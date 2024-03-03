@@ -25,3 +25,9 @@
     background-color: #04AA6D;
     color: white;
   }
+
+/* Add style to page title text */
+.PageTitle {
+  text-align: center;
+  font-size: 2em;
+}
