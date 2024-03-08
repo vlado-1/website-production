@@ -1,0 +1,8 @@
+/* Control the left side */
+.left {
+    position: fixed;
+    height: 100%;
+    width: 50%;  
+    left: 0;
+  }
+  
