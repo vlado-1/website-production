@@ -1,0 +1,17 @@
+/* Add style to item box */
+.item {
+    background-color: rgb(252,252,252);
+    border: 1pt solid black;
+    border-radius: 5px;
+    margin: 2%;
+}
+
+/* Add custom margins to text elements */
+.item h4, p {
+    margin: 0 0.5% 0.5% 1%;
+}
+
+/* Add date text style */
+.small-date {
+    font-size: 0.8em;
+}
