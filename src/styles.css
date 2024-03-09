@@ -11,7 +11,12 @@ body {
 }
 
 /* Customize list and showcase
-   % based on parent */
+   % based on parent
+   
+   Note: any other combination of display and position will cause either the element
+         to go out-of-flow and thus ruin the %-based styling below, or cause the element
+         to become a block and thus take up a whole line by itself 
+         (we want want two half-containers in the same row).*/
 .half-container {
     position: static;
     display: inline-block;
