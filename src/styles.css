@@ -6,11 +6,18 @@ html, body{
     margin: 0;
 }
 
-/* Add margin style to list and showcase */
+body {
+    background-color: #F5F5F5;
+}
+
+/* Customize list and showcase
+   % based on parent */
 .half-container {
-    /* % of parent */
+    position: static;
+    display: inline-block;
     margin: 5%; 
-    float: left;
-    height: 100%;
-    width: 40%;  
+    height: 90%;
+    width: 40%;
+    background-color: white;
+    overflow-y: auto;
   }
