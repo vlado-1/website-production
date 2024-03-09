@@ -1,7 +1,1 @@
 /* Control the right side */
-.right {
-  position: fixed;
-  height: 100%;
-  width: 50%; 
-  right: 0;
-}

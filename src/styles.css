@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Take up entire height of screen */
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+/* Add margin style to list and showcase */
+.half-container {
+    /* % of parent */
+    margin: 5%; 
+    float: left;
+    height: 100%;
+    width: 40%;  
+  }
