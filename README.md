@@ -25,3 +25,14 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# Steps to setup environment from scratch
+
+1: Install NodeJs (with NPM).
+2: Set global install location of NPM to desired location.
+3: Globally install @angular/cli.
+4: Globally install typescript, ts-node and @types/node.
+5: Follow Angular site instuctions on how to create project using ng command (https://angular.io/guide/setup-local).
+6: Create server folder, npm init and then install express.js + typescript locally.
+7: Run server with ts-node main.ts (if typescript is being used) else node main.js.
+8: Run angular development server with ng serve.
