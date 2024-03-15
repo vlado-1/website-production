@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 # Steps to setup environment from scratch
 
-1: Install NodeJs (with NPM).
+1: Install NodeJs (comes with NPM).
 2: Set global install location of NPM to desired location.
 3: Globally install @angular/cli.
 4: Globally install typescript, ts-node and @types/node.
