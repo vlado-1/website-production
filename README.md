@@ -26,7 +26,8 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-# Steps to setup environment from scratch
+# Project Information
+## Steps to setup environment from scratch
 
 1. Install NodeJs (comes with NPM).
 2. Set global install location of NPM to desired location.
@@ -37,7 +38,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 7. Run server with ts-node main.ts (if typescript is being used) else node main.js.
 8. Run angular development server with ng serve.
 
-# Server project structure
+## Server project structure
 
 1. config = contains config information for connecting to the MySQL DB (host, user, pswd etc..).
 2. controllers = get requests from routes, and convert them to HTTP responses (use middleware as necessary)
@@ -47,7 +48,12 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 6. services = contains the functions that perform CRUD on the MySQL db and all the business logic.
 7. utils = helper functions.
 
-# Server File Relations
+## Server File Relations
 
 main -> routers (-> middlewares) -> controllers + models -> services + config
 (utils anywhere)
+https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
+
+## Server Problems
+    <li> Had to use 'commonjs' module type (nodejs require) instead of 'ES' module type (typescript import) in the javascript files otherwise I get an error about 'SyntaxError: Cannot use import statement outside a module'.  </li>
+    <li> Need to settle on a consistent variable naming scheme.  </li>

@@ -1,6 +1,9 @@
-var router = express.Router();
-var controllerProjectList = require('../controllers/projectlist.controller');
+const exprs = require('express');
+const router = exprs.Router();
+const controller = require('../controllers/projectlist.controller');
 
-router.get('/projectlist', controllerProjectList.getProjectList);
+router.get('/projectlist', function (req: any, res: any) {
+    controller.getProjectList(req, res);
+});
 
-module.exports = router;
+module.exports = { router };

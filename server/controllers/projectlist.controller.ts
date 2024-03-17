@@ -1,16 +1,13 @@
-import { Request, RequestHandler, Response } from 'express';
+const serviceProjectOne = require('../services/projectone.service');
 
-var ProjectOneService = require('../services/projectone.service');
-
-export const getProjectList: RequestHandler = async (req: Request, res: Response ) => {
-    try {
-        const projectlist = await ProjectOneService.getProjectList();
-        
-        res.status(200).json({projectlist});
-    } catch (error) {
+const getProjectList = async (req: any, res: any) => {
+    serviceProjectOne.getProjectListData().then((result: any) => {
+        //console.log(JSON.stringify(result));
+        res.status(200).send(result);
+    }). catch ((error: any) => {
         console.error('[projectlist.controller][getProjectList][Error] ', typeof error === 'object' ? JSON.stringify(error) : error);
-        res.status(500).json({
-            message: 'There was an error when fetching the project list'
-        });
-    }
+        res.status(500).status({message: 'There was an error when fetching the project list'});
+    });
 }
+
+module.exports = { getProjectList };

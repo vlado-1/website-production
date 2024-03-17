@@ -1,4 +1,4 @@
-export const DATA_SOURCES = {
+const DATA_SOURCES = {
     mySqlDataSource: {
       DB_HOST: 'localhost',
       DB_USER: 'vsmo',
@@ -8,3 +8,5 @@ export const DATA_SOURCES = {
       DB_CONNECTION_LIMIT: 1,
     }
   };
+
+  module.exports = {DATA_SOURCES};
