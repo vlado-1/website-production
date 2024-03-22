@@ -48,6 +48,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 6. services = contains the functions that perform CRUD on the MySQL db and all the business logic.
 7. utils = helper functions.
 
+server host = localhost
+server port = 3000
+
 ## Server File Relations
 
 main -> routers (-> middlewares) -> controllers + models -> services + config
@@ -55,5 +58,5 @@ main -> routers (-> middlewares) -> controllers + models -> services + config
 https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
 
 ## Server Problems
-    <li> Had to use 'commonjs' module type (nodejs require) instead of 'ES' module type (typescript import) in the javascript files otherwise I get an error about 'SyntaxError: Cannot use import statement outside a module'.  </li>
+    <li> Had to use 'commonjs' module type (nodejs require) instead of 'ES' module type (typescript import) in the server-side javascript files otherwise I get an error about 'SyntaxError: Cannot use import statement outside a module'.  </li>
     <li> Need to settle on a consistent variable naming scheme.  </li>
