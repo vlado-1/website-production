@@ -6,7 +6,7 @@ const getProjectList = async (req: any, res: any) => {
         res.status(200).send(result);
     }). catch ((error: any) => {
         console.error('[projectlist.controller][getProjectList][Error] ', typeof error === 'object' ? JSON.stringify(error) : error);
-        res.status(500).status({message: 'There was an error when fetching the project list'});
+        res.status(500).send({message: 'There was an error when fetching the project list'});
     });
 }
 
