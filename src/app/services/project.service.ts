@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { project } from '../models/project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,11 @@ export class ProjectService {
     return this.http.get(this.serverUrl + "projectlist").pipe(catchError(this.handleError));
   }
 
-  handleError(error: any): string {
-    return "Well something went wrong with the http request.";
+  handleError(error: any): Observable<never> {
+    let errMsg: string = '';
+    errMsg = error.message;
+    return throwError(() => {
+      return errMsg;
+    });
   }
 }

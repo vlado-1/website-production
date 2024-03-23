@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-list-item',
@@ -8,13 +8,13 @@ import { Component } from '@angular/core';
   styleUrl: './list-item.component.css'
 })
 export class ListItemComponent {
-  itemName: string = "Project One";
-  itemDesc: string = "Developing a website to host the various mini projects I do, and to provide me an opportunity to learn about different technologies.";
-  itemDate: string = "24/02/2024";
+  @Input()
+  itemTitle: string = "Project One";
+  @Input()
+  itemDescn: string = "Developing a website to host the various mini projects I do, and to provide me an opportunity to learn about different technologies.";
+  @Input()
+  itemEffort: number = 1;
 
-  public ListItemComponent (iname: string, idesc: string, idate: string) {
-    this.itemName = iname;
-    this.itemDesc = idesc;
-    this.itemDate = idate;
+  public ListItemComponent () {
   }
 }

@@ -1,3 +1,13 @@
 <div class="half-container">
-    <app-list-item></app-list-item>
+    <ng-container *ngIf="pList$ | async as pList; else pending">
+        <div *ngFor="let project of pList">
+            <app-list-item [itemTitle]="project.title"
+                           [itemDescn]="project.descn"
+                           [itemEffort]="project.effort"></app-list-item>
+        </div>
+    </ng-container>
+
+    <ng-template #pending>
+        <h3>Pending...</h3>
+    </ng-template>
 </div>
