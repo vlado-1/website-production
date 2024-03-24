@@ -1,9 +1,7 @@
 <div class="half-container">
     <ng-container *ngIf="pList$ | async as pList; else pending">
         <div *ngFor="let project of pList">
-            <app-list-item [itemTitle]="project.title"
-                           [itemDescn]="project.descn"
-                           [itemEffort]="project.effort"></app-list-item>
+            <app-list-item [listItem]="project"></app-list-item>
         </div>
     </ng-container>
 

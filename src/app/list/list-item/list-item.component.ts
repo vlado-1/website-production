@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { project } from '../../models/project.model';
 
 @Component({
   selector: 'app-list-item',
@@ -9,11 +10,10 @@ import { Component, Input } from '@angular/core';
 })
 export class ListItemComponent {
   @Input()
-  itemTitle: string = "Project One";
-  @Input()
-  itemDescn: string = "Developing a website to host the various mini projects I do, and to provide me an opportunity to learn about different technologies.";
-  @Input()
-  itemEffort: number = 1;
+  listItem: project = { pid:   -1,
+                        title: 'None',
+                        descn: 'None',
+                        effort: 0};
 
   public ListItemComponent () {
   }
