@@ -1,10 +1,27 @@
 <div class="half-container">
+    <!-- Bar that shows add, remove and cancel icons -->
+    <div class="listnav">
+        <ng-container *ngIf="addMode; else standBy">
+            <button class="active" (click)="onSave()"><img class="navimg" src="..\..\assets\check.svg"></button>
+            <button class="active" (click)="onCancel()"><img class="navimg" src="..\..\assets\cross.svg"></button>           
+        </ng-container>
+        <ng-template #standBy>
+            <button class="active" (click)="onAdd()"><img class="navimg" src="..\..\assets\plus.svg"></button>
+            <button class="active" (click)="onDelete()"><img class="navimg" src="..\..\assets\trash.svg"></button>
+        </ng-template>
+    </div>
+    <ng-container *ngIf="addMode">
+        <app-add-item></app-add-item>
+    </ng-container>
+
+    <!-- Lists all project items --> 
     <ng-container *ngIf="pList$ | async as pList; else pending">
         <div *ngFor="let project of pList">
             <app-list-item [listItem]="project"></app-list-item>
         </div>
     </ng-container>
 
+    <!-- Displayed when pList$ observable hasn't been fetched -->
     <ng-template #pending>
         <h3>Pending...</h3>
     </ng-template>
