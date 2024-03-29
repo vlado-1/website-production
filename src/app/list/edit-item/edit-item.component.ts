@@ -5,13 +5,13 @@ import { ProjectService } from '../../services/project.service';
 
 
 @Component({
-  selector: 'app-add-item',
+  selector: 'app-edit-item',
   standalone: true,
   imports: [NgFor, NgIf, AsyncPipe,CommonModule, FormsModule],
-  templateUrl: './add-item.component.html',
-  styleUrl: './add-item.component.css'
+  templateUrl: './edit-item.component.html',
+  styleUrl: './edit-item.component.css'
 })
-export class AddItemComponent {
+export class EditItemComponent {
 
   public addMode: boolean = false;
   public inTitle : string;

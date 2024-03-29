@@ -19,4 +19,13 @@ const addProject = async (req: any, res: any) => {
     });
 }
 
-module.exports = { getProjectList, addProject };
+const deleteProject = async (req: any, res: any) => {
+    serviceProjectOne.deleteProjectData(req.body).then((result: any) => {
+        res.status(200).send({message: "Successfully deleted project item."});
+    }).catch((error: any) => {
+        console.error('[projectlist.controller][addProject][Error] ', typeof error === 'object' ? JSON.stringify(error) : error);
+        res.status(500).send({message: 'There was a error when deleting the project item.'});
+    });
+}
+
+module.exports = { getProjectList, addProject, deleteProject };

@@ -1,10 +1,10 @@
 <div class="half-container" (refresh)="refreshList()">
-    <app-add-item></app-add-item>
+    <app-edit-item></app-edit-item>
 
     <!-- Lists all project items --> 
     <ng-container *ngIf="pList$ | async as pList; else pending">
         <div *ngFor="let project of pList">
-            <app-list-item [listItem]="project"></app-list-item>
+            <app-list-item [listItem]="project" (click)="onSelect(project)"></app-list-item>
         </div>
     </ng-container>
 

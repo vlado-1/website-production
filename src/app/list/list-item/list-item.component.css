@@ -6,6 +6,10 @@
     margin: 2%;
 }
 
+.item:hover {
+    cursor: pointer;
+}
+
 /* Add custom margins to text elements */
 .item h4, p {
     margin: 0 0.5% 0.5% 1%;

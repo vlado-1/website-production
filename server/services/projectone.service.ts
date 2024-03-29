@@ -11,4 +11,8 @@ const addProjectData = async (item: any) => {
     return modelProjectOne.execute(queriesModule.projectOneQueries.AddProject, [item['title'],item['descn'],Number(item['effort'])]);
 };
 
-module.exports = { getProjectListData, addProjectData };
+const deleteProjectData = async (item: any) => {
+    return modelProjectOne.execute(queriesModule.projectOneQueries.DeleteProject,);
+};
+
+module.exports = { getProjectListData, addProjectData, deleteProjectData };
