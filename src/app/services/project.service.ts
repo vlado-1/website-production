@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
-import { project } from '../models/project.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject, EMPTY, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-  serverUrl: string = 'http://localhost:3000/';
+  private serverUrl: string        = 'http://localhost:3000/';
+  private subject:   Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient) { }
 
@@ -16,11 +16,28 @@ export class ProjectService {
     return this.http.get(this.serverUrl + "projectlist").pipe(catchError(this.handleError));
   }
 
-  handleError(error: any): Observable<never> {
+  addProject(inTitle: string, inDescn: string, inEffort: string): Observable<any> {
+    return this.http.post(this.serverUrl + "addProject", {title:  inTitle, 
+                                                          descn:  inDescn, 
+                                                          effort: inEffort})
+                                                        .pipe(catchError(this.handleError));
+  }
+
+  handleError(response: any): Observable<never> {
     let errMsg: string = '';
-    errMsg = error.message;
+    errMsg = response.error.message;
+    console.log(response);
     return throwError(() => {
       return errMsg;
     });
   }
+
+  refresh(): void {
+    this.subject.next();
+  }
+
+  onRefresh(): Observable<void> {
+    return this.subject.asObservable();
+  }
+
 }

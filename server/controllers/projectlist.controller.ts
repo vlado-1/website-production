@@ -10,4 +10,13 @@ const getProjectList = async (req: any, res: any) => {
     });
 }
 
-module.exports = { getProjectList };
+const addProject = async (req: any, res: any) => {
+    serviceProjectOne.addProjectData(req.body).then((result: any) => {
+        res.status(200).send({message: 'Successfully added project item.'});
+    }).catch ((error: any) => {
+        console.error('[projectlist.controller][addProject][Error] ', typeof error === 'object' ? JSON.stringify(error) : error);
+        res.status(500).send({message: 'There was a error when creating the project item.'});
+    });
+}
+
+module.exports = { getProjectList, addProject };

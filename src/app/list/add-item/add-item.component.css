@@ -1,3 +1,31 @@
+/* Add a black background color to the top navigation */
+.editnav {
+    background-color: hsl(0, 7%, 80%);
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .editnav button {
+    float: left;
+    background-color: #119cc2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    border: none;
+  }
+  
+  /* Change the color of links on hover */
+  .editnav button:hover {
+    background-color: #55cef0;
+    color: white;  
+  }
+  
+.navimg {
+    height: 1em;
+    object-fit: contain;
+}
+
 #addItemForm {
     margin: 2%;
     background-color: rgb(240, 238, 238);

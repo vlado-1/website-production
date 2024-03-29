@@ -1,5 +1,20 @@
-<div id="addItemForm">
-    <input type="text" name="itemTitle"  placeholder="Project Name"><br>
-    <input type="text" name="itemDescn"  placeholder="Project Description"><br>
-    <input type="text" name="itemEffort" placeholder="Project Effort"><br>
+<!-- Bar that shows add, remove / save, cancel icons -->
+<div class="editnav">
+    <ng-container *ngIf="addMode; else standBy">
+        <button class="active" (click)="onSave()"><img class="navimg" src="..\..\assets\check.svg"></button>
+        <button class="active" (click)="onCancel()"><img class="navimg" src="..\..\assets\cross.svg"></button>           
+    </ng-container>
+    <ng-template #standBy>
+        <button class="active" (click)="onAdd()"><img class="navimg" src="..\..\assets\plus.svg"></button>
+        <button class="active" (click)="onDelete()"><img class="navimg" src="..\..\assets\trash.svg"></button>
+    </ng-template>
 </div>
+
+<ng-container *ngIf="addMode">
+    <!-- Form to add event -->
+    <div id="addItemForm">
+        <input type="text" name="itemTitle"  placeholder="Project Name"        [(ngModel)]="inTitle"><br>
+        <input type="text" name="itemDescn"  placeholder="Project Description" [(ngModel)]="inDescn"><br>
+        <input type="text" name="itemEffort" placeholder="Project Effort"      [(ngModel)]="inEffort"><br>
+    </div>
+</ng-container>

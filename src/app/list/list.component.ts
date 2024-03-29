@@ -16,29 +16,16 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 })
 export class ListComponent {
 
-  public pList$: Observable<project[]>;
-  public addMode: boolean = false;
+  public pList$: Observable<project[]> = new Observable<project[]>();
 
   constructor( private pService: ProjectService) {
-    this.pList$ = pService.getProjects();
+    this.refreshList();
+    pService.onRefresh().subscribe(() => {
+      this.refreshList();
+    });
   }
 
-  onSave(): void {
-    console.log("Save");
-    this.addMode = !this.addMode;
-  }
-
-  onCancel(): void {
-    console.log("Cancel");
-    this.addMode = !this.addMode;
-  }
-
-  onAdd(): void {
-    console.log("Add");
-    this.addMode = !this.addMode;
-  }
-
-  onDelete(): void {
-    console.log("Delete");
+  public refreshList(): void {
+    this.pList$ = this.pService.getProjects();
   }
 }
