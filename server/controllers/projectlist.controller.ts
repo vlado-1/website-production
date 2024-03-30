@@ -19,7 +19,7 @@ const addProject = async (req: any, res: any) => {
     });
 }
 
-const deleteProject = async (req: any, res: any) => {
+const deleteProjects = async (req: any, res: any) => {
     serviceProjectOne.deleteProjectData(req.body).then((result: any) => {
         res.status(200).send({message: "Successfully deleted project item."});
     }).catch((error: any) => {
@@ -28,4 +28,4 @@ const deleteProject = async (req: any, res: any) => {
     });
 }
 
-module.exports = { getProjectList, addProject, deleteProject };
+module.exports = { getProjectList, addProject, deleteProjects };

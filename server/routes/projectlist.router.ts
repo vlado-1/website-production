@@ -10,8 +10,8 @@ router.post('/addProject', function (req: any, res: any) {
     controller.addProject(req, res);
 });
 
-router.post('/deleteProject', function(req: any, res: any) {
-    controller.deleteProject(req, res);
+router.post('/deleteProjects', function(req: any, res: any) {
+    controller.deleteProjects(req, res);
 });
 
 module.exports = { router };

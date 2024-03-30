@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, EMPTY, catchError, throwError } from 'rxjs';
+import { project } from '../models/project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,11 @@ export class ProjectService {
     return this.http.post(this.serverUrl + "addProject", {title:  inTitle, 
                                                           descn:  inDescn, 
                                                           effort: inEffort})
+                                                        .pipe(catchError(this.handleError));
+  }
+
+  deleteProjects(toDelete: project[]): Observable<any> {
+    return this.http.post(this.serverUrl + "deleteProjects", {toDelete})
                                                         .pipe(catchError(this.handleError));
   }
 

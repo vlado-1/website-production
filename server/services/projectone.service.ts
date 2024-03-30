@@ -11,8 +11,15 @@ const addProjectData = async (item: any) => {
     return modelProjectOne.execute(queriesModule.projectOneQueries.AddProject, [item['title'],item['descn'],Number(item['effort'])]);
 };
 
-const deleteProjectData = async (item: any) => {
-    return modelProjectOne.execute(queriesModule.projectOneQueries.DeleteProject,);
+const deleteProjectData = async (items: any) => {
+    // Need to provide a list of pids to delete to the query. ([1,2,3,..]) is good
+    let pids: number[] = [];
+
+    items["toDelete"].forEach((item: any) => {
+        pids.push(item.pid);
+    });
+
+    return modelProjectOne.execute(queriesModule.projectOneQueries.DeleteProjects,[pids]);
 };
 
 module.exports = { getProjectListData, addProjectData, deleteProjectData };

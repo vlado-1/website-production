@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
@@ -12,6 +12,9 @@ import { ProjectService } from '../../services/project.service';
   styleUrl: './edit-item.component.css'
 })
 export class EditItemComponent {
+  // for emitter to work on parent, the event handler must be on component selector
+  @Output()
+  public delete: EventEmitter<void> = new EventEmitter<void>();
 
   public addMode: boolean = false;
   public inTitle : string;
@@ -54,5 +57,6 @@ export class EditItemComponent {
 
   onDelete(): void {
     console.log("Delete");
+    this.delete.emit();
   }
 }

@@ -3,4 +3,5 @@ export interface project {
     title: string;
     descn: string;
     effort: number;
+    selected: boolean;
 }
