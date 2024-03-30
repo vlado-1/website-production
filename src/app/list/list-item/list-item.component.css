@@ -19,3 +19,17 @@
 .small {
     font-size: 0.8em;
 }
+
+#indicator {
+    float: left;
+    width: 5%;
+    height: 3.701em;
+    margin-right: 1%;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+/* Highlight box when selected */
+.selected {
+    background-color: #119cc2;
+}

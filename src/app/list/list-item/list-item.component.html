@@ -1,4 +1,5 @@
-<div class="item">
+<div class="item" (click)="onSelect()">
+    <div id="indicator" [ngClass]="{'selected': isSelected}"></div>
     <h4>{{listItem.title}}</h4>
     <p>{{listItem.descn}}</p>
     <p class="small">Effort: {{listItem.effort}}</p>

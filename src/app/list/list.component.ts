@@ -17,12 +17,6 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 export class ListComponent {
 
   public pList$: Observable<project[]> = new Observable<project[]>();
-  public selectedProject: project = {
-    pid: 0,
-    title: "",
-    descn: "",
-    effort: 0,
-};
 
   constructor( private pService: ProjectService) {
     this.refreshList();
@@ -33,9 +27,5 @@ export class ListComponent {
 
   public refreshList(): void {
     this.pList$ = this.pService.getProjects();
-  }
-
-  public onSelect(selected: project): void {
-    this.selectedProject = selected;
   }
 }
