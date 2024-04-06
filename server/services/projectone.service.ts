@@ -1,17 +1,21 @@
 // Will need to import Execute from projectone.models.ts
 // Helpful site: https://www.becomebetterprogrammer.com/mysql-nodejs-expressjs-typescript/
-var modelProjectOne = require('../models/projectone.models');
-var queriesModule = require('../models/projectone.queries');
+import { execute } from "../models/projectone.models";
+import { projectOneQueries } from "../models/projectone.queries";
+import { logger } from "../utils/project.logger";
 
 const getProjectListData = async () => {
-    return modelProjectOne.execute(queriesModule.projectOneQueries.GetProjectList, []);
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectone.service.ts | getProjectListData');
+    return execute(projectOneQueries.GetProjectList, []);
 };
 
 const addProjectData = async (item: any) => {
-    return modelProjectOne.execute(queriesModule.projectOneQueries.AddProject, [item['title'],item['descn'],Number(item['effort'])]);
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectone.service.ts | addProjectData');
+    return execute(projectOneQueries.AddProject, [item['title'],item['descn'],Number(item['effort'])]);
 };
 
 const deleteProjectData = async (items: any) => {
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectone.service.ts | deleteProjectData');
     // Need to provide a list of pids to delete to the query. ([1,2,3,..]) is good
     let pids: number[] = [];
 
@@ -19,7 +23,7 @@ const deleteProjectData = async (items: any) => {
         pids.push(item.pid);
     });
 
-    return modelProjectOne.execute(queriesModule.projectOneQueries.DeleteProjects,[pids]);
+    return execute(projectOneQueries.DeleteProjects,[pids]);
 };
 
-module.exports = { getProjectListData, addProjectData, deleteProjectData };
+export { getProjectListData, addProjectData, deleteProjectData };

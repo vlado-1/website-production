@@ -1,26 +1,30 @@
 // Have Init function (add to main.ts) to create mysql db pool (connection pool). 
 // Have execute function to execute queries
 //  Helpfule link: https://www.becomebetterprogrammer.com/mysql-nodejs-expressjs-typescript/
-var dataSource = require ('./../config/db.config').DATA_SOURCES.mySqlDataSource;
-var db = require('mysql');
-var pool = db.pool;
+// mysql2 can be import via import statement but mysql can't. mysql2 is newer.
+import { DATA_SOURCES } from "../config/db.config";
+import { createPool } from 'mysql2';
+import { logger } from "../utils/project.logger";
+
+var dataSource = DATA_SOURCES.mySqlDataSource;
+
+var pool: any;
 
 /**
  * generates pool connection to be used throughout the app
  */
 const init = () => {
   try {
-    pool = db.createPool({
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectone.models.ts | init')
+    pool = createPool({
       connectionLimit: dataSource.DB_CONNECTION_LIMIT,
       host: dataSource.DB_HOST,
       user: dataSource.DB_USER,
       password: dataSource.DB_PASSWORD,
       database: dataSource.DB_DATABASE,
     });
-
-    console.debug('MySql Adapter Pool generated successfully');
   } catch (error) {
-    console.error('[mysql.connector][init][Error]: ', error);
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectone.models.ts | pool failed | ' + JSON.stringify(error));
     throw new Error('failed to initialized pool');
   }
 };
@@ -35,20 +39,22 @@ const init = () => {
 const execute = (query: any, params: any) => {
   try {
     if (!pool) throw new Error('Pool was not created. Ensure pool is created when running the app.');
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectone.models.ts | Execute');
     return new Promise((resolve, reject) => {
       pool.query(query, params, (error: any, results: any) => {
         if (error) {
+          logger.log('verbose',  new Date().toLocaleString() + ' | projectone.models.ts | Execute failed | ' + JSON.stringify(error));
           reject(error);
         }
         else {
+          logger.log('verbose',  new Date().toLocaleString() + ' | projectone.models.ts | Execute success');
           resolve(results)};
       });
     });
 
   } catch (error) {
-    console.error('[mysql.connector][execute][Error]: ', error);
     throw new Error('failed to execute MySQL query');
   }
 }
 
-module.exports = {init, execute};
+export {init, execute};

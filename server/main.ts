@@ -1,11 +1,14 @@
-const express = require('express');
-const cors = require('cors');
+import { logger } from "./utils/project.logger";
+import express from 'express';
+import cors from 'cors';
+
+import {router} from './routes/projectlist.router';
+import { init } from "./models/projectone.models";
+
 const app = express();
 const port = 3000;
-const routerProjectList = require('./routes/projectlist.router');
-const modelProject = require('./models/projectone.models');
 
-modelProject.init();
+init();
 
 /* Cross-Origin Resource Sharing (CORS) is an HTTP-header based 
    mechanism that allows a server to indicate any origins (domain, scheme, or port) 
@@ -23,7 +26,12 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use('/', routerProjectList.router);
+app.use((req: any, res: any, next: Function) => {
+  logger.log('verbose',  new Date().toLocaleString() + ' | main.ts | Client request received');
+  next();
+  });
+
+app.use('/', router);
 
 app.listen(port, () => {
   console.log(`Project One server is listening on port ${port}`);

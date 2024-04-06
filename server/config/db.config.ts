@@ -9,4 +9,4 @@ const DATA_SOURCES = {
     }
   };
 
-  module.exports = {DATA_SOURCES};
+export {DATA_SOURCES};

@@ -4,4 +4,4 @@ const projectOneQueries = {
     DeleteProjects: 'DELETE FROM projectone.projects WHERE projectone.projects.pid IN (?);',
 };
 
-module.exports = { projectOneQueries };
+export { projectOneQueries };
