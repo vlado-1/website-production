@@ -22,13 +22,13 @@ export class ListComponent {
   constructor( private pService: ProjectService) {
     this.refreshList();
     pService.onRefresh().subscribe(() => {
-      console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Refresh observable activated");
+      console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Refresh received");
       this.refreshList();
     });
   }
 
   public refreshList(): void {
-    console.debug("%s: %s | %s", "ListComponent", "refreshList", "Refreshing Projects List");
+    console.debug("%s: %s | %s", "ListComponent", "refreshList", "Refreshing");
     this.pList$ = this.pService.getProjects();
   }
 
@@ -36,7 +36,7 @@ export class ListComponent {
     
     this.selectedItems = [];
 
-    console.debug("%s: %s | %s", "ListComponent", "onSelect", "Synchronizing item list with individual item");
+    console.debug("%s: %s | %s", "ListComponent", "onSelect", "Sync >> selected item => list");
 
     this.pList$ = this.pList$.pipe(map((list: project[]): project[] => {
       return list.map((item: project): project => {
@@ -59,10 +59,10 @@ export class ListComponent {
   }
 
   public onDelete() {
-    console.debug("%s: %s | %s", "ListComponent", "onDelete", "Delete event");
+    console.debug("%s: %s | %s", "ListComponent", "onDelete", "Delete");
 
     this.pService.deleteProjects(this.selectedItems).subscribe((response) => {
-      console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Delete observable activated");
+      console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Delete finished");
       this.refreshList();
     });
   }

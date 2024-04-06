@@ -46,12 +46,12 @@ export class ProjectService {
   }
 
   refresh(): void {
-    console.debug("%s: %s | %s", "ProjectService", "refresh", "Activate Subject");
+    console.debug("%s: %s | %s", "ProjectService", "refresh", "Refresh broadcast");
     this.subject.next();
   }
 
   onRefresh(): Observable<void> {
-    console.debug("%s: %s | %s", "ProjectService", "onRefresh", "Retrieve 'refresh' observable");
+    console.debug("%s: %s | %s", "ProjectService", "onRefresh", "Refresh observable");
     return this.subject.asObservable();
   }
 
