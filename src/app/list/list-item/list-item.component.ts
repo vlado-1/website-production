@@ -25,6 +25,7 @@ export class ListItemComponent {
   }
 
   public onSelect(): void {
+    console.debug("%s: %s | %s", "ListItemComponent", "onSelect", "Select Event");
     this.listItem.selected = !this.listItem.selected;
     this.updateSelected.emit(this.listItem);
   }

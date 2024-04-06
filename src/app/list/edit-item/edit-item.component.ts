@@ -28,15 +28,16 @@ export class EditItemComponent {
   }
   
   onSave(): void {
-    console.log("Save");
+    console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save event");
 
     if (this.inTitle == "" && this.inDescn == "" && this.inEffort == "") {
+      console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
     }
 
     this.pService.addProject(this.inTitle, this.inDescn, this.inEffort).subscribe(
       (result: any) => {
-      console.log("Add project success");
+        console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save observable activated");
       this.pService.refresh();
     });
 
@@ -46,17 +47,17 @@ export class EditItemComponent {
   }
 
   onCancel(): void {
-    console.log("Cancel");
+    console.debug("%s: %s | %s", "EditItemComponent", "onCancel", "Canceled");
     this.addMode = !this.addMode;
   }
 
   onAdd(): void {
-    console.log("Add");
+    console.debug("%s: %s | %s", "EditItemComponent", "onAdd", "Add Mode");
     this.addMode = !this.addMode;
   }
 
   onDelete(): void {
-    console.log("Delete");
+    console.debug("%s: %s | %s", "EditItemComponent", "onDelete", "Delete event");
     this.delete.emit();
   }
 }

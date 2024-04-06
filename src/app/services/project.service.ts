@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, EMPTY, catchError, throwError } from 'rxjs';
+import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { project } from '../models/project.model';
 
 @Injectable({
@@ -14,10 +14,15 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   getProjects(): Observable<any> {
+    console.debug("%s: %s | %s", "ProjectService", "getProjects", "GET " + this.serverUrl + "projectlist");
     return this.http.get(this.serverUrl + "projectlist").pipe(catchError(this.handleError));
   }
 
   addProject(inTitle: string, inDescn: string, inEffort: string): Observable<any> {
+    console.debug("%s: %s | %s", "ProjectService", "addProject", "POST " + this.serverUrl + "addProject");
+    console.debug({title:  inTitle, 
+      descn:  inDescn, 
+      effort: inEffort});
     return this.http.post(this.serverUrl + "addProject", {title:  inTitle, 
                                                           descn:  inDescn, 
                                                           effort: inEffort})
@@ -25,6 +30,8 @@ export class ProjectService {
   }
 
   deleteProjects(toDelete: project[]): Observable<any> {
+    console.debug("%s: %s | %s", "ProjectService", "deleteProjects", "POST " + this.serverUrl + "deleteProjects");
+    console.debug(toDelete);
     return this.http.post(this.serverUrl + "deleteProjects", {toDelete})
                                                         .pipe(catchError(this.handleError));
   }
@@ -32,17 +39,19 @@ export class ProjectService {
   handleError(response: any): Observable<never> {
     let errMsg: string = '';
     errMsg = response.error.message;
-    console.log(response);
+    console.debug("%s: %s | %s", "ProjectService", "handleError", errMsg);
     return throwError(() => {
       return errMsg;
     });
   }
 
   refresh(): void {
+    console.debug("%s: %s | %s", "ProjectService", "refresh", "Activate Subject");
     this.subject.next();
   }
 
   onRefresh(): Observable<void> {
+    console.debug("%s: %s | %s", "ProjectService", "onRefresh", "Retrieve 'refresh' observable");
     return this.subject.asObservable();
   }
 
