@@ -26,4 +26,10 @@ const deleteProjectData = async (items: any) => {
     return execute(projectOneQueries.DeleteProjects,[pids]);
 };
 
-export { getProjectListData, addProjectData, deleteProjectData };
+const updateProjectData = async (items: any) => {
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectone.service.ts | updateProjectData');
+    
+    return execute(projectOneQueries.UpdateProject,[items.title, items.descn, items.effort, items.pid]);
+};
+
+export { getProjectListData, addProjectData, deleteProjectData, updateProjectData };

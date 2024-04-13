@@ -36,6 +36,13 @@ export class ProjectService {
                                                         .pipe(catchError(this.handleError));
   }
 
+  updateProject(toEdit: project): Observable<any> {
+    console.debug("%s: %s | %s", "ProjectService", "updateProject", "POST " + this.serverUrl + "updateProject");
+    console.debug(toEdit);
+    return this.http.post(this.serverUrl + "updateProject", toEdit)
+                                                        .pipe(catchError(this.handleError));
+  }
+
   handleError(response: any): Observable<never> {
     let errMsg: string = '';
     errMsg = response.error.message;

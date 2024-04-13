@@ -1,8 +1,8 @@
-import {getProjectListData, addProjectData, deleteProjectData} from '../services/projectone.service';
+import {getProjectListData, addProjectData, deleteProjectData, updateProjectData} from '../services/projectone.service';
 import { logger } from '../utils/project.logger';
 
 const getProjectList = async (req: any, res: any) => {
-    logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.constroller.ts | getProjectList');
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | getProjectList');
     getProjectListData().then((result: any) => {
         res.status(200).send(result);
     }). catch ((error: any) => {
@@ -11,7 +11,7 @@ const getProjectList = async (req: any, res: any) => {
 }
 
 const addProject = async (req: any, res: any) => {
-    logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.constroller.ts | addProject');
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | addProject');
     addProjectData(req.body).then((result: any) => {
         res.status(200).send({message: 'Add Success'});
     }).catch ((error: any) => {
@@ -21,7 +21,7 @@ const addProject = async (req: any, res: any) => {
 }
 
 const deleteProjects = async (req: any, res: any) => {
-    logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.constroller.ts | deleteProjects');
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | deleteProjects');
     deleteProjectData(req.body).then((result: any) => {
         res.status(200).send({message: "Delete Success"});
     }).catch((error: any) => {
@@ -30,4 +30,14 @@ const deleteProjects = async (req: any, res: any) => {
     });
 }
 
-export { getProjectList, addProject, deleteProjects };
+const updateProject = async (req: any, res: any) => {
+    logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | updateProject');
+    updateProjectData(req.body).then((result: any) => {
+        res.status(200).send({message: "Update Success"});
+    }).catch((error: any) => {
+        logger.log('verbose', new Date().toLocaleString() + " | projectlist.controller.ts | Error | " + JSON.stringify(error));
+        res.status(500).send({message: 'Update Failed'});
+    });
+}
+
+export { getProjectList, addProject, deleteProjects, updateProject };

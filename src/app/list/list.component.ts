@@ -17,6 +17,7 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 export class ListComponent {
 
   public pList: project[] = [];
+  public selection: project = {pid: 0, title: "", descn: "", effort: 0, selected: false};
 
   constructor( private pService: ProjectService) {
     this.refreshList();
@@ -34,7 +35,6 @@ export class ListComponent {
   }
 
   public onSelect(listItem: project): void {
-
     console.debug("%s: %s | %s", "ListComponent", "onSelect", "Set selected attribute");
 
     this.pList = this.pList.map((item: project): project => {
@@ -42,8 +42,16 @@ export class ListComponent {
                   if (item.pid == listItem.pid) {
                       item.selected = listItem.selected;
                     }
-                    return item;
+                  return item;
                   });
+
+    if (this.pList.filter(item => { return item.selected }).length == 1) {
+      this.selection = this.pList.filter(item => { return item.selected })[0];
+    }
+    else {
+      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false};
+    }
+
 
     console.debug("%s: %s | %o", "ListComponent", "onSelect", this.pList);
   }

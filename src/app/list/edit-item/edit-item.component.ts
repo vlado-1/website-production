@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
+import { project } from '../../models/project.model';
 
 
 @Component({
@@ -15,6 +16,9 @@ export class EditItemComponent {
   // for emitter to work on parent, the event handler must be on component selector
   @Output()
   public delete: EventEmitter<void> = new EventEmitter<void>();
+
+  @Input()
+  public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false};
 
   public addMode: boolean = false;
   public inTitle : string;
@@ -34,12 +38,25 @@ export class EditItemComponent {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
     }
+    if (this.inTitle == this.editItem.title && this.inDescn == this.editItem.descn && this.inEffort == this.editItem.effort.toString()) {
+      console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
+      return;
+    }
 
-    this.pService.addProject(this.inTitle, this.inDescn, this.inEffort).subscribe(
-      (result: any) => {
-        console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished");
-      this.pService.refresh();
-    });
+    if (this.editItem.selected) {
+      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true}).subscribe(
+        (result: any) => {
+          console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Edit");
+        this.pService.refresh();
+      });    
+    }
+    else { 
+      this.pService.addProject(this.inTitle, this.inDescn, this.inEffort).subscribe(
+        (result: any) => {
+          console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Add");
+        this.pService.refresh();
+      });
+    }
 
     this.inTitle  = "";
     this.inDescn  = "";
@@ -53,6 +70,16 @@ export class EditItemComponent {
 
   onAdd(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onAdd", "Add");
+    this.addMode = !this.addMode;
+  }
+
+  onEdit(): void {
+    console.debug("%s: %s | %s", "EditItemComponent", "onEdit", "Edit");
+
+    this.inTitle  = this.editItem.title;
+    this.inDescn  = this.editItem.descn;
+    this.inEffort = this.editItem.effort.toString();
+
     this.addMode = !this.addMode;
   }
 

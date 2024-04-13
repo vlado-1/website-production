@@ -6,6 +6,9 @@
     </ng-container>
     <ng-template #standBy>
         <button class="active" (click)="onAdd()"><img class="navimg" src="..\..\assets\plus.svg"></button>
+        <ng-container *ngIf="editItem.selected">
+            <button class="active" (click)="onEdit()"><img class="navimg" src="..\..\assets\edit.svg"></button> 
+        </ng-container>       
         <button class="active" (click)="onDelete()"><img class="navimg" src="..\..\assets\trash.svg"></button>
     </ng-template>
 </div>
