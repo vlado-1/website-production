@@ -2,14 +2,15 @@
     <app-edit-item (delete)="onDelete()"></app-edit-item>
 
     <!-- Lists all project items --> 
-    <ng-container *ngIf="pList$ | async as pList; else pending">
+    <ng-container *ngIf="pList">
         <div *ngFor="let project of pList">
             <app-list-item [listItem]="project" (updateSelected)="onSelect($any($event))"></app-list-item>
         </div>
     </ng-container>
 
-    <!-- Displayed when pList$ observable hasn't been fetched -->
+    <!-- Displayed when pList$ observable hasn't been fetched
     <ng-template #pending>
         <h3>Pending...</h3>
     </ng-template>
+    -->
 </div>

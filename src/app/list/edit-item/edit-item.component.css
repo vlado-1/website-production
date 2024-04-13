@@ -19,6 +19,7 @@
   .editnav button:hover {
     background-color: #55cef0;
     color: white;  
+    cursor: pointer;
   }
   
 .navimg {

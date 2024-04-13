@@ -16,8 +16,7 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 })
 export class ListComponent {
 
-  public pList$: Observable<project[]> = new Observable<project[]>();
-  public selectedItems: project[] = [];
+  public pList: project[] = [];
 
   constructor( private pService: ProjectService) {
     this.refreshList();
@@ -29,39 +28,34 @@ export class ListComponent {
 
   public refreshList(): void {
     console.debug("%s: %s | %s", "ListComponent", "refreshList", "Refreshing");
-    this.pList$ = this.pService.getProjects();
+    this.pService.getProjects().subscribe(result => {
+      this.pList = result;
+      });
   }
 
   public onSelect(listItem: project): void {
-    
-    this.selectedItems = [];
 
-    console.debug("%s: %s | %s", "ListComponent", "onSelect", "Sync >> selected item => list");
+    console.debug("%s: %s | %s", "ListComponent", "onSelect", "Set selected attribute");
 
-    this.pList$ = this.pList$.pipe(map((list: project[]): project[] => {
-      return list.map((item: project): project => {
-        if (item.pid == listItem.pid) {
-          item.selected = listItem.selected;
-        }
-        return item;
-      });
-    }));
+    this.pList = this.pList.map((item: project): project => {
+                  // Beware - don't confuse ABL with javascript (a = b is NOT a comparison, a == b is)
+                  if (item.pid == listItem.pid) {
+                      item.selected = listItem.selected;
+                    }
+                    return item;
+                  });
 
-    this.pList$.forEach((list: project[]) => {
-      list.forEach((item: project) => {
-        if (item.selected) {
-          this.selectedItems.push(item);
-        }
-      });
-    });
-
-    console.debug("%s: %s | %o", "ListComponent", "onSelect", this.selectedItems);
+    console.debug("%s: %s | %o", "ListComponent", "onSelect", this.pList);
   }
 
   public onDelete() {
     console.debug("%s: %s | %s", "ListComponent", "onDelete", "Delete");
 
-    this.pService.deleteProjects(this.selectedItems).subscribe((response) => {
+    var selectedItems: project[] = this.pList.filter((item: project) => {
+      return item.selected;
+    });
+
+    this.pService.deleteProjects(selectedItems).subscribe((response) => {
       console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Delete finished");
       this.refreshList();
     });
