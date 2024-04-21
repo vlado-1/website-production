@@ -26,6 +26,8 @@ app.use(cors({
 
 app.use(express.json());
 
+app.use(express.static('static'))
+
 app.use((req: any, res: any, next: Function) => {
   logger.log('verbose',  new Date().toLocaleString() + ' | main.ts | Client request received');
   next();

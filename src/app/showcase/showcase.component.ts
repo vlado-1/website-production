@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { MarkdownComponent } from 'ngx-markdown';
 
 @Component({
   selector: 'app-showcase',
   standalone: true,
-  imports: [],
+  imports: [MarkdownComponent],
   templateUrl: './showcase.component.html',
   styleUrl: './showcase.component.css'
 })
