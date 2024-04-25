@@ -3,12 +3,13 @@ import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
 import { project } from '../../models/project.model';
+import { FileuploadComponent } from '../../fileupload/fileupload.component';
 
 
 @Component({
   selector: 'app-edit-item',
   standalone: true,
-  imports: [NgFor, NgIf, AsyncPipe,CommonModule, FormsModule],
+  imports: [NgFor, NgIf, AsyncPipe,CommonModule, FormsModule, FileuploadComponent],
   templateUrl: './edit-item.component.html',
   styleUrl: './edit-item.component.css'
 })

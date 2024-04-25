@@ -1,0 +1,28 @@
+/* Hide default file upload button */
+.file-input {
+    display: none;
+}
+
+/* Style the links inside the navigation bar */
+.file-upload button {
+    display: inline-block;
+    background-color: #119cc2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    border: none;
+    margin: 1.5%;
+}
+
+/* Change the color of links on hover */
+.file-upload button:hover {
+    background-color: #55cef0;
+    color: white;  
+    cursor: pointer;
+}
+
+.navimg {
+    height: 0.8em;
+    object-fit: contain;
+}
