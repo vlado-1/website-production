@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-fileupload',
@@ -9,20 +10,20 @@ import { Component } from '@angular/core';
 })
 export class FileuploadComponent {
 
-  public fileName: string = "";
+  public uploadFiles: FileList | null = null;
+
+  @Output()
+  fileUpload: EventEmitter<FormData | null> = new EventEmitter<FormData | null>(); 
 
   onFileSelected(event: Event): void {
-
+    var formData = new FormData();
     var htmlInputFiles: HTMLInputElement = event.target as HTMLInputElement;
 
-    if (htmlInputFiles.files == null) {
-      return;
-    }
+    this.uploadFiles = htmlInputFiles.files;
 
-    console.log(htmlInputFiles.files[0]);
-
-    if (htmlInputFiles.files && htmlInputFiles.files.length) {
-      this.fileName = htmlInputFiles.files[0].name;
+    if (this.uploadFiles != null) {
+      formData.append("File", this.uploadFiles[0]);
+      this.fileUpload.emit(formData);
     }
   }
 }

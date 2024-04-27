@@ -18,14 +18,17 @@ export class ProjectService {
     return this.http.get(this.serverUrl + "projectlist").pipe(catchError(this.handleError));
   }
 
-  addProject(inTitle: string, inDescn: string, inEffort: string): Observable<any> {
+  addProject(inTitle: string, inDescn: string, inEffort: string, inFormData: FormData | null): Observable<any> {    
     console.debug("%s: %s | %s", "ProjectService", "addProject", "POST " + this.serverUrl + "addProject");
     console.debug({title:  inTitle, 
       descn:  inDescn, 
-      effort: inEffort});
+      effort: inEffort,
+      upload: inFormData});
+
     return this.http.post(this.serverUrl + "addProject", {title:  inTitle, 
                                                           descn:  inDescn, 
-                                                          effort: inEffort})
+                                                          effort: inEffort,
+                                                          upload: inFormData})
                                                         .pipe(catchError(this.handleError));
   }
 
@@ -39,6 +42,7 @@ export class ProjectService {
   updateProject(toEdit: project): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "updateProject", "POST " + this.serverUrl + "updateProject");
     console.debug(toEdit);
+
     return this.http.post(this.serverUrl + "updateProject", toEdit)
                                                         .pipe(catchError(this.handleError));
   }

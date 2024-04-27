@@ -4,4 +4,5 @@ export interface project {
     descn: string;
     effort: number;
     selected: boolean;
+    upload: FormData | null;
 }

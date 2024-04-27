@@ -19,40 +19,44 @@ export class EditItemComponent {
   public delete: EventEmitter<void> = new EventEmitter<void>();
 
   @Input()
-  public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false};
+  public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null};
 
   public addMode: boolean = false;
   public inTitle : string;
   public inDescn : string;
   public inEffort: string;
+  public inUpload: FormData | null;
 
   constructor( private pService: ProjectService) {
     this.inTitle  = "";
     this.inDescn  = "";
     this.inEffort = "";
+    this.inUpload = null;
   }
   
   onSave(): void {
+    var formData: FormData = new FormData();
+    
     console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save");
 
     if (this.inTitle == "" && this.inDescn == "" && this.inEffort == "") {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
     }
-    if (this.inTitle == this.editItem.title && this.inDescn == this.editItem.descn && this.inEffort == this.editItem.effort.toString()) {
+    if (this.inTitle == this.editItem.title && this.inDescn == this.editItem.descn && this.inEffort == this.editItem.effort.toString() && this.inUpload == null) {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
     }
 
     if (this.editItem.selected) {
-      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true}).subscribe(
+      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, upload: this.inUpload}).subscribe(
         (result: any) => {
           console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Edit");
         this.pService.refresh();
       });    
     }
     else { 
-      this.pService.addProject(this.inTitle, this.inDescn, this.inEffort).subscribe(
+      this.pService.addProject(this.inTitle, this.inDescn, this.inEffort, this.inUpload).subscribe(
         (result: any) => {
           console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Add");
         this.pService.refresh();
@@ -62,6 +66,7 @@ export class EditItemComponent {
     this.inTitle  = "";
     this.inDescn  = "";
     this.inEffort = "";
+    this.inUpload = null;
   }
 
   onCancel(): void {
@@ -87,5 +92,10 @@ export class EditItemComponent {
   onDelete(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onDelete", "Delete");
     this.delete.emit();
+  }
+
+  onUploadFiles(formData: FormData | null): void {
+    console.debug("%s: %s | %s", "EditItemComponent", "onUploadFiles", "Upload File");
+    this.inUpload = formData;
   }
 }
