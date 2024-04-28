@@ -10,20 +10,23 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class FileuploadComponent {
 
-  public uploadFiles: FileList | null = null;
+  public uploadFile: File | null = null;
 
   @Output()
-  fileUpload: EventEmitter<FormData | null> = new EventEmitter<FormData | null>(); 
+  fileUpload: EventEmitter<File | null> = new EventEmitter<File | null>(); 
 
   onFileSelected(event: Event): void {
-    var formData = new FormData();
     var htmlInputFiles: HTMLInputElement = event.target as HTMLInputElement;
 
-    this.uploadFiles = htmlInputFiles.files;
+    if (htmlInputFiles.files != null) {
+      this.uploadFile = htmlInputFiles.files[0];
+    }
+    else {
+      this.uploadFile = null;
+    }
 
-    if (this.uploadFiles != null) {
-      formData.append("File", this.uploadFiles[0]);
-      this.fileUpload.emit(formData);
+    if (this.uploadFile != null) {
+      this.fileUpload.emit(this.uploadFile);
     }
   }
 }

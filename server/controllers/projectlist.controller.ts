@@ -6,7 +6,7 @@ const getProjectList = async (req: any, res: any) => {
     getProjectListData().then((result: any) => {
         res.status(200).send(result);
     }). catch ((error: any) => {
-        res.status(500).send({message: 'Get Success'});
+        res.status(500).send({message: 'Get Failed'});
     });
 }
 

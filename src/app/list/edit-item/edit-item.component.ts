@@ -22,10 +22,11 @@ export class EditItemComponent {
   public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null};
 
   public addMode: boolean = false;
+  public editMode: boolean = false;
   public inTitle : string;
   public inDescn : string;
   public inEffort: string;
-  public inUpload: FormData | null;
+  public inUpload: File | null;
 
   constructor( private pService: ProjectService) {
     this.inTitle  = "";
@@ -48,7 +49,7 @@ export class EditItemComponent {
       return;
     }
 
-    if (this.editItem.selected) {
+    if (this.editMode) {
       this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, upload: this.inUpload}).subscribe(
         (result: any) => {
           console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Edit");
@@ -71,12 +72,14 @@ export class EditItemComponent {
 
   onCancel(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onCancel", "Cancel");
-    this.addMode = !this.addMode;
+    this.addMode  = !this.addMode;
+    this.editMode = false;
   }
 
   onAdd(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onAdd", "Add");
-    this.addMode = !this.addMode;
+    this.addMode  = !this.addMode;
+    this.editMode = false;
   }
 
   onEdit(): void {
@@ -86,7 +89,8 @@ export class EditItemComponent {
     this.inDescn  = this.editItem.descn;
     this.inEffort = this.editItem.effort.toString();
 
-    this.addMode = !this.addMode;
+    this.addMode  = !this.addMode;
+    this.editMode = true;
   }
 
   onDelete(): void {
@@ -94,8 +98,8 @@ export class EditItemComponent {
     this.delete.emit();
   }
 
-  onUploadFiles(formData: FormData | null): void {
+  onUploadFiles(upload: File | null): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onUploadFiles", "Upload File");
-    this.inUpload = formData;
+    this.inUpload = upload;
   }
 }
