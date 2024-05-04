@@ -30,7 +30,8 @@ export class ProjectService {
                                                           descn:  inDescn, 
                                                           effort: Number(inEffort),
                                                           selected: true,
-                                                          upload: inFile}))
+                                                          upload: null,
+                                                          fileID: ''}))
                                                         .pipe(catchError(this.handleError));
   }
 
@@ -42,11 +43,27 @@ export class ProjectService {
   }
 
   updateProject(toEdit: project): Observable<any> {
+    toEdit.upload = null;
+    
     console.debug("%s: %s | %s", "ProjectService", "updateProject", "POST " + this.serverUrl + "updateProject");
     console.debug(toEdit);
 
     return this.http.post(this.serverUrl + "updateProject", this.getFormData(toEdit))
                                                         .pipe(catchError(this.handleError));
+  }
+
+  uploadFile(inFile: File | null): Observable<any> {
+    console.debug("%s: %s | %s", "ProjectService", "uploadFile", "POST " + this.serverUrl + "uploadFile");
+    console.debug(inFile);
+
+    return this.http.post(this.serverUrl + "uploadFile", this.getFormData({pid: 0,
+                                                                              title:  "", 
+                                                                              descn:  "", 
+                                                                              effort: 0,
+                                                                              selected: true,
+                                                                              upload: inFile,
+                                                                              fileID: ''}))
+                                                        .pipe(catchError(this.handleError)); 
   }
 
   handleError(response: any): Observable<never> {

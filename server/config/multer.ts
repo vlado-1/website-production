@@ -33,10 +33,8 @@ export const fileStorage = multer.diskStorage({
            Note: Multer will not append any file extension for you, your function 
            should return a filename complete with an file extension. */
     
-        var pos = file.originalname.lastIndexOf(".");
-        
         logger.log('verbose',new Date().toLocaleString() + '| config/multer.ts | /filename ' + " | " + file.originalname + ".md");
     
-        callback(null, file.originalname.replace(file.originalname.substring(pos < 0 ? 0 : pos, file.originalname.length) ,".md"));
+        callback(null, Date.now().toString() + ".md");
     }
 })

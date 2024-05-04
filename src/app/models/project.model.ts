@@ -5,4 +5,5 @@ export interface project {
     effort: number;
     selected: boolean;
     upload: File | null;
+    fileID: string | null;
 }

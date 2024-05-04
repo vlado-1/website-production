@@ -40,4 +40,9 @@ const updateProject = async (req: any, res: any) => {
     });
 }
 
-export { getProjectList, addProject, deleteProjects, updateProject };
+const uploadFile = async (req: any, res: any) => {
+    logger.log('verbose', new Date().toLocaleString() + ' | projectlist.controller.ts | uploadFile');
+    res.status(200).send({message: "Upload success", fileID: req.file.filename});
+}
+
+export { getProjectList, addProject, deleteProjects, updateProject, uploadFile };
