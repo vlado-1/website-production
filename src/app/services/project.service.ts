@@ -9,7 +9,8 @@ import { project } from '../models/project.model';
 export class ProjectService {
 
   private serverUrl: string        = 'http://localhost:3000/';
-  private subject:   Subject<void> = new Subject<void>();
+  private refreshSubject:   Subject<void> = new Subject<void>();
+  private selectSubject: Subject<project> = new Subject<project>();
 
   constructor(private http: HttpClient) { }
 
@@ -30,8 +31,8 @@ export class ProjectService {
                                                           descn:  inDescn, 
                                                           effort: Number(inEffort),
                                                           selected: true,
-                                                          upload: null,
-                                                          fileID: ''}))
+                                                          upload: inFile,
+                                                          fileId: null}))
                                                         .pipe(catchError(this.handleError));
   }
 
@@ -43,27 +44,11 @@ export class ProjectService {
   }
 
   updateProject(toEdit: project): Observable<any> {
-    toEdit.upload = null;
-    
     console.debug("%s: %s | %s", "ProjectService", "updateProject", "POST " + this.serverUrl + "updateProject");
     console.debug(toEdit);
 
     return this.http.post(this.serverUrl + "updateProject", this.getFormData(toEdit))
                                                         .pipe(catchError(this.handleError));
-  }
-
-  uploadFile(inFile: File | null): Observable<any> {
-    console.debug("%s: %s | %s", "ProjectService", "uploadFile", "POST " + this.serverUrl + "uploadFile");
-    console.debug(inFile);
-
-    return this.http.post(this.serverUrl + "uploadFile", this.getFormData({pid: 0,
-                                                                              title:  "", 
-                                                                              descn:  "", 
-                                                                              effort: 0,
-                                                                              selected: true,
-                                                                              upload: inFile,
-                                                                              fileID: ''}))
-                                                        .pipe(catchError(this.handleError)); 
   }
 
   handleError(response: any): Observable<never> {
@@ -94,12 +79,22 @@ export class ProjectService {
 
   refresh(): void {
     console.debug("%s: %s | %s", "ProjectService", "refresh", "Refresh broadcast");
-    this.subject.next();
+    this.refreshSubject.next();
   }
 
   onRefresh(): Observable<void> {
     console.debug("%s: %s | %s", "ProjectService", "onRefresh", "Refresh observable");
-    return this.subject.asObservable();
+    return this.refreshSubject.asObservable();
+  }
+
+  select(inSelected: project): void {
+    console.debug("%s: %s | %s", "ProjectService", "select", "Select broadcast");
+    this.selectSubject.next(inSelected);    
+  }
+
+  onSelect(): Observable<project> {
+    console.debug("%s: %s | %s", "ProjectService", "onSelect", "Select observable");
+    return this.selectSubject.asObservable();
   }
 
 }

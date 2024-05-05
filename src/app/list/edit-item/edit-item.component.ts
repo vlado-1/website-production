@@ -19,7 +19,7 @@ export class EditItemComponent {
   public delete: EventEmitter<void> = new EventEmitter<void>();
 
   @Input()
-  public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileID: ''};
+  public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
 
   public addMode: boolean = false;
   public editMode: boolean = false;
@@ -50,33 +50,27 @@ export class EditItemComponent {
     }
 
     if (this.editMode) {
-      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, upload: this.inUpload, fileID: ''}).subscribe(
-        (updResult: any) => {
-          this.pService.uploadFile(this.inUpload).subscribe((UplResult: any) => {
+      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, upload: this.inUpload, fileId: null}).subscribe(
+        (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Edit");
-            console.debug("%s: %s | %s", "EditItemComponent", "onSave", "File Uploaded -- Edit -- " + UplResult.fileID);
             this.pService.refresh();
 
             this.inTitle  = "";
             this.inDescn  = "";
             this.inEffort = "";
             this.inUpload = null;
-          });
       });    
     }
     else { 
       this.pService.addProject(this.inTitle, this.inDescn, this.inEffort, this.inUpload).subscribe(
-        (updResult: any) => {
-          this.pService.uploadFile(this.inUpload).subscribe((UplResult: any) => {
+        (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Add finished -- Edit");
-            console.debug("%s: %s | %s", "EditItemComponent", "onSave", "File Uploaded -- Edit -- " + UplResult.fileID);
             this.pService.refresh();
 
             this.inTitle  = "";
             this.inDescn  = "";
             this.inEffort = "";
             this.inUpload = null;
-          });
       });    
     }
   }

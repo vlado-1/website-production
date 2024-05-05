@@ -3,7 +3,7 @@ import { Router } from "express";
 import multer from 'multer';
 import { fileFilter } from "../utils/multer";
 import { fileStorage } from "../config/multer";
-import { getProjectList, addProject, deleteProjects, updateProject, uploadFile } from "../controllers/projectlist.controller";
+import { getProjectList, addProject, deleteProjects, updateProject } from "../controllers/projectlist.controller";
 
 var router = Router();
 var upload = multer({ storage: fileStorage, fileFilter: fileFilter });
@@ -13,7 +13,7 @@ router.get('/projectlist', function (req: any, res: any) {
     getProjectList(req, res);
 });
 
-router.post('/addProject', upload.none(), function (req: any, res: any) {
+router.post('/addProject', upload.single("upload"), function (req: any, res: any) {
     logger.log('verbose',new Date().toLocaleString() + '| projectlist.router.ts | /addProject');
     addProject(req, res);
 });
@@ -23,14 +23,9 @@ router.post('/deleteProjects', function(req: any, res: any) {
     deleteProjects(req, res);
 });
 
-router.post('/updateProject', upload.none(), function(req: any, res: any) {
+router.post('/updateProject', upload.single("upload"), function(req: any, res: any) {
     logger.log('verbose', new Date().toLocaleString() + '| projectlist.router.ts | /updateProject');
     updateProject(req, res);
-});
-
-router.post('/uploadFile', upload.single("upload"), function(req: any, res: any) {
-    logger.log('verbose', new Date().toLocaleString() + '| projectlist.router.ts | /uploadFile');
-    uploadFile(req, res);
 });
 
 export { router };

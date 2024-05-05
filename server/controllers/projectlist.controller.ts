@@ -11,8 +11,14 @@ const getProjectList = async (req: any, res: any) => {
 }
 
 const addProject = async (req: any, res: any) => {
+    var fileName: string | null = null;
+
+    if (req.file != null) {
+        fileName = req.file.filename;
+    }
+
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | addProject');
-    addProjectData(req.body).then((result: any) => {
+    addProjectData(Object.assign(req.body, {fileId: fileName})).then((result: any) => {
         res.status(200).send({message: 'Add Success'});
     }).catch ((error: any) => {
         logger.log('verbose', new Date().toLocaleString() + " | projectlist.controller.ts | Error | " + JSON.stringify(error));
@@ -31,8 +37,14 @@ const deleteProjects = async (req: any, res: any) => {
 }
 
 const updateProject = async (req: any, res: any) => {
+    var fileName: string | null = null;
+
+    if (req.file != null) {
+        fileName = req.file.filename;
+    }
+
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | updateProject');
-    updateProjectData(req.body).then((result: any) => {
+    updateProjectData(Object.assign(req.body, {fileId: fileName})).then((result: any) => {
         res.status(200).send({message: "Update Success"});
     }).catch((error: any) => {
         logger.log('verbose', new Date().toLocaleString() + " | projectlist.controller.ts | Error | " + JSON.stringify(error));
@@ -40,9 +52,4 @@ const updateProject = async (req: any, res: any) => {
     });
 }
 
-const uploadFile = async (req: any, res: any) => {
-    logger.log('verbose', new Date().toLocaleString() + ' | projectlist.controller.ts | uploadFile');
-    res.status(200).send({message: "Upload success", fileID: req.file.filename});
-}
-
-export { getProjectList, addProject, deleteProjects, updateProject, uploadFile };
+export { getProjectList, addProject, deleteProjects, updateProject };

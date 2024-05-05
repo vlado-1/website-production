@@ -3,7 +3,6 @@ import { ListItemComponent } from './list-item/list-item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { ProjectService } from '../services/project.service';
 import { project } from '../models/project.model';
-import { Observable, map } from 'rxjs';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 
 
@@ -17,7 +16,7 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 export class ListComponent {
 
   public pList: project[] = [];
-  public selection: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileID: ""};
+  public selection: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
 
   constructor( private pService: ProjectService) {
     this.refreshList();
@@ -42,6 +41,9 @@ export class ListComponent {
                   if (item.pid == listItem.pid) {
                       item.selected = listItem.selected;
                     }
+                  else {
+                      item.selected = false;
+                  }
                   return item;
                   });
 
@@ -49,9 +51,10 @@ export class ListComponent {
       this.selection = this.pList.filter(item => { return item.selected })[0];
     }
     else {
-      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileID: ""};
+      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
     }
 
+    this.pService.select(this.selection);
 
     console.debug("%s: %s | %o", "ListComponent", "onSelect", this.pList);
   }
@@ -66,6 +69,9 @@ export class ListComponent {
     this.pService.deleteProjects(selectedItems).subscribe((response) => {
       console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Delete finished");
       this.refreshList();
+
+      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
+      this.pService.select(this.selection);
     });
   }
 }

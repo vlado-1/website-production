@@ -1,6 +1,7 @@
 <div class="half-container">
     <!-- loaded from remote url -->
     <markdown
-    [src]="'http://localhost:3000/README.md'">
+    *ngIf="fileName != null"
+    [src]="'http://localhost:3000/' + fileName">
     </markdown>
 </div>
