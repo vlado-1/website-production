@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MdeditorComponent } from '../mdeditor/mdeditor.component';
 import { MarkdownComponent } from 'ngx-markdown';
 import { ProjectService } from '../services/project.service';
 import { project } from '../models/project.model';
@@ -7,7 +8,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-showcase',
   standalone: true,
-  imports: [MarkdownComponent, NgIf],
+  imports: [MarkdownComponent, MdeditorComponent, NgIf],
   templateUrl: './showcase.component.html',
   styleUrl: './showcase.component.css'
 })
