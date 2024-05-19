@@ -19,6 +19,11 @@ export class ProjectService {
     return this.http.get(this.serverUrl + "projectlist").pipe(catchError(this.handleError));
   }
 
+  getFile(inFileId: string | null): Observable<any> {
+    console.debug("%s: %s | %s", "ProjectService", "getFile", "GET " + this.serverUrl + "inFileId");
+    return this.http.get(this.serverUrl + inFileId, {responseType: 'text' as 'json'}).pipe(catchError(this.handleError));
+  }
+
   addProject(inTitle: string, inDescn: string, inEffort: string, inFile: File | null): Observable<any> {    
     console.debug("%s: %s | %s", "ProjectService", "addProject", "POST " + this.serverUrl + "addProject");
     console.debug({title:  inTitle, 

@@ -14,11 +14,20 @@ import { NgIf } from '@angular/common';
 })
 export class ShowcaseComponent {
 
-  public fileName: string | null = null;
+  public content: string | null = null;
 
   constructor (private pService: ProjectService) {
     this.pService.onSelect().subscribe((selection: project) => {
-      this.fileName = selection.fileId;
+      if (selection.selected) {
+        if (selection.fileId != null) {
+          this.pService.getFile(selection.fileId).subscribe(data => {
+            this.content = data.toString();
+          });
+        }
+      }
+      else {
+        this.content = "";
+      }
     });
   }
 
