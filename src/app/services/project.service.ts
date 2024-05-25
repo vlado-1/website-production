@@ -11,6 +11,7 @@ export class ProjectService {
   private serverUrl: string        = 'http://localhost:3000/';
   private refreshSubject:   Subject<void> = new Subject<void>();
   private selectSubject: Subject<project> = new Subject<project>();
+  private editSubject: Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient) { }
 
@@ -102,4 +103,13 @@ export class ProjectService {
     return this.selectSubject.asObservable();
   }
 
+  edit(): void {
+    console.debug("%s: %s | %s", "ProjectService", "edit", "Edit broadcast");
+    this.editSubject.next();    
+  }
+
+  onEdit(): Observable<void> {
+    console.debug("%s: %s | %s", "ProjectService", "onEdit", "Edit observable");
+    return this.editSubject.asObservable();
+  }
 }

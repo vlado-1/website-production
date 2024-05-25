@@ -15,6 +15,7 @@ import { NgIf } from '@angular/common';
 export class ShowcaseComponent {
 
   public content: string | null = null;
+  public editMode: boolean = false;
 
   constructor (private pService: ProjectService) {
     this.pService.onSelect().subscribe((selection: project) => {
@@ -26,9 +27,17 @@ export class ShowcaseComponent {
         }
       }
       else {
-        this.content = "";
+        this.content = null;
       }
     });
+
+    this.pService.onEdit().subscribe(() => {
+      this.editMode = !this.editMode;
+    });
+  }
+
+  public onClick() {
+    this.pService.edit();
   }
 
 }

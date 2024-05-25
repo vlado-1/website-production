@@ -18,7 +18,6 @@ export class EditItemComponent {
   @Output()
   public delete: EventEmitter<void> = new EventEmitter<void>();
 
-  @Input()
   public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
 
   public addMode: boolean = false;
@@ -33,6 +32,19 @@ export class EditItemComponent {
     this.inDescn  = "";
     this.inEffort = "";
     this.inUpload = null;
+
+    this.pService.onEdit().subscribe(() => {
+      this.addMode  = !this.addMode;
+      this.editMode = !this.editMode;
+    });
+
+    pService.onSelect().subscribe((selected: project) => {
+      this.editItem = selected;
+      this.inTitle = this.editItem.title;
+      this.inDescn = this.editItem.descn;
+      this.inEffort = this.editItem.effort.toString();
+      this.inUpload = this.editItem.upload;
+    });
   }
   
   onSave(): void {
@@ -77,8 +89,7 @@ export class EditItemComponent {
 
   onCancel(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onCancel", "Cancel");
-    this.addMode  = !this.addMode;
-    this.editMode = false;
+    this.pService.edit();
   }
 
   onAdd(): void {
@@ -94,8 +105,7 @@ export class EditItemComponent {
     this.inDescn  = this.editItem.descn;
     this.inEffort = this.editItem.effort.toString();
 
-    this.addMode  = !this.addMode;
-    this.editMode = true;
+    this.pService.edit();
   }
 
   onDelete(): void {

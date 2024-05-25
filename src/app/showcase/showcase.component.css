@@ -1,1 +1,19 @@
-/* Control the right side */
+#placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border: medium solid lightgrey;
+}
+
+#placeholder:hover {
+    cursor: pointer;
+}
+
+#placeholder h3 {
+    border: medium solid lightgrey;
+    padding: 1em;
+    color: lightgrey;
+    opacity: 0.6;
+}

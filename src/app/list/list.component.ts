@@ -24,6 +24,9 @@ export class ListComponent {
       console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Refresh received");
       this.refreshList();
     });
+    pService.onSelect().subscribe((selected: project) => {
+      this.selection = selected;
+    });
   }
 
   public refreshList(): void {
