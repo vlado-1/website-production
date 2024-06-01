@@ -20,7 +20,6 @@ export class EditItemComponent {
 
   public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
 
-  public addMode: boolean = false;
   public editMode: boolean = false;
   public inTitle : string;
   public inDescn : string;
@@ -34,16 +33,23 @@ export class EditItemComponent {
     this.inUpload = null;
 
     this.pService.onEdit().subscribe(() => {
-      this.addMode  = !this.addMode;
       this.editMode = !this.editMode;
     });
 
     pService.onSelect().subscribe((selected: project) => {
       this.editItem = selected;
-      this.inTitle = this.editItem.title;
-      this.inDescn = this.editItem.descn;
-      this.inEffort = this.editItem.effort.toString();
-      this.inUpload = this.editItem.upload;
+      if (this.editItem.selected) {
+        this.inTitle = this.editItem.title;
+        this.inDescn = this.editItem.descn;
+        this.inEffort = this.editItem.effort.toString();
+        this.inUpload = this.editItem.upload;
+      }
+      else {
+        this.inTitle  = "";
+        this.inDescn  = "";
+        this.inEffort = "";
+        this.inUpload = null;        
+      }
     });
   }
   
@@ -94,8 +100,10 @@ export class EditItemComponent {
 
   onAdd(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onAdd", "Add");
-    this.addMode  = !this.addMode;
-    this.editMode = false;
+    // Deselct all project items
+    this.pService.select({pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null});  
+
+    this.pService.edit();
   }
 
   onEdit(): void {

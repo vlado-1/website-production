@@ -1,6 +1,6 @@
 <!-- Bar that shows add, remove / save, cancel icons -->
 <div class="editnav">
-    <ng-container *ngIf="addMode; else standBy">
+    <ng-container *ngIf="editMode; else standBy">
         <button class="active" (click)="onSave()"><img class="navimg" src="..\..\assets\check.svg"></button>
         <button class="active" (click)="onCancel()"><img class="navimg" src="..\..\assets\cross.svg"></button>           
     </ng-container>
@@ -13,7 +13,7 @@
     </ng-template>
 </div>
 
-<ng-container *ngIf="addMode">
+<ng-container *ngIf="editMode">
     <!-- Form to add event -->
     <div id="addItemForm">
         <input type="text" name="itemTitle"  placeholder="Project Name"        [(ngModel)]="inTitle"><br>

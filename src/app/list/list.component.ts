@@ -26,6 +26,14 @@ export class ListComponent {
     });
     pService.onSelect().subscribe((selected: project) => {
       this.selection = selected;
+
+      // Deselect all if no real project (pid = 0) selected
+      if (selected.pid == 0) {
+        this.pList = this.pList.map((item: project): project => {
+          item.selected = false;
+          return item;
+          });
+      }
     });
   }
 

@@ -25,6 +25,9 @@ export class ShowcaseComponent {
             this.content = data.toString();
           });
         }
+        else {
+          this.content = "";
+        }
       }
       else {
         this.content = null;
