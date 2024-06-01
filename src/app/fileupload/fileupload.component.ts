@@ -1,5 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-
+import { Component } from '@angular/core';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-fileupload',
@@ -12,8 +12,7 @@ export class FileuploadComponent {
 
   public uploadFile: File | null = null;
 
-  @Output()
-  fileUpload: EventEmitter<File | null> = new EventEmitter<File | null>(); 
+  constructor (private pService: ProjectService) {}
 
   onFileSelected(event: Event): void {
     var htmlInputFiles: HTMLInputElement = event.target as HTMLInputElement;
@@ -26,7 +25,7 @@ export class FileuploadComponent {
     }
 
     if (this.uploadFile != null) {
-      this.fileUpload.emit(this.uploadFile);
+      this.pService.upload(this.uploadFile);
     }
   }
 }

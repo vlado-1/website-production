@@ -37,6 +37,24 @@ export class ShowcaseComponent {
     this.pService.onEdit().subscribe(() => {
       this.editMode = !this.editMode;
     });
+
+    this.pService.onUpload().subscribe((upload: File | null) => {
+      var fileReader = new FileReader();
+
+      // Read file that user has uploaded to client side and display its contents.
+      if (upload != null && fileReader != null) {
+        fileReader.readAsText(upload, "UTF-8");
+      
+        fileReader.onload = (event: ProgressEvent<FileReader>) => {
+          if (event.target != null && event.target.result != null) {
+            this.content = event.target.result.toString();
+          }
+          else {
+            this.content = "";
+          }
+        };
+      }
+    });
   }
 
   public onClick() {

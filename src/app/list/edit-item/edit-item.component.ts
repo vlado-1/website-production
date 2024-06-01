@@ -51,6 +51,10 @@ export class EditItemComponent {
         this.inUpload = null;        
       }
     });
+
+    pService.onUpload().subscribe((upload: File | null) => {
+      this.inUpload = upload;
+    });
   }
   
   onSave(): void {
@@ -67,7 +71,7 @@ export class EditItemComponent {
       return;
     }
 
-    if (this.editMode) {
+    if (this.editItem.pid != 0) {
       this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, upload: this.inUpload, fileId: null}).subscribe(
         (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Edit");
@@ -77,6 +81,8 @@ export class EditItemComponent {
             this.inDescn  = "";
             this.inEffort = "";
             this.inUpload = null;
+
+            this.onCancel();
       });    
     }
     else { 
@@ -89,6 +95,8 @@ export class EditItemComponent {
             this.inDescn  = "";
             this.inEffort = "";
             this.inUpload = null;
+
+            this.onCancel();
       });    
     }
   }
@@ -121,8 +129,4 @@ export class EditItemComponent {
     this.delete.emit();
   }
 
-  onUploadFiles(upload: File | null): void {
-    console.debug("%s: %s | %s", "EditItemComponent", "onUploadFiles", "Upload File");
-    this.inUpload = upload;
-  }
 }

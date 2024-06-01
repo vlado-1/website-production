@@ -12,6 +12,7 @@ export class ProjectService {
   private refreshSubject:   Subject<void> = new Subject<void>();
   private selectSubject: Subject<project> = new Subject<project>();
   private editSubject: Subject<void> = new Subject<void>();
+  private uploadSubject: Subject<File | null> = new Subject<File | null>();
 
   constructor(private http: HttpClient) { }
 
@@ -111,5 +112,15 @@ export class ProjectService {
   onEdit(): Observable<void> {
     console.debug("%s: %s | %s", "ProjectService", "onEdit", "Edit observable");
     return this.editSubject.asObservable();
+  }
+
+  upload(toUpload: File | null): void {
+    console.debug("%s: %s | %s", "ProjectService", "upload", "Upload broadcast");
+    this.uploadSubject.next(toUpload);
+  }
+
+  onUpload(): Observable<File | null> {
+    console.debug("%s: %s | %s", "ProjectService", "onUpload", "Upload observable");
+    return this.uploadSubject.asObservable();
   }
 }
