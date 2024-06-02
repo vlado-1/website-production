@@ -13,6 +13,7 @@ export class ProjectService {
   private selectSubject: Subject<project> = new Subject<project>();
   private editSubject: Subject<void> = new Subject<void>();
   private uploadSubject: Subject<File | null> = new Subject<File | null>();
+  private collectEditorDataSubject: Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient) { }
 
@@ -77,6 +78,10 @@ export class ProjectService {
     formData.append("descn", data.descn);
     formData.append("effort", data.effort.toString());
 
+    if (data.fileId != null) {
+      formData.append("fileId", data.fileId);
+    }
+
     if (data.upload != null) {
       formData.append("upload", data.upload);
     }
@@ -122,5 +127,15 @@ export class ProjectService {
   onUpload(): Observable<File | null> {
     console.debug("%s: %s | %s", "ProjectService", "onUpload", "Upload observable");
     return this.uploadSubject.asObservable();
+  }
+
+  collectEditorData(): void {
+    console.debug("%s: %s | %s", "ProjectService", "collectEditorData", "Collect editor data boadcast");
+    this.collectEditorDataSubject.next();
+  }
+
+  onCollectEditorData(): Observable<void> {
+    console.debug("%s: %s | %s", "ProjectService", "onCollectEditorData", "Collect editor data observable");
+    return this.collectEditorDataSubject.asObservable();
   }
 }

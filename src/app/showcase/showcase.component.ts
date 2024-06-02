@@ -36,6 +36,10 @@ export class ShowcaseComponent {
 
     this.pService.onEdit().subscribe(() => {
       this.editMode = !this.editMode;
+
+      if (!this.editMode) {
+        this.content = null;
+      }
     });
 
     this.pService.onUpload().subscribe((upload: File | null) => {

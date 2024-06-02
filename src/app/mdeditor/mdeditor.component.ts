@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { LMarkdownEditorModule, MdEditorOption } from 'ngx-markdown-editor';
 import { FormsModule } from '@angular/forms';
+import { ProjectService } from '../services/project.service';
+import fs from 'fs';
 
 @Component({
   selector: 'app-mdeditor',
@@ -19,8 +21,17 @@ export class MdeditorComponent {
     resizable: true             // Allow resize the editor
   };
 
-  public doUpload(files: Array<File>): void {
+  constructor (private pService: ProjectService) {
+    pService.onCollectEditorData().subscribe(() => {
+      var newFilePath: string = "../temp/" + Date.now().toString() + ".md";
+      if (this.content != null) {
+        fs.writeFileSync(newFilePath, this.content);
+        alert(newFilePath);
+        this.pService.upload(getFile(newFilePath));
+      }
+    });
   }
+
   public preRenderFunc(inContent: string): string {
     return inContent;
   }

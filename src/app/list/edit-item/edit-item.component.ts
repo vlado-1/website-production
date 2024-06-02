@@ -45,10 +45,7 @@ export class EditItemComponent {
         this.inUpload = this.editItem.upload;
       }
       else {
-        this.inTitle  = "";
-        this.inDescn  = "";
-        this.inEffort = "";
-        this.inUpload = null;        
+        this.reset();        
       }
     });
 
@@ -62,6 +59,8 @@ export class EditItemComponent {
     
     console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save");
 
+    this.pService.collectEditorData();
+
     if (this.inTitle == "" && this.inDescn == "" && this.inEffort == "") {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
@@ -72,16 +71,11 @@ export class EditItemComponent {
     }
 
     if (this.editItem.pid != 0) {
-      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, upload: this.inUpload, fileId: null}).subscribe(
+      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, upload: this.inUpload, fileId: this.editItem.fileId}).subscribe(
         (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Edit");
             this.pService.refresh();
-
-            this.inTitle  = "";
-            this.inDescn  = "";
-            this.inEffort = "";
-            this.inUpload = null;
-
+            this.reset();
             this.onCancel();
       });    
     }
@@ -90,12 +84,7 @@ export class EditItemComponent {
         (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Add finished -- Edit");
             this.pService.refresh();
-
-            this.inTitle  = "";
-            this.inDescn  = "";
-            this.inEffort = "";
-            this.inUpload = null;
-
+            this.reset();
             this.onCancel();
       });    
     }
@@ -103,14 +92,16 @@ export class EditItemComponent {
 
   onCancel(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onCancel", "Cancel");
+    this.reset();
+    this.pService.select(this.editItem);  
     this.pService.edit();
   }
 
   onAdd(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onAdd", "Add");
     // Deselct all project items
-    this.pService.select({pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null});  
-
+    this.reset();
+    this.pService.select(this.editItem);  
     this.pService.edit();
   }
 
@@ -128,5 +119,13 @@ export class EditItemComponent {
     console.debug("%s: %s | %s", "EditItemComponent", "onDelete", "Delete");
     this.delete.emit();
   }
+
+  reset(): void {
+    this.editItem = {pid: 0, title: "", descn: "", effort: 0, selected: false, fileId: null, upload: null};
+    this.inTitle  = this.editItem.title;
+    this.inDescn  = this.editItem.descn;
+    this.inEffort = "";
+    this.inUpload = this.editItem.upload;   
+  }  
 
 }

@@ -1,5 +1,6 @@
 import {getProjectListData, addProjectData, deleteProjectData, updateProjectData} from '../services/projectone.service';
 import { logger } from '../utils/project.logger';
+import fs from 'fs';
 
 const getProjectList = async (req: any, res: any) => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | getProjectList');
@@ -41,6 +42,11 @@ const updateProject = async (req: any, res: any) => {
 
     if (req.file != null) {
         fileName = req.file.filename;
+    }
+
+    if (req.body.fileId != null) {
+        logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | updateProject | Deleting exising file: ' + req.body.fileId);       
+        fs.unlinkSync('./static/' + req.body.fileId);
     }
 
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | updateProject');
