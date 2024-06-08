@@ -4,10 +4,10 @@
     *ngIf="fileName != null"
     [src]="'http://localhost:3000/' + fileName">
     </markdown> -->
-    <app-mdeditor [content]="content" *ngIf="editMode; else placeholder"></app-mdeditor>
+    <app-mdeditor *ngIf="editMode; else placeholder"></app-mdeditor>
 
     <ng-template #placeholder>
-        <div id="placeholder" (click)="onClick()" *ngIf="content != null">
+        <div id="placeholder" (click)="onClick()">
             <h3>Click to Edit</h3>
         </div>
     </ng-template>

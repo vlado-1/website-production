@@ -8,12 +8,12 @@ import { project } from '../models/project.model';
 })
 export class ProjectService {
 
-  private serverUrl: string        = 'http://localhost:3000/';
-  private refreshSubject:   Subject<void> = new Subject<void>();
-  private selectSubject: Subject<project> = new Subject<project>();
-  private editSubject: Subject<void> = new Subject<void>();
-  private uploadSubject: Subject<File | null> = new Subject<File | null>();
-  private collectEditorDataSubject: Subject<void> = new Subject<void>();
+  private serverUrl:                string                 = 'http://localhost:3000/';
+  private refreshSubject:           Subject<void>          = new Subject<void>();
+  private selectSubject:            Subject<project>       = new Subject<project>();
+  private editSubject:              Subject<void>          = new Subject<void>();
+  private uploadSubject:            Subject<string | null> = new Subject<string | null>();
+  private collectEditorDataSubject: Subject<void>          = new Subject<void>();
 
   constructor(private http: HttpClient) { }
 
@@ -22,12 +22,7 @@ export class ProjectService {
     return this.http.get(this.serverUrl + "projectlist").pipe(catchError(this.handleError));
   }
 
-  getFile(inFileId: string | null): Observable<any> {
-    console.debug("%s: %s | %s", "ProjectService", "getFile", "GET " + this.serverUrl + "inFileId");
-    return this.http.get(this.serverUrl + inFileId, {responseType: 'text' as 'json'}).pipe(catchError(this.handleError));
-  }
-
-  addProject(inTitle: string, inDescn: string, inEffort: string, inFile: File | null): Observable<any> {    
+  addProject(inTitle: string, inDescn: string, inEffort: string, inFile: string | null): Observable<any> {    
     console.debug("%s: %s | %s", "ProjectService", "addProject", "POST " + this.serverUrl + "addProject");
     console.debug({title:  inTitle, 
       descn:  inDescn, 
@@ -39,23 +34,22 @@ export class ProjectService {
                                                           descn:  inDescn, 
                                                           effort: Number(inEffort),
                                                           selected: true,
-                                                          upload: inFile,
-                                                          fileId: null}))
+                                                          file: null}))
                                                         .pipe(catchError(this.handleError));
   }
 
-  deleteProjects(toDelete: project[]): Observable<any> {
+  deleteProjects(data: project[]): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "deleteProjects", "POST " + this.serverUrl + "deleteProjects");
-    console.debug(toDelete);
-    return this.http.post(this.serverUrl + "deleteProjects", {toDelete})
+    console.debug(data);
+    return this.http.post(this.serverUrl + "deleteProjects", {data})
                                                         .pipe(catchError(this.handleError));
   }
 
-  updateProject(toEdit: project): Observable<any> {
+  updateProject(data: project): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "updateProject", "POST " + this.serverUrl + "updateProject");
-    console.debug(toEdit);
+    console.debug(data);
 
-    return this.http.post(this.serverUrl + "updateProject", this.getFormData(toEdit))
+    return this.http.post(this.serverUrl + "updateProject", this.getFormData(data))
                                                         .pipe(catchError(this.handleError));
   }
 
@@ -78,12 +72,8 @@ export class ProjectService {
     formData.append("descn", data.descn);
     formData.append("effort", data.effort.toString());
 
-    if (data.fileId != null) {
-      formData.append("fileId", data.fileId);
-    }
-
-    if (data.upload != null) {
-      formData.append("upload", data.upload);
+    if (data.file != null) {
+      formData.append("file", data.file);
     }
 
     return formData;
@@ -119,12 +109,12 @@ export class ProjectService {
     return this.editSubject.asObservable();
   }
 
-  upload(toUpload: File | null): void {
+  upload(data: string | null): void {
     console.debug("%s: %s | %s", "ProjectService", "upload", "Upload broadcast");
-    this.uploadSubject.next(toUpload);
+    this.uploadSubject.next(data);
   }
 
-  onUpload(): Observable<File | null> {
+  onUpload(): Observable<string | null> {
     console.debug("%s: %s | %s", "ProjectService", "onUpload", "Upload observable");
     return this.uploadSubject.asObservable();
   }

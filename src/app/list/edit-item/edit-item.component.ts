@@ -18,19 +18,19 @@ export class EditItemComponent {
   @Output()
   public delete: EventEmitter<void> = new EventEmitter<void>();
 
-  public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
+  public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
 
   public editMode: boolean = false;
   public inTitle : string;
   public inDescn : string;
   public inEffort: string;
-  public inUpload: File | null;
+  public inFile: string | null;
 
   constructor( private pService: ProjectService) {
     this.inTitle  = "";
     this.inDescn  = "";
     this.inEffort = "";
-    this.inUpload = null;
+    this.inFile = null;
 
     this.pService.onEdit().subscribe(() => {
       this.editMode = !this.editMode;
@@ -42,15 +42,15 @@ export class EditItemComponent {
         this.inTitle = this.editItem.title;
         this.inDescn = this.editItem.descn;
         this.inEffort = this.editItem.effort.toString();
-        this.inUpload = this.editItem.upload;
+        this.inFile = this.editItem.file;
       }
       else {
         this.reset();        
       }
     });
 
-    pService.onUpload().subscribe((upload: File | null) => {
-      this.inUpload = upload;
+    pService.onUpload().subscribe((file: string | null) => {
+      this.inFile = file;
     });
   }
   
@@ -59,19 +59,17 @@ export class EditItemComponent {
     
     console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save");
 
-    this.pService.collectEditorData();
-
     if (this.inTitle == "" && this.inDescn == "" && this.inEffort == "") {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
     }
-    if (this.inTitle == this.editItem.title && this.inDescn == this.editItem.descn && this.inEffort == this.editItem.effort.toString() && this.inUpload == null) {
+    if (this.inTitle == this.editItem.title && this.inDescn == this.editItem.descn && this.inEffort == this.editItem.effort.toString() && this.inFile == this.editItem.file) {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
     }
 
     if (this.editItem.pid != 0) {
-      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, upload: this.inUpload, fileId: this.editItem.fileId}).subscribe(
+      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, file: this.inFile}).subscribe(
         (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Edit");
             this.pService.refresh();
@@ -80,7 +78,7 @@ export class EditItemComponent {
       });    
     }
     else { 
-      this.pService.addProject(this.inTitle, this.inDescn, this.inEffort, this.inUpload).subscribe(
+      this.pService.addProject(this.inTitle, this.inDescn, this.inEffort, this.inFile).subscribe(
         (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Add finished -- Edit");
             this.pService.refresh();
@@ -121,11 +119,11 @@ export class EditItemComponent {
   }
 
   reset(): void {
-    this.editItem = {pid: 0, title: "", descn: "", effort: 0, selected: false, fileId: null, upload: null};
+    this.editItem = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
     this.inTitle  = this.editItem.title;
     this.inDescn  = this.editItem.descn;
     this.inEffort = "";
-    this.inUpload = this.editItem.upload;   
+    this.inFile = this.editItem.file;   
   }  
 
 }

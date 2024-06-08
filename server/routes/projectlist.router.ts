@@ -13,7 +13,7 @@ router.get('/projectlist', function (req: any, res: any) {
     getProjectList(req, res);
 });
 
-router.post('/addProject', upload.single("upload"), function (req: any, res: any) {
+router.post('/addProject', upload.none(), function (req: any, res: any) {
     logger.log('verbose',new Date().toLocaleString() + '| projectlist.router.ts | /addProject');
     addProject(req, res);
 });
@@ -23,7 +23,7 @@ router.post('/deleteProjects', function(req: any, res: any) {
     deleteProjects(req, res);
 });
 
-router.post('/updateProject', upload.single("upload"), function(req: any, res: any) {
+router.post('/updateProject', upload.none(), function(req: any, res: any) {
     logger.log('verbose', new Date().toLocaleString() + '| projectlist.router.ts | /updateProject');
     updateProject(req, res);
 });

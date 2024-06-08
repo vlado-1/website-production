@@ -3,7 +3,6 @@
 import { execute } from "../models/projectone.models";
 import { projectOneQueries } from "../models/projectone.queries";
 import { logger } from "../utils/project.logger";
-import { unlinkSync } from "fs";
 
 const getProjectListData = async () => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectone.service.ts | getProjectListData');
@@ -12,7 +11,7 @@ const getProjectListData = async () => {
 
 const addProjectData = async (item: any) => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectone.service.ts | addProjectData');
-    return execute(projectOneQueries.AddProject, [item['title'],item['descn'],Number(item['effort']),item['fileId']]);
+    return execute(projectOneQueries.AddProject, [item.title,item.descn,Number(item.effort),item.file]);
 };
 
 const deleteProjectData = async (items: any) => {
@@ -21,21 +20,15 @@ const deleteProjectData = async (items: any) => {
     // Need to provide a list of pids to delete to the query. ([1,2,3,..]) is good
     let pids: number[] = [];
 
-    items["toDelete"].forEach((item: any) => {
-        // Try to delete file
-        if (item.fileId != "" && item.fileId != null) {
-            unlinkSync("./static/" + item.fileId);
-        }
+    items["data"].forEach((item: any) => {
         pids.push(item.pid);
     });
-
     return execute(projectOneQueries.DeleteProjects,[pids]);
 };
 
-const updateProjectData = async (items: any) => {
+const updateProjectData = async (item: any) => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectone.service.ts | updateProjectData');
-    
-    return execute(projectOneQueries.UpdateProject,[items.title, items.descn, items.effort, items.fileId, items.pid]);
+    return execute(projectOneQueries.UpdateProject,[item.title, item.descn, item.effort, item.file, item.pid]);
 };
 
 export { getProjectListData, addProjectData, deleteProjectData, updateProjectData };

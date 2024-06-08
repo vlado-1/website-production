@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { LMarkdownEditorModule, MdEditorOption } from 'ngx-markdown-editor';
 import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../services/project.service';
-import fs from 'fs';
+import { project } from '../models/project.model';
 
 @Component({
   selector: 'app-mdeditor',
@@ -13,7 +13,6 @@ import fs from 'fs';
 })
 export class MdeditorComponent {
 
-  @Input()
   public content: string | null = "";
   public mode: string = "Editor";
   public options: MdEditorOption = {  
@@ -22,13 +21,23 @@ export class MdeditorComponent {
   };
 
   constructor (private pService: ProjectService) {
-    pService.onCollectEditorData().subscribe(() => {
-      var newFilePath: string = "../temp/" + Date.now().toString() + ".md";
+    this.pService.onCollectEditorData().subscribe(() => {
       if (this.content != null) {
-        fs.writeFileSync(newFilePath, this.content);
-        alert(newFilePath);
-        this.pService.upload(getFile(newFilePath));
+        this.pService.upload(this.content);
       }
+    });
+
+    this.pService.onSelect().subscribe((data: project) => {
+      if (data.selected && data.file != null) {
+        this.content = data.file;
+      }
+      else {
+        this.content = null;
+      }
+    });
+
+    this.pService.onUpload().subscribe((content: string | null) => {
+      this.content = content;
     });
   }
 
@@ -42,4 +51,7 @@ export class MdeditorComponent {
   }
   public onPreviewDomChanged(htmlElement: HTMLElement): void{}
 
+  public onFocusOut(): void{
+    this.pService.upload(this.content);
+  }
 }

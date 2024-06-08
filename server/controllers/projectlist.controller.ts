@@ -1,6 +1,5 @@
 import {getProjectListData, addProjectData, deleteProjectData, updateProjectData} from '../services/projectone.service';
 import { logger } from '../utils/project.logger';
-import fs from 'fs';
 
 const getProjectList = async (req: any, res: any) => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | getProjectList');
@@ -12,14 +11,8 @@ const getProjectList = async (req: any, res: any) => {
 }
 
 const addProject = async (req: any, res: any) => {
-    var fileName: string | null = null;
-
-    if (req.file != null) {
-        fileName = req.file.filename;
-    }
-
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | addProject');
-    addProjectData(Object.assign(req.body, {fileId: fileName})).then((result: any) => {
+    addProjectData(req.body).then((result: any) => {
         res.status(200).send({message: 'Add Success'});
     }).catch ((error: any) => {
         logger.log('verbose', new Date().toLocaleString() + " | projectlist.controller.ts | Error | " + JSON.stringify(error));
@@ -38,19 +31,8 @@ const deleteProjects = async (req: any, res: any) => {
 }
 
 const updateProject = async (req: any, res: any) => {
-    var fileName: string | null = null;
-
-    if (req.file != null) {
-        fileName = req.file.filename;
-    }
-
-    if (req.body.fileId != null) {
-        logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | updateProject | Deleting exising file: ' + req.body.fileId);       
-        fs.unlinkSync('./static/' + req.body.fileId);
-    }
-
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | updateProject');
-    updateProjectData(Object.assign(req.body, {fileId: fileName})).then((result: any) => {
+    updateProjectData(req.body).then((result: any) => {
         res.status(200).send({message: "Update Success"});
     }).catch((error: any) => {
         logger.log('verbose', new Date().toLocaleString() + " | projectlist.controller.ts | Error | " + JSON.stringify(error));

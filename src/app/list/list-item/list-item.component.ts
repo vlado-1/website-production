@@ -16,8 +16,7 @@ export class ListItemComponent {
                         descn: 'None',
                         effort: 0,
                         selected: false,
-                        upload: null,
-                        fileId: null};
+                        file: null};
   
   // for emitter to work on parent, the event handler must be on component selector
   @Output()

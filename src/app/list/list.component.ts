@@ -16,7 +16,7 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 export class ListComponent {
 
   public pList: project[] = [];
-  public selection: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
+  public selection: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
 
   constructor( private pService: ProjectService) {
     this.refreshList();
@@ -62,7 +62,7 @@ export class ListComponent {
       this.selection = this.pList.filter(item => { return item.selected })[0];
     }
     else {
-      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
+      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
     }
 
     this.pService.select(this.selection);
@@ -81,7 +81,7 @@ export class ListComponent {
       console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Delete finished");
       this.refreshList();
 
-      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, upload: null, fileId: null};
+      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
       this.pService.select(this.selection);
     });
   }
