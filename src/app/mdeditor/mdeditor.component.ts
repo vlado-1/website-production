@@ -3,6 +3,7 @@ import { LMarkdownEditorModule, MdEditorOption } from 'ngx-markdown-editor';
 import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../services/project.service';
 import { project } from '../models/project.model';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-mdeditor',
@@ -20,13 +21,7 @@ export class MdeditorComponent {
     resizable: true             // Allow resize the editor
   };
 
-  constructor (private pService: ProjectService) {
-    this.pService.onCollectEditorData().subscribe(() => {
-      if (this.content != null) {
-        this.pService.upload(this.content);
-      }
-    });
-
+  constructor (private pService: ProjectService, private lss: LocalStorageService) {
     this.pService.onSelect().subscribe((data: project) => {
       if (data.selected && data.file != null) {
         this.content = data.file;
@@ -36,12 +31,15 @@ export class MdeditorComponent {
       }
     });
 
-    this.pService.onUpload().subscribe((content: string | null) => {
-      this.content = content;
+    this.pService.onUpdateLocalStore().subscribe(() => {
+      if (lss.getData("File") != this.content) {
+        this.content = lss.getData("File");
+      }
     });
   }
 
-  public preRenderFunc(inContent: string): string {
+  public preRenderFunc: Function = (inContent: string): string => {
+    this.pService.updateLocalStore(inContent);
     return inContent;
   }
   public postRenderFunc(inContent: string): string {
@@ -49,9 +47,6 @@ export class MdeditorComponent {
   }
   public onEditorLoaded(aceEditor: any): void {
   }
-  public onPreviewDomChanged(htmlElement: HTMLElement): void{}
-
-  public onFocusOut(): void{
-    this.pService.upload(this.content);
+  public onPreviewDomChanged(htmlElement: HTMLElement): void{
   }
 }

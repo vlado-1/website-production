@@ -24,7 +24,7 @@ export class FileuploadComponent {
       fileReader.readAsText(htmlInputFiles.files[0], "UTF-8");      
       fileReader.onload = (event: ProgressEvent<FileReader>) => {
         if (event != null && event.target != null && event.target.result != null) {
-          this.pService.upload(event.target.result.toString());
+          this.pService.updateLocalStore(event.target.result.toString());
         }
       };
     }

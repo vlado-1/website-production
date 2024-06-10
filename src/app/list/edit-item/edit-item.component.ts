@@ -4,7 +4,7 @@ import { NgFor, NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
 import { project } from '../../models/project.model';
 import { FileuploadComponent } from '../../fileupload/fileupload.component';
-
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-edit-item',
@@ -26,7 +26,7 @@ export class EditItemComponent {
   public inEffort: string;
   public inFile: string | null;
 
-  constructor( private pService: ProjectService) {
+  constructor( private pService: ProjectService, private lss: LocalStorageService) {
     this.inTitle  = "";
     this.inDescn  = "";
     this.inEffort = "";
@@ -39,25 +39,27 @@ export class EditItemComponent {
     pService.onSelect().subscribe((selected: project) => {
       this.editItem = selected;
       if (this.editItem.selected) {
-        this.inTitle = this.editItem.title;
-        this.inDescn = this.editItem.descn;
+        this.inTitle  = this.editItem.title;
+        this.inDescn  = this.editItem.descn;
         this.inEffort = this.editItem.effort.toString();
-        this.inFile = this.editItem.file;
+        this.inFile   = this.editItem.file;
       }
       else {
         this.reset();        
       }
     });
 
-    pService.onUpload().subscribe((file: string | null) => {
-      this.inFile = file;
+    pService.onUpdateLocalStore().subscribe(() => {
+      this.inFile = this.lss.getData("File");
     });
   }
   
   onSave(): void {
     var formData: FormData = new FormData();
-    
+  
     console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save");
+
+    this.inFile = this.lss.getData("File");
 
     if (this.inTitle == "" && this.inDescn == "" && this.inEffort == "") {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
@@ -124,6 +126,7 @@ export class EditItemComponent {
     this.inDescn  = this.editItem.descn;
     this.inEffort = "";
     this.inFile = this.editItem.file;   
+    this.lss.clearData();
   }  
 
 }

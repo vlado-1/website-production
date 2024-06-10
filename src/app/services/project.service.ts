@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { project } from '../models/project.model';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,9 @@ export class ProjectService {
   private refreshSubject:           Subject<void>          = new Subject<void>();
   private selectSubject:            Subject<project>       = new Subject<project>();
   private editSubject:              Subject<void>          = new Subject<void>();
-  private uploadSubject:            Subject<string | null> = new Subject<string | null>();
-  private collectEditorDataSubject: Subject<void>          = new Subject<void>();
+  private updateLocalStoreSubject:  Subject<void>          = new Subject<void>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private lss: LocalStorageService) { }
 
   getProjects(): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "getProjects", "GET " + this.serverUrl + "projectlist");
@@ -109,23 +109,17 @@ export class ProjectService {
     return this.editSubject.asObservable();
   }
 
-  upload(data: string | null): void {
-    console.debug("%s: %s | %s", "ProjectService", "upload", "Upload broadcast");
-    this.uploadSubject.next(data);
+  updateLocalStore(data: string | null): void {
+    console.debug("%s: %s | %s", "ProjectService", "upload", "Update Local Storage broadcast");
+    if (data == null) {
+      data = "";
+    }
+    this.lss.saveData("File", data);
+    this.updateLocalStoreSubject.next();
   }
 
-  onUpload(): Observable<string | null> {
-    console.debug("%s: %s | %s", "ProjectService", "onUpload", "Upload observable");
-    return this.uploadSubject.asObservable();
-  }
-
-  collectEditorData(): void {
-    console.debug("%s: %s | %s", "ProjectService", "collectEditorData", "Collect editor data boadcast");
-    this.collectEditorDataSubject.next();
-  }
-
-  onCollectEditorData(): Observable<void> {
-    console.debug("%s: %s | %s", "ProjectService", "onCollectEditorData", "Collect editor data observable");
-    return this.collectEditorDataSubject.asObservable();
+  onUpdateLocalStore(): Observable<void> {
+    console.debug("%s: %s | %s", "ProjectService", "onUpload", "Update LocalStorage observable");
+    return this.updateLocalStoreSubject.asObservable();
   }
 }
