@@ -3,22 +3,17 @@
     display: none;
 }
 
-/* Style the links inside the navigation bar */
 .file-upload button {
-    display: inline-block;
-    background-color: #119cc2;
+    display: inline;
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
     border: none;
-    margin: 1.5%;
+    background-color: transparent;
 }
 
-/* Change the color of links on hover */
+/* Change mouse to pointer on hover */
 .file-upload button:hover {
-    background-color: #55cef0;
-    color: white;  
     cursor: pointer;
 }
 

@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../services/project.service';
 import { project } from '../models/project.model';
 import { LocalStorageService } from '../services/local-storage.service';
+import { FileuploadComponent } from '../fileupload/fileupload.component';
 
 @Component({
   selector: 'app-mdeditor',
   standalone: true,
-  imports: [FormsModule, LMarkdownEditorModule],
+  imports: [FormsModule, LMarkdownEditorModule, FileuploadComponent],
   templateUrl: './mdeditor.component.html',
   styleUrl: './mdeditor.component.css'
 })

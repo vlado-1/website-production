@@ -40,6 +40,11 @@ export class ListComponent {
 
   public refreshList(): void {
     console.debug("%s: %s | %s", "ListComponent", "refreshList", "Refreshing");
+    
+    /* Clear local storage on refresh because LocalStorageService will be re-constructed
+       With new keys and ivs causing subsequent local storage decryption to fail. */
+    this.lss.clearData();
+    
     this.pService.getProjects().subscribe(result => {
       this.pList = result;
       });
