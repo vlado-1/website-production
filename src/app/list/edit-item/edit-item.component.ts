@@ -48,10 +48,6 @@ export class EditItemComponent {
         this.reset();        
       }
     });
-
-    pService.onUpdateLocalStore().subscribe(() => {
-      this.inFile = this.lss.getData("File");
-    });
   }
   
   onSave(): void {
@@ -117,6 +113,7 @@ export class EditItemComponent {
 
   onDelete(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onDelete", "Delete");
+    this.lss.clearData();
     this.delete.emit();
   }
 

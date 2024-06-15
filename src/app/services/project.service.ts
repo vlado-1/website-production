@@ -9,11 +9,11 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class ProjectService {
 
-  private serverUrl:                string                 = 'http://localhost:3000/';
-  private refreshSubject:           Subject<void>          = new Subject<void>();
-  private selectSubject:            Subject<project>       = new Subject<project>();
-  private editSubject:              Subject<void>          = new Subject<void>();
-  private updateLocalStoreSubject:  Subject<void>          = new Subject<void>();
+  private serverUrl:                   string                 = 'http://localhost:3000/';
+  private refreshSubject:              Subject<void>          = new Subject<void>();
+  private selectSubject:               Subject<project>       = new Subject<project>();
+  private editSubject:                 Subject<void>          = new Subject<void>();
+  private updateEditorContentSubject:  Subject<void>          = new Subject<void>();
 
   constructor(private http: HttpClient, private lss: LocalStorageService) { }
 
@@ -27,14 +27,14 @@ export class ProjectService {
     console.debug({title:  inTitle, 
       descn:  inDescn, 
       effort: inEffort,
-      upload: inFile});
+      file: inFile});
 
     return this.http.post(this.serverUrl + "addProject", this.getFormData({pid: 0,
                                                           title:  inTitle, 
                                                           descn:  inDescn, 
                                                           effort: Number(inEffort),
                                                           selected: true,
-                                                          file: null}))
+                                                          file: inFile}))
                                                         .pipe(catchError(this.handleError));
   }
 
@@ -109,17 +109,13 @@ export class ProjectService {
     return this.editSubject.asObservable();
   }
 
-  updateLocalStore(data: string | null): void {
+  updateEditorContent(): void {
     console.debug("%s: %s | %s", "ProjectService", "upload", "Update Local Storage broadcast");
-    if (data == null) {
-      data = "";
-    }
-    this.lss.saveData("File", data);
-    this.updateLocalStoreSubject.next();
+    this.updateEditorContentSubject.next();
   }
 
-  onUpdateLocalStore(): Observable<void> {
+  onUpdateEditorContent(): Observable<void> {
     console.debug("%s: %s | %s", "ProjectService", "onUpload", "Update LocalStorage observable");
-    return this.updateLocalStoreSubject.asObservable();
+    return this.updateEditorContentSubject.asObservable();
   }
 }

@@ -4,6 +4,7 @@ import { EditItemComponent } from './edit-item/edit-item.component';
 import { ProjectService } from '../services/project.service';
 import { project } from '../models/project.model';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { LocalStorageService } from '../services/local-storage.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ListComponent {
   public pList: project[] = [];
   public selection: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
 
-  constructor( private pService: ProjectService) {
+  constructor( private pService: ProjectService, private lss: LocalStorageService) {
     this.refreshList();
     pService.onRefresh().subscribe(() => {
       console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Refresh received");
@@ -63,6 +64,12 @@ export class ListComponent {
     }
     else {
       this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
+    }
+
+    if (this.lss.getData("File") == "") {
+      if (this.selection.file != null) {
+        this.lss.saveData("File", this.selection.file);
+      }
     }
 
     this.pService.select(this.selection);

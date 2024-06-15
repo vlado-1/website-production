@@ -22,6 +22,8 @@ export class MdeditorComponent {
   };
 
   constructor (private pService: ProjectService, private lss: LocalStorageService) {
+    this.content = lss.getData("File");
+
     this.pService.onSelect().subscribe((data: project) => {
       if (data.selected && data.file != null) {
         this.content = data.file;
@@ -31,15 +33,13 @@ export class MdeditorComponent {
       }
     });
 
-    this.pService.onUpdateLocalStore().subscribe(() => {
-      if (lss.getData("File") != this.content) {
-        this.content = lss.getData("File");
-      }
+    this.pService.onUpdateEditorContent().subscribe(() => {
+      this.content = lss.getData("File");
     });
   }
 
   public preRenderFunc: Function = (inContent: string): string => {
-    this.pService.updateLocalStore(inContent);
+    this.lss.saveData("File", inContent);
     return inContent;
   }
   public postRenderFunc(inContent: string): string {
