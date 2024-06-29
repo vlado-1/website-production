@@ -18,11 +18,11 @@ There is REST communication between the front and backend.
 
 ## Developer Interface
 
-- frontend host = localhost
-- frontend port = 4200
+frontend host = localhost
+frontend port = 4200
 
-- backend host = localhost
-- backend port = 3000
+backend host = localhost
+backend port = 3000
 
 DB Details will vary based on the DB server settings.
 
