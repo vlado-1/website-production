@@ -1,32 +1,39 @@
-# Myweb
+# Project One
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+A website I've built. It doesn't have a clear purpose. For now it displays an editable list of projects that I want to showcase. The editor uses a WYSIWYG editor for markdown in angular. 
 
-## Development server
+I'll extend the website in any direction I want to. My ideas appear as github issues that I work on whenever I have time.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## General Architecture
 
-## Code scaffolding
+The website consists of the following components:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular front end
+- NodeJs backend server using the ExpressJS framework.
+- SQL Database server.
 
-## Build
+View the appropriate package-lock.json file to see the versions.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+There is REST communication between the front and backend.
 
-## Running unit tests
+## Developer Interface
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+frontend host = localhost
+frontend port = 4200
 
-## Running end-to-end tests
+backend host = localhost
+backend port = 3000
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+DB Details will vary based on the DB server settings.
 
-## Further help
+## Common Commands
+  
+  - 'ng serve`: Builds and serves your application, rebuilding on file changes. Server can be accessed from `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+  - `ng generate component component-name`: generates a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  - `ng build`: builds the project. The build artifacts will be stored in the `dist/` directory.
+  - `ng test`: executes the unit tests via [Karma](https://karma-runner.github.io).
+  - 'npm backend': runs the backend server. Need to be in the 'server' folder when executing this command as it executes a script specified in the server/package.json file. 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
-# Project Information
 ## Steps to setup environment from scratch
 
 1. Install NodeJs (comes with NPM).
@@ -47,9 +54,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 5. routes = single file for each logical set of routes. Routing refers to determining how an application responds to a client request to a particular endpoint, which is a URI (or path) and a specific HTTP request method (GET, POST, and so on).
 6. services = contains the functions that perform CRUD on the MySQL db and all the business logic.
 7. utils = helper functions.
-
-server host = localhost
-server port = 3000
 
 ## Server File Relations
 
