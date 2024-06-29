@@ -10,7 +10,7 @@ The website consists of the following components:
 
 - Angular front end
 - NodeJs backend server using the ExpressJS framework.
-- SQL Database server.
+- MySQL Database server.
 
 View the appropriate package-lock.json file to see the versions.
 
