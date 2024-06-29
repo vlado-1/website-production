@@ -39,7 +39,7 @@ DB Details will vary based on the DB server settings.
 4. Globally install typescript, ts-node and @types/node.
 5. Follow Angular site instuctions on how to create project using ng command (https://angular.io/guide/setup-local).
 6. Create server folder, npm init and then install express.js + typescript locally.
-7. Run server with ts-node main.ts (if typescript is being used) else node main.js.
+7. Run server with npx tsx main.ts (if typescript is being used) else node main.js.
 8. Run angular development server with ng serve.
 
 ## Server project structure
