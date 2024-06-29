@@ -25,11 +25,11 @@ DB Details will vary based on the DB server settings.
 
 ## Common Commands
   
-  - 'ng serve`: Builds and serves your application, rebuilding on file changes. Server can be accessed from `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+  - `ng serve`: Builds and serves your application, rebuilding on file changes. Server can be accessed from `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
   - `ng generate component component-name`: generates a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
   - `ng build`: builds the project. The build artifacts will be stored in the `dist/` directory.
   - `ng test`: executes the unit tests via [Karma](https://karma-runner.github.io).
-  - 'npm backend': runs the backend server. Need to be in the 'server' folder when executing this command as it executes a script specified in the server/package.json file. 
+  - `npm backend`: runs the backend server. Need to be in the 'server' folder when executing this command as it executes a script specified in the server/package.json file. 
 
 ## Steps to setup environment from scratch
 
