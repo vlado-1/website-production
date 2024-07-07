@@ -1,14 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Take up entire height of screen */
-html, body{
-    height: 100%;
+html, body {
     margin: 0;
     font-family: Arial;
 }
 
 body {
     background-color: #F5F5F5;
+    padding-top: 230vh;
 }
 
 /* Customize list and showcase
@@ -19,11 +19,9 @@ body {
          to become a block and thus take up a whole line by itself 
          (we want want two half-containers in the same row).*/
 .half-container {
-    position: static;
-    display: inline-block;
+    flex: 0 1 column;
     margin: 5%; 
-    height: 90%;
-    width: 40%;
+    height: 65vh;
     background-color: white;
     overflow-y: auto;
   }

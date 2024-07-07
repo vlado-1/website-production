@@ -2,6 +2,7 @@
 .topnav {
     background-color: hsl(0, 7%, 80%);
     overflow: hidden;
+    line-height: 1.2;
   }
   
   /* Style the links inside the navigation bar */
@@ -26,8 +27,39 @@
     color: white;
   }
 
-/* Add style to page title text */
-.PageTitle {
-  text-align: center;
-  font-size: 2em;
-}
+/* Add scroll animation to the home page header.
+   Using the scroll animation from:
+   https://scroll-driven-animations.style/demos/cover-to-fixed-header/css/ */
+   @keyframes sticky-parallax-header-move-and-size {
+    from {
+      line-height: 100vh;
+      font-size: calc(8vw + 1em);
+    }
+    to {
+      line-height: 15vh;
+      font-size: 4em;
+    }
+  }
+  
+  #sticky-parallax-header {
+    text-align: center;
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    top: 0;
+
+  
+    animation: sticky-parallax-header-move-and-size linear forwards;
+    animation-timeline: scroll();
+    animation-range: 0vh 130vh;
+  }
+
+  .flex-half-container {
+    display: flex;
+    flex-direction: row;
+    line-height: 1.2;
+  }
+
+  app-showcase, app-list {
+    flex: 1 1 0;
+  }

@@ -30,16 +30,17 @@
 #addItemForm {
     margin: 2%;
     background-color: rgb(240, 238, 238);
+    font-size: 16px;
+    line-height: 2;
 }
 
 input {
     opacity: 0.9;
     display:inline-block;
-    margin: 1.5%;
+    margin: 1%;
     border:none; 
     background-color: rgb(252,252,252); 
     border-radius: 1px;
     outline: 0;
     width: 96%;
-    height: 2em;
 }
