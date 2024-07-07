@@ -1,8 +1,8 @@
 # Project One
 
-A website I've built. It doesn't have a clear purpose. For now it displays an editable list of projects that I want to showcase. The editor uses a WYSIWYG editor for markdown in angular. 
+A website I've built. It doesn't have a clear purpose.
 
-I'll extend the website in any direction I want to. My ideas appear as github issues that I work on whenever I have time.
+For now it displays an editable list describing projects that I want to showcase. Each project list item is associated with a markdown file which can be edited using a WYSIWYG editor for markdown in angular. 
 
 ## General Architecture
 
