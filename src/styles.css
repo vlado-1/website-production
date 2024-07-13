@@ -21,7 +21,7 @@ body {
 .half-container {
     flex: 0 1 column;
     margin: 5%; 
-    height: 65vh;
+    height: 70vh;
     background-color: white;
     overflow-y: auto;
   }
