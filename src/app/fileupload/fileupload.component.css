@@ -4,10 +4,11 @@
 }
 
 .file-upload button {
-    display: inline;
+    /* Button looks unaligned in mdeditor without this exact padding and border */
+    padding: 6.96px 8.68px 6.96px 8.68px;
+    border: 0.667px;
     text-align: center;
     text-decoration: none;
-    font-size: 17px;
     border: none;
     background-color: transparent;
 }
@@ -18,6 +19,6 @@
 }
 
 .navimg {
-    height: 0.8em;
+    height: 14px;
     object-fit: contain;
 }
