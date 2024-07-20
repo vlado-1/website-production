@@ -54,6 +54,13 @@
     animation-range: 0vh 130vh;
   }
 
+  #author {
+    font-size: small;
+    line-height: 1.2;
+    margin-top: 16px;
+    margin-bottom: 0px;
+  }
+
   .flex-half-container {
     display: flex;
     flex-direction: row;

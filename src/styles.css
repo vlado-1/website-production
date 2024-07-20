@@ -20,8 +20,8 @@ body {
          (we want want two half-containers in the same row).*/
 .half-container {
     flex: 0 1 column;
-    margin: 5%; 
-    height: 70vh;
+    margin: 2.5%; 
+    height: 68vh;
     background-color: white;
     overflow-y: auto;
   }
