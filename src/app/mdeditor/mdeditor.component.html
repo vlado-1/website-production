@@ -5,8 +5,7 @@
   [height]="'100%'" 
   [mode]="mode" 
   [options]="options" 
-  (onEditorLoaded)="onEditorLoaded($event)"
-  (onPreviewDomChanged)="onPreviewDomChanged($event)"
+  (click)="togglePreview($event)"
   required 
   maxlength="1000">
   <slot custom-btns>

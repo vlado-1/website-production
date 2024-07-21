@@ -19,7 +19,8 @@ export class MdeditorComponent {
   public mode: string = "Editor";
   public options: MdEditorOption = {  
     showPreviewPanel: false,    // Show preview panel, Default is true
-    resizable: false             // Allow resize the editor
+    resizable: false,             // Allow resize the editor
+    enablePreviewContentClick: true
   };
 
   constructor (private pService: ProjectService, private lss: LocalStorageService) {
@@ -46,8 +47,26 @@ export class MdeditorComponent {
   public postRenderFunc(inContent: string): string {
     return inContent;
   }
-  public onEditorLoaded(aceEditor: any): void {
-  }
-  public onPreviewDomChanged(htmlElement: HTMLElement): void{
+  public togglePreview(event: Event): void {
+    var clickedHTMLElement: HTMLElement = <HTMLElement>event.target;
+    /* eye icon - means editor in preview state currently
+       eye-slash - means editor in normal state
+       TO DO: replace text eith preview in preview mode, and don't let preview expand alot */
+    if (clickedHTMLElement.className == "fa fa-eye") {
+
+    }
+    else if (clickedHTMLElement.className == "fa fa-eye-slash") {
+      
+    }
+    else if (clickedHTMLElement.className.includes("btn")) {
+      clickedHTMLElement = <HTMLElement>clickedHTMLElement.firstElementChild;
+      
+      if (clickedHTMLElement.className == "fa fa-eye") {
+        
+      }
+      else if (clickedHTMLElement.className = "fa fa-eye-slash") {
+        
+      }
+    }
   }
 }
