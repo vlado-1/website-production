@@ -19,7 +19,7 @@ export class MdeditorComponent {
   public mode: string = "Editor";
   public options: MdEditorOption = {  
     showPreviewPanel: false,    // Show preview panel, Default is true
-    resizable: true             // Allow resize the editor
+    resizable: false             // Allow resize the editor
   };
 
   constructor (private pService: ProjectService, private lss: LocalStorageService) {
