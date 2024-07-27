@@ -20,7 +20,8 @@ export class MdeditorComponent {
   public options: MdEditorOption = {  
     showPreviewPanel: false,    // Show preview panel, Default is true
     resizable: false,             // Allow resize the editor
-    enablePreviewContentClick: true
+    enablePreviewContentClick: true,
+    hideIcons: ['FullScreen'] // full screen is a little buggy so don't give user the option
   };
 
   constructor (private pService: ProjectService, private lss: LocalStorageService) {
@@ -38,6 +39,7 @@ export class MdeditorComponent {
     this.pService.onUpdateEditorContent().subscribe(() => {
       this.content = lss.getData("File");
     });
+
   }
 
   public preRenderFunc: Function = (inContent: string): string => {
