@@ -23,5 +23,11 @@ body {
     margin: 2.5%; 
     height: 68vh;
     background-color: white;
+  }
+
+  app-list .half-container {
     overflow-y: auto;
+  }
+  app-showcase .half-container {
+    overflow-y: hidden;
   }

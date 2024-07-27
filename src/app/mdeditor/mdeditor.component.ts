@@ -16,7 +16,7 @@ import { FileuploadComponent } from '../fileupload/fileupload.component';
 export class MdeditorComponent {
 
   public content: string | null = "";
-  public mode: string = "Editor";
+  public mode: string = "editor";
   public options: MdEditorOption = {  
     showPreviewPanel: false,    // Show preview panel, Default is true
     resizable: false,             // Allow resize the editor
@@ -49,23 +49,33 @@ export class MdeditorComponent {
   }
   public togglePreview(event: Event): void {
     var clickedHTMLElement: HTMLElement = <HTMLElement>event.target;
+    var editorContainer: HTMLElement = <HTMLElement>document.getElementsByClassName("editor-container")[0];
+    var editSection: HTMLElement = <HTMLElement>editorContainer.firstElementChild;
+    var previewSection: HTMLElement = <HTMLElement>editorContainer.lastElementChild;
+
     /* eye icon - means editor in preview state currently
        eye-slash - means editor in normal state
        TO DO: replace text eith preview in preview mode, and don't let preview expand alot */
     if (clickedHTMLElement.className == "fa fa-eye") {
-
+      editSection.style.display = "none";
+      previewSection.style.display = "block"
+      previewSection.style.width = "50vh";
     }
     else if (clickedHTMLElement.className == "fa fa-eye-slash") {
-      
+      editSection.style.display = "block";
+      previewSection.style.display = "none"
     }
     else if (clickedHTMLElement.className.includes("btn")) {
       clickedHTMLElement = <HTMLElement>clickedHTMLElement.firstElementChild;
       
       if (clickedHTMLElement.className == "fa fa-eye") {
-        
+        editSection.style.display = "none";
+        previewSection.style.display = "block";
+        previewSection.style.width = "50vh";
       }
       else if (clickedHTMLElement.className = "fa fa-eye-slash") {
-        
+        editSection.style.display = "block";
+        previewSection.style.display = "none";
       }
     }
   }
