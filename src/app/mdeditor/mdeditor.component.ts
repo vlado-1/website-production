@@ -57,7 +57,7 @@ export class MdeditorComponent {
 
     /* eye icon - means editor in preview state currently
        eye-slash - means editor in normal state
-       TO DO: replace text eith preview in preview mode, and don't let preview expand alot */
+       Replace text editor with preview in preview mode, and fix preview width to 50vh */
     if (clickedHTMLElement.className == "fa fa-eye") {
       editSection.style.display = "none";
       previewSection.style.display = "block"
