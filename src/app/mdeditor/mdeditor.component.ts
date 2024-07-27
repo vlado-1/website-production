@@ -16,10 +16,12 @@ import { FileuploadComponent } from '../fileupload/fileupload.component';
 export class MdeditorComponent {
 
   public content: string | null = "";
-  public mode: string = "Editor";
+  public mode: string = "editor";
   public options: MdEditorOption = {  
     showPreviewPanel: false,    // Show preview panel, Default is true
-    resizable: true             // Allow resize the editor
+    resizable: false,             // Allow resize the editor
+    enablePreviewContentClick: true,
+    hideIcons: ['FullScreen'] // full screen is a little buggy so don't give user the option
   };
 
   constructor (private pService: ProjectService, private lss: LocalStorageService) {
@@ -37,6 +39,7 @@ export class MdeditorComponent {
     this.pService.onUpdateEditorContent().subscribe(() => {
       this.content = lss.getData("File");
     });
+
   }
 
   public preRenderFunc: Function = (inContent: string): string => {
@@ -46,8 +49,36 @@ export class MdeditorComponent {
   public postRenderFunc(inContent: string): string {
     return inContent;
   }
-  public onEditorLoaded(aceEditor: any): void {
-  }
-  public onPreviewDomChanged(htmlElement: HTMLElement): void{
+  public togglePreview(event: Event): void {
+    var clickedHTMLElement: HTMLElement = <HTMLElement>event.target;
+    var editorContainer: HTMLElement = <HTMLElement>document.getElementsByClassName("editor-container")[0];
+    var editSection: HTMLElement = <HTMLElement>editorContainer.firstElementChild;
+    var previewSection: HTMLElement = <HTMLElement>editorContainer.lastElementChild;
+
+    /* eye icon - means editor in preview state currently
+       eye-slash - means editor in normal state
+       Replace text editor with preview in preview mode, and fix preview width to 50vh */
+    if (clickedHTMLElement.className == "fa fa-eye") {
+      editSection.style.display = "none";
+      previewSection.style.display = "block"
+      previewSection.style.width = "50vh";
+    }
+    else if (clickedHTMLElement.className == "fa fa-eye-slash") {
+      editSection.style.display = "block";
+      previewSection.style.display = "none"
+    }
+    else if (clickedHTMLElement.className.includes("btn")) {
+      clickedHTMLElement = <HTMLElement>clickedHTMLElement.firstElementChild;
+      
+      if (clickedHTMLElement.className == "fa fa-eye") {
+        editSection.style.display = "none";
+        previewSection.style.display = "block";
+        previewSection.style.width = "50vh";
+      }
+      else if (clickedHTMLElement.className = "fa fa-eye-slash") {
+        editSection.style.display = "block";
+        previewSection.style.display = "none";
+      }
+    }
   }
 }
