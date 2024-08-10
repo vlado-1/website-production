@@ -5,6 +5,7 @@ import { ProjectService } from '../../services/project.service';
 import { project } from '../../models/project.model';
 import { FileuploadComponent } from '../../fileupload/fileupload.component';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-edit-item',
@@ -26,7 +27,9 @@ export class EditItemComponent {
   public inEffort: string;
   public inFile: string | null;
 
-  constructor( private pService: ProjectService, private lss: LocalStorageService) {
+  public loggedIn: boolean = false;
+
+  constructor( private pService: ProjectService, private lss: LocalStorageService, private authService: AuthenticationService) {
     this.inTitle  = "";
     this.inDescn  = "";
     this.inEffort = "";
@@ -47,6 +50,10 @@ export class EditItemComponent {
       else {
         this.reset();        
       }
+    });
+
+    this.authService.onLogin().subscribe((status: boolean) => {
+      this.loggedIn = status;
     });
   }
   

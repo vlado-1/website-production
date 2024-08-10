@@ -5,6 +5,7 @@ import { ProjectService } from '../services/project.service';
 import { project } from '../models/project.model';
 import { LocalStorageService } from '../services/local-storage.service';
 import { FileuploadComponent } from '../fileupload/fileupload.component';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-mdeditor',
@@ -24,7 +25,7 @@ export class MdeditorComponent {
     hideIcons: ['FullScreen'] // full screen is a little buggy so don't give user the option
   };
 
-  constructor (private pService: ProjectService, private lss: LocalStorageService) {
+  constructor (private pService: ProjectService, private lss: LocalStorageService, private authServic: AuthenticationService) {
     this.content = lss.getData("File");
 
     this.pService.onSelect().subscribe((data: project) => {
@@ -40,6 +41,24 @@ export class MdeditorComponent {
       this.content = lss.getData("File");
     });
 
+    this.authServic.onLogin().subscribe((status: boolean) => {
+      if (status) {
+        this.options = {  
+          showPreviewPanel: false,    // Show preview panel, Default is true
+          resizable: false,             // Allow resize the editor
+          enablePreviewContentClick: true,
+          hideIcons: ['FullScreen'] // full screen is a little buggy so don't give user the option
+        };
+      }
+      else {
+        this.options = {  
+          showPreviewPanel: true,    // Show preview panel, Default is true
+          resizable: false,             // Allow resize the editor
+          enablePreviewContentClick: true,
+          hideIcons: ['Bold', 'Italic', 'Heading', 'Reference', 'Link', 'Image', 'Ul', 'Ol', 'Code', 'TogglePreview', 'FullScreen'] // full screen is a little buggy so don't give user the option
+        };
+      }
+    });
   }
 
   public preRenderFunc: Function = (inContent: string): string => {

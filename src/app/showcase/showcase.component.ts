@@ -3,6 +3,7 @@ import { MdeditorComponent } from '../mdeditor/mdeditor.component';
 import { MarkdownComponent } from 'ngx-markdown';
 import { ProjectService } from '../services/project.service';
 import { NgIf } from '@angular/common';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-showcase',
@@ -14,12 +15,21 @@ import { NgIf } from '@angular/common';
 export class ShowcaseComponent {
 
   public editMode: boolean = false;
+  public holder: string = "Click to View";
 
-  constructor (private pService: ProjectService) {
+  constructor (private pService: ProjectService, private authService: AuthenticationService) {
     this.pService.onEdit().subscribe(() => {
       this.editMode = !this.editMode;
     });
 
+    this.authService.onLogin().subscribe((status: boolean) => {
+      if (status) {
+        this.holder = "Click to Edit";
+      }
+      else {
+        this.holder = "Click to View";
+      }
+    });
   }
 
   public onClick() {
