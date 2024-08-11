@@ -24,6 +24,7 @@ export class MdeditorComponent {
     enablePreviewContentClick: true,
     hideIcons: ['FullScreen'] // full screen is a little buggy so don't give user the option
   };
+  public loggedIn: boolean = false;
 
   constructor (private pService: ProjectService, private lss: LocalStorageService, private authServic: AuthenticationService) {
     this.content = lss.getData("File");
@@ -42,21 +43,20 @@ export class MdeditorComponent {
     });
 
     this.authServic.onLogin().subscribe((status: boolean) => {
+      var toolbar: HTMLElement = <HTMLElement>document.getElementsByClassName("tool-bar")[0];
+      
       if (status) {
-        this.options = {  
-          showPreviewPanel: false,    // Show preview panel, Default is true
-          resizable: false,             // Allow resize the editor
-          enablePreviewContentClick: true,
-          hideIcons: ['FullScreen'] // full screen is a little buggy so don't give user the option
-        };
+        this.loggedIn = status;
+        toolbar.style.pointerEvents = "auto";
+        toolbar.style.opacity       = "1";
+        this.closePreview();
       }
       else {
-        this.options = {  
-          showPreviewPanel: true,    // Show preview panel, Default is true
-          resizable: false,             // Allow resize the editor
-          enablePreviewContentClick: true,
-          hideIcons: ['Bold', 'Italic', 'Heading', 'Reference', 'Link', 'Image', 'Ul', 'Ol', 'Code', 'TogglePreview', 'FullScreen'] // full screen is a little buggy so don't give user the option
-        };
+        // Disable editor toolbar and set to preview only mode if not logged in
+        this.loggedIn = status;
+        toolbar.style.pointerEvents = "none";
+        toolbar.style.opacity       = "0.4";
+        this.fullPreview();
       }
     });
   }
@@ -70,34 +70,44 @@ export class MdeditorComponent {
   }
   public togglePreview(event: Event): void {
     var clickedHTMLElement: HTMLElement = <HTMLElement>event.target;
-    var editorContainer: HTMLElement = <HTMLElement>document.getElementsByClassName("editor-container")[0];
-    var editSection: HTMLElement = <HTMLElement>editorContainer.firstElementChild;
-    var previewSection: HTMLElement = <HTMLElement>editorContainer.lastElementChild;
 
-    /* eye icon - means editor in preview state currently
-       eye-slash - means editor in normal state
-       Replace text editor with preview in preview mode, and fix preview width to 50vh */
+    /* eye icon - if clicked means editor should go to preview state
+       eye-slash - if clicked means editor should go to normal state */
     if (clickedHTMLElement.className == "fa fa-eye") {
-      editSection.style.display = "none";
-      previewSection.style.display = "block"
-      previewSection.style.width = "50vh";
+      this.fullPreview();
     }
     else if (clickedHTMLElement.className == "fa fa-eye-slash") {
-      editSection.style.display = "block";
-      previewSection.style.display = "none"
+      this.closePreview();
     }
     else if (clickedHTMLElement.className.includes("btn")) {
       clickedHTMLElement = <HTMLElement>clickedHTMLElement.firstElementChild;
       
       if (clickedHTMLElement.className == "fa fa-eye") {
-        editSection.style.display = "none";
-        previewSection.style.display = "block";
-        previewSection.style.width = "50vh";
+        this.fullPreview();
       }
       else if (clickedHTMLElement.className = "fa fa-eye-slash") {
-        editSection.style.display = "block";
-        previewSection.style.display = "none";
+        this.closePreview();
       }
     }
+  }
+
+  private fullPreview(): void {
+    // Replace text editor with preview, and fix preview width to 50vh
+    var editorContainer: HTMLElement = <HTMLElement>document.getElementsByClassName("editor-container")[0];
+    var editSection: HTMLElement = <HTMLElement>editorContainer.firstElementChild;
+    var previewSection: HTMLElement = <HTMLElement>editorContainer.lastElementChild;
+
+    editSection.style.display = "none";
+    previewSection.style.display = "block"
+    previewSection.style.width = "50vh";
+  }
+
+  private closePreview(): void {
+    var editorContainer: HTMLElement = <HTMLElement>document.getElementsByClassName("editor-container")[0];
+    var editSection: HTMLElement = <HTMLElement>editorContainer.firstElementChild;
+    var previewSection: HTMLElement = <HTMLElement>editorContainer.lastElementChild;
+
+    editSection.style.display = "block";
+    previewSection.style.display = "none"
   }
 }

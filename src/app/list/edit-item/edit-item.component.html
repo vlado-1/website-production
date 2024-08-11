@@ -13,7 +13,7 @@
     </ng-template>
 </div>
 
-<ng-container *ngIf="editMode">
+<ng-container *ngIf="editMode && loggedIn">
     <!-- Form to add event -->
     <div id="addItemForm">
         <input [disabled]="!loggedIn" type="text" name="itemTitle"  placeholder="Project Name"        [(ngModel)]="inTitle"><br>
