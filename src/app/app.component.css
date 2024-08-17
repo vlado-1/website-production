@@ -23,9 +23,18 @@
   
   /* Change the color of links on hover */
   .topnav a:hover {
-     background-color: #55cef0;
+    background-color: #55cef0;
   }
   
+  /* Centering google sign in button */
+  .googleButton {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+  }
 
 /* Add scroll animation to the home page header.
    Using the scroll animation from:
@@ -67,7 +76,7 @@
     font-size: medium;
     line-height: 1.2;
     margin-top: 0px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 
   .flex-half-container {

@@ -26,6 +26,23 @@ export class MdeditorComponent {
   };
   public loggedIn: boolean = false;
 
+
+  public ngAfterViewInit(): void {
+    // After editor has been loaded, disable it if not logged in.
+    var toolbar: HTMLElement = <HTMLElement>document.getElementsByClassName("tool-bar")[0];
+
+    if (!this.loggedIn) {
+      toolbar.style.pointerEvents = "none";
+      toolbar.style.opacity       = "0.4";
+      this.fullPreview();
+    }
+    else {
+      toolbar.style.pointerEvents = "auto";
+      toolbar.style.opacity       = "1";
+      this.closePreview();
+    }
+  }
+
   constructor (private pService: ProjectService, private lss: LocalStorageService, private authServic: AuthenticationService) {
     this.content = lss.getData("File");
 
