@@ -22,6 +22,10 @@ export class LocalStorageService {
     localStorage.setItem(key, this.encrypt(value));
   }
 
+  public saveDataBasic(key: string, value: string): void {
+    localStorage.setItem(key, value);
+  }
+
   public getData(key: string): string {
     let data = localStorage.getItem(key)|| "";
     return this.decrypt(data);

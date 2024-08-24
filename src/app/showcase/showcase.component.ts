@@ -22,14 +22,12 @@ export class ShowcaseComponent {
       this.editMode = !this.editMode;
     });
 
-    this.authService.onLogin().subscribe((status: boolean) => {
-      if (status) {
-        this.holder = "Click to Edit";
-      }
-      else {
-        this.holder = "Click to View";
-      }
-    });
+    if (this.authService.getLoginStatus()) {
+      this.holder = "Click to Edit";
+    }
+    else {
+      this.holder = "Click to View";
+    }
   }
 
   public onClick() {

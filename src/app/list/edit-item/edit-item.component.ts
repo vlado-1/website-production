@@ -52,9 +52,7 @@ export class EditItemComponent {
       }
     });
 
-    this.authService.onLogin().subscribe((status: boolean) => {
-      this.loggedIn = status;
-    });
+    this.loggedIn = authService.getLoginStatus();
   }
   
   onSave(): void {

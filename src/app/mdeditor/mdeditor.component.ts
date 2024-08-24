@@ -30,7 +30,7 @@ export class MdeditorComponent {
   public ngAfterViewInit(): void {
     // After editor has been loaded, disable it if not logged in.
     var toolbar: HTMLElement = <HTMLElement>document.getElementsByClassName("tool-bar")[0];
-
+    this.loggedIn = this.authService.getLoginStatus();
     if (!this.loggedIn) {
       toolbar.style.pointerEvents = "none";
       toolbar.style.opacity       = "0.4";
@@ -43,7 +43,7 @@ export class MdeditorComponent {
     }
   }
 
-  constructor (private pService: ProjectService, private lss: LocalStorageService, private authServic: AuthenticationService) {
+  constructor (private pService: ProjectService, private lss: LocalStorageService, private authService: AuthenticationService) {
     this.content = lss.getData("File");
 
     this.pService.onSelect().subscribe((data: project) => {
@@ -57,24 +57,6 @@ export class MdeditorComponent {
 
     this.pService.onUpdateEditorContent().subscribe(() => {
       this.content = lss.getData("File");
-    });
-
-    this.authServic.onLogin().subscribe((status: boolean) => {
-      var toolbar: HTMLElement = <HTMLElement>document.getElementsByClassName("tool-bar")[0];
-      
-      if (status) {
-        this.loggedIn = status;
-        toolbar.style.pointerEvents = "auto";
-        toolbar.style.opacity       = "1";
-        this.closePreview();
-      }
-      else {
-        // Disable editor toolbar and set to preview only mode if not logged in
-        this.loggedIn = status;
-        toolbar.style.pointerEvents = "none";
-        toolbar.style.opacity       = "0.4";
-        this.fullPreview();
-      }
     });
   }
 

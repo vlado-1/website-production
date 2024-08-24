@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs';
-
+import { LocalStorageService } from './local-storage.service';
+declare global {
+  interface Window { loginSubject: Subject<any>; }
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -9,16 +12,23 @@ export class AuthenticationService {
 
   private loginSubject: Subject<boolean> = new Subject<boolean>();
 
-  constructor() { }
+  constructor(private lss: LocalStorageService) { 
+    window.loginSubject = new Subject<any>();
 
-  setLoginStatus (status: boolean): void {
-    console.debug("%s: %s | %s", "AuthenticationService", "setLoginStatus", "Login status broadcast");
-    this.loginSubject.next(status);
+    window.loginSubject.asObservable().subscribe((jwt: any) => {
+      console.log(jwt);
+      // TODO: Login into backend server
+      if (true) {
+        lss.saveDataBasic("login", "true");
+      }
+      else {
+        lss.removeData("login");
+      }
+    });
   }
 
-  onLogin(): Observable<boolean> {
-    console.debug("%s: %s | %s", "AuthenticationService", "onLogin", "Login status observable");
-    return this.loginSubject.asObservable();
-  }
+  getLoginStatus(): boolean {
+    return this.lss.getData("login") == "true";
+  };
   
 }
