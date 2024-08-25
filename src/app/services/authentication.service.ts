@@ -16,7 +16,6 @@ export class AuthenticationService {
     window.loginSubject = new Subject<any>();
 
     window.loginSubject.asObservable().subscribe((jwt: any) => {
-      console.log(jwt);
       // TODO: Login into backend server
       if (true) {
         lss.saveDataBasic("login", "true");
@@ -28,7 +27,7 @@ export class AuthenticationService {
   }
 
   getLoginStatus(): boolean {
-    return this.lss.getData("login") == "true";
+    return this.lss.getData("login") != "";
   };
   
 }

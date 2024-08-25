@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import forge from 'node-forge';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ export class LocalStorageService {
 
   private AESkey: string = forge.random.getBytesSync(32);
   private AESiv:  string = forge.random.getBytesSync(32);
+
+  private storeSubject: Subject<string> = new Subject<string>();
 
   constructor() {
     this.generateKeyAndIV();
@@ -20,10 +23,12 @@ export class LocalStorageService {
 
   public saveData(key: string, value: string): void {
     localStorage.setItem(key, this.encrypt(value));
+    this.storeSubject.next(key);
   }
 
   public saveDataBasic(key: string, value: string): void {
     localStorage.setItem(key, value);
+    this.storeSubject.next(key);
   }
 
   public getData(key: string): string {
@@ -32,10 +37,17 @@ export class LocalStorageService {
   }
   public removeData(key: string): void {
     localStorage.removeItem(key);
+    this.storeSubject.next(key);
   }
 
   public clearData(): void {
-    localStorage.clear();
+    var key: string = "";
+    for (var i = 0; i < localStorage.length; i++) {
+      key = localStorage.key(i) || "";
+      if (key != "login") {
+        localStorage.removeItem(key);
+      }
+    }
   }
 
   private encrypt(txt: string): string {
@@ -56,5 +68,9 @@ export class LocalStorageService {
     decipher.finish();
 
     return forge.util.encodeUtf8(decipher.output.getBytes());
+  }
+
+  public onStore(): Observable<string> {
+    return this.storeSubject.asObservable();
   }
 }

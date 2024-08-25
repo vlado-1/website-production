@@ -58,6 +58,12 @@ export class MdeditorComponent {
     this.pService.onUpdateEditorContent().subscribe(() => {
       this.content = lss.getData("File");
     });
+
+    this.lss.onStore().subscribe((key: string) => {
+      if (key == "login") {
+        this.loggedIn = authService.getLoginStatus();
+      }
+    });
   }
 
   public preRenderFunc: Function = (inContent: string): string => {

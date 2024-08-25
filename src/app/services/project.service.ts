@@ -15,7 +15,7 @@ export class ProjectService {
   private editSubject:                 Subject<void>          = new Subject<void>();
   private updateEditorContentSubject:  Subject<void>          = new Subject<void>();
 
-  constructor(private http: HttpClient, private lss: LocalStorageService) { }
+  constructor(private http: HttpClient) { }
 
   getProjects(): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "getProjects", "GET " + this.serverUrl + "projectlist");

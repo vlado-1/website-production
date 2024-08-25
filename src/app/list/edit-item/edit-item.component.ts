@@ -52,6 +52,12 @@ export class EditItemComponent {
       }
     });
 
+    this.lss.onStore().subscribe((key: string) => {
+      if (key == "login") {
+        this.loggedIn = authService.getLoginStatus();
+      }
+    });
+
     this.loggedIn = authService.getLoginStatus();
   }
   

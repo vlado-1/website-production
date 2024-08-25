@@ -4,6 +4,7 @@ import { MarkdownComponent } from 'ngx-markdown';
 import { ProjectService } from '../services/project.service';
 import { NgIf } from '@angular/common';
 import { AuthenticationService } from '../services/authentication.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-showcase',
@@ -15,19 +16,18 @@ import { AuthenticationService } from '../services/authentication.service';
 export class ShowcaseComponent {
 
   public editMode: boolean = false;
-  public holder: string = "Click to View";
+  public loggedIn: boolean = false;
 
-  constructor (private pService: ProjectService, private authService: AuthenticationService) {
+  constructor (private pService: ProjectService, private authService: AuthenticationService, private lss: LocalStorageService) {
     this.pService.onEdit().subscribe(() => {
       this.editMode = !this.editMode;
     });
-
-    if (this.authService.getLoginStatus()) {
-      this.holder = "Click to Edit";
-    }
-    else {
-      this.holder = "Click to View";
-    }
+    
+    this.lss.onStore().subscribe((key: string) => {
+      if (key == "login") {
+        this.loggedIn = authService.getLoginStatus();
+      }
+    });
   }
 
   public onClick() {
