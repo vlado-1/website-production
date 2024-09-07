@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { project } from '../models/project.model';
-import { LocalStorageService } from './local-storage.service';
+import { handleError } from '../util/ErrorHandlerREST';
+import { getFormData } from '../util/FormWrapper';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ProjectService {
 
   getProjects(): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "getProjects", "GET " + this.serverUrl + "projectlist");
-    return this.http.get(this.serverUrl + "projectlist").pipe(catchError(this.handleError));
+    return this.http.get(this.serverUrl + "projectlist").pipe(catchError(handleError));
   }
 
   addProject(inTitle: string, inDescn: string, inEffort: string, inFile: string | null): Observable<any> {    
@@ -29,54 +30,28 @@ export class ProjectService {
       effort: inEffort,
       file: inFile});
 
-    return this.http.post(this.serverUrl + "addProject", this.getFormData({pid: 0,
+    return this.http.post(this.serverUrl + "addProject", getFormData({pid: 0,
                                                           title:  inTitle, 
                                                           descn:  inDescn, 
                                                           effort: Number(inEffort),
                                                           selected: true,
                                                           file: inFile}))
-                                                        .pipe(catchError(this.handleError));
+                                                        .pipe(catchError(handleError));
   }
 
   deleteProjects(data: project[]): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "deleteProjects", "POST " + this.serverUrl + "deleteProjects");
     console.debug(data);
     return this.http.post(this.serverUrl + "deleteProjects", {data})
-                                                        .pipe(catchError(this.handleError));
+                                                        .pipe(catchError(handleError));
   }
 
   updateProject(data: project): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "updateProject", "POST " + this.serverUrl + "updateProject");
     console.debug(data);
 
-    return this.http.post(this.serverUrl + "updateProject", this.getFormData(data))
-                                                        .pipe(catchError(this.handleError));
-  }
-
-  handleError(response: any): Observable<never> {
-    let errMsg: string = '';
-    errMsg = response.error.message;
-    console.debug("%s: %s | %s", "ProjectService", "handleError", errMsg);
-    return throwError(() => {
-      return errMsg;
-    });
-  }
-
-  getFormData( data: project ): FormData {
-
-    /* Default encoding type is "multipart/form-data" */
-    var formData: FormData = new FormData();
-
-    formData.append("pid", data.pid.toString());
-    formData.append("title", data.title);
-    formData.append("descn", data.descn);
-    formData.append("effort", data.effort.toString());
-
-    if (data.file != null) {
-      formData.append("file", data.file);
-    }
-
-    return formData;
+    return this.http.post(this.serverUrl + "updateProject", getFormData(data))
+                                                        .pipe(catchError(handleError));
   }
 
   refresh(): void {
