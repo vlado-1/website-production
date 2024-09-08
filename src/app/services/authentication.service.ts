@@ -24,7 +24,7 @@ export class AuthenticationService {
       this.http.post(this.serverUrl + "login", getFormDataFromToken(jwt))
                .pipe(catchError(handleError))
                .subscribe((result: any) => {
-                  if (result.loginStatus) {
+                  if (result.loginStatus === 'true') {
                     console.debug("%s: %s", "AuthenticationService", "Sign In");
                     lss.saveDataBasic("login", "true");
 

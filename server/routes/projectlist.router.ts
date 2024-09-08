@@ -4,6 +4,7 @@ import multer from 'multer';
 import { fileFilter } from "../utils/multer";
 import { fileStorage } from "../config/multer";
 import { getProjectList, addProject, deleteProjects, updateProject } from "../controllers/projectlist.controller";
+import { login } from "../controllers/authentication.controller";
 
 var router = Router();
 var upload = multer({ storage: fileStorage, fileFilter: fileFilter });
@@ -26,6 +27,11 @@ router.post('/deleteProjects', function(req: any, res: any) {
 router.post('/updateProject', upload.none(), function(req: any, res: any) {
     logger.log('verbose', new Date().toLocaleString() + '| projectlist.router.ts | /updateProject');
     updateProject(req, res);
+});
+
+router.post('/login', upload.none(), function(req: any, res: any) {
+    logger.log('verbose', new Date().toLocaleString() + '| projectlist.router.ts | /login');
+    login(req, res);
 });
 
 export { router };
