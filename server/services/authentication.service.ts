@@ -6,7 +6,7 @@ import { logger } from "../utils/project.logger";
 import { LoginTicket, OAuth2Client, TokenPayload } from 'google-auth-library';
 
 export async function checkAccount (data: any): Promise<any> {
-    var token: any = data.jwt;
+    var token: any = JSON.parse(data.jwt).credential;
     var uid: string = "";
 
     logger.log('verbose',  new Date().toLocaleString() + ' | authentication.service.ts | checkAccount');
@@ -23,7 +23,7 @@ export async function checkAccount (data: any): Promise<any> {
     /* 5.  If you specified a hd parameter value in the request, verify that the ID token has a hd claim that matches an accepted domain associated with a Google Cloud organization. */
     
     // All these steps are encapsulated in the Google Auth Library for NodeJS used below 
-    var client: OAuth2Client = new OAuth2Client();
+    var client: OAuth2Client = new OAuth2Client("470042236186-4ktmsh2n5fi48ooagmobbfmdau5rlese.apps.googleusercontent.com");
     async function verify() {
         const ticket: LoginTicket = await client.verifyIdToken({
             idToken: token,
@@ -37,14 +37,16 @@ export async function checkAccount (data: any): Promise<any> {
             // const domain = payload['hd'];
         }
     };
-    verify()
-    .then((response: any) => {
-        logger.log('verbose',  new Date().toLocaleString() + ' | authentication.service.ts | checkAccount | Verified Google ID Token');
-        return execute(AuthenticationQueries.CheckAccount, [uid]);
-    })
-    .catch((error: any) => {
+
+    try{
+        return await verify()
+                    .then((response: any) => {
+                        logger.log('verbose',  new Date().toLocaleString() + ' | authentication.service.ts | checkAccount | Verified Google ID Token | ' + uid.toString());
+                        return execute(AuthenticationQueries.CheckAccount, [uid]);
+                    });
+    }
+    catch(error: any) {
         logger.log('verbose',  new Date().toLocaleString() + ' | authentication.service.ts | checkAccount | Failed to verify Google ID Token');
-        logger.log('verbose',  new Date().toLocaleString() + JSON.stringify(error));
-        throw ('Failed to verify Google ID Token');
-    });
+        throw error;
+    };
 };

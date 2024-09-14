@@ -12,7 +12,7 @@ declare global {
 })
 export class AuthenticationService {
 
-  private serverUrl: string              = 'http://localhost:3000/';
+  private serverUrl: string = 'http://localhost:3000/';
 
   constructor(private lss: LocalStorageService, private http: HttpClient) { 
     window.loginSubject = new Subject<any>();
@@ -35,7 +35,7 @@ export class AuthenticationService {
                     console.debug("%s: %s", "AuthenticationService", "Sign Out");
                     lss.removeData("login");
 
-                    googleButton.style.display = "block";
+                    googleButton.style.display = "flex";
                     logoutButton.style.display = "none";
                   }
                });

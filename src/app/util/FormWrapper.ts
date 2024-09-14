@@ -20,7 +20,7 @@ export function getFormData( data: project ): FormData {
 export function getFormDataFromToken (token: any): FormData {
     var formData: FormData = new FormData();
 
-    formData.append("jwt", token);
+    formData.append("jwt", JSON.stringify(token));
 
     return formData;
 }
