@@ -90,23 +90,23 @@
   }
 
   .logout-btn {
-    font-size: small;
     margin: 0 auto;
     width: 100px;
-    line-height: 2;
     border: 1px solid #dadce0;
     border-radius: 4px;
     margin-bottom: 8px;
     display: none;
   }
 
-  .logout-btn a {
+  .logout-btn p {
+    margin: 0 auto;
     color: #3c4043;
     text-decoration: none;
     font-family: arial, sans-serif;
     font-weight: 500;
     font-size: 14px;
     letter-spacing: 0.25px;
+    line-height: 2;
   }
 
   .logout-btn:hover {
