@@ -25,14 +25,14 @@ export class AuthenticationService {
                .pipe(catchError(handleError))
                .subscribe((result: any) => {
                   if (result.loginStatus === 'true') {
-                    console.debug("%s: %s", "AuthenticationService", "Sign In");
+                    console.debug("%s: %s", "AuthenticationService", "Login Success");
                     lss.saveDataBasic("login", "true");
 
                     googleButton.style.display = "none";
                     logoutButton.style.display = "block";
                   }
                   else {
-                    console.debug("%s: %s", "AuthenticationService", "Sign Out");
+                    console.debug("%s: %s", "AuthenticationService", "Login Fail");
                     lss.removeData("login");
 
                     googleButton.style.display = "flex";

@@ -1,6 +1,7 @@
 import { logger } from "./utils/project.logger";
 import express from 'express';
 import cors from 'cors';
+import session from 'express-session';
 
 import {router} from './routes/projectlist.router';
 import { init } from "./models/projectone.models";
@@ -28,8 +29,21 @@ app.use(express.json());
 
 app.use(express.static('static'));
 
+/* Create a session for incoming connections to server.
+   Though don't save session until login success. */
+app.use(session({
+  secret: 'rQEMKVdmfRQGYq9JG7r7PLd8oITY9i', // May need to regularly change this, and provide array of all secreats used so far
+  resave: false,
+  saveUninitialized: false,
+  cookie: { path: '/', 
+            httpOnly: true, 
+            secure: false,
+            maxAge: undefined }
+}));
+
 app.use((req: any, res: any, next: Function) => {
-  logger.log('verbose',  new Date().toLocaleString() + ' | main.ts | Client request received');
+  req.session.name = "Guest";
+  logger.log('verbose',  new Date().toLocaleString() + ' | main.ts | Client request received from ' + req.session.name);
   next();
 });
 
