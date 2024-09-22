@@ -22,7 +22,8 @@ init();
 app.use(cors({
   origin: 'http://localhost:4200',
   methods: 'GET,POST',
-  allowedHeaders: 'Content-Type, Accept'
+  allowedHeaders: 'Content-Type, Accept',
+  credentials: true
 }));
 
 app.use(express.json());
@@ -32,7 +33,7 @@ app.use(express.static('static'));
 /* Create a session for incoming connections to server.
    Though don't save session until login success. */
 app.use(session({
-  secret: 'rQEMKVdmfRQGYq9JG7r7PLd8oITY9i', // May need to regularly change this, and provide array of all secreats used so far
+  secret: 'rQEMKVdmfRQGYq9JG7r7PLd8oITY9i', // May need to regularly change this, and provide array of all secrets used so far
   resave: false,
   saveUninitialized: false,
   cookie: { path: '/', 
@@ -42,8 +43,10 @@ app.use(session({
 }));
 
 app.use((req: any, res: any, next: Function) => {
-  req.session.name = "Guest";
-  logger.log('verbose',  new Date().toLocaleString() + ' | main.ts | Client request received from ' + req.session.name);
+  if (!req.session.name) {
+    req.session.name = "Guest";
+  }
+  logger.log('verbose',  new Date().toLocaleString() + ' | main.ts | Client request received | ' + req.session.name + ' | ' + req.sessionID);
   next();
 });
 

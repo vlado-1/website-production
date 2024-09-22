@@ -20,7 +20,7 @@ export class ProjectService {
 
   getProjects(): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "getProjects", "GET " + this.serverUrl + "projectlist");
-    return this.http.get(this.serverUrl + "projectlist").pipe(catchError(handleError));
+    return this.http.get(this.serverUrl + "projectlist", { withCredentials: true }).pipe(catchError(handleError));
   }
 
   addProject(inTitle: string, inDescn: string, inEffort: string, inFile: string | null): Observable<any> {    
@@ -35,14 +35,15 @@ export class ProjectService {
                                                           descn:  inDescn, 
                                                           effort: Number(inEffort),
                                                           selected: true,
-                                                          file: inFile}))
+                                                          file: inFile}),
+                                                          { withCredentials: true })
                                                         .pipe(catchError(handleError));
   }
 
   deleteProjects(data: project[]): Observable<any> {
     console.debug("%s: %s | %s", "ProjectService", "deleteProjects", "POST " + this.serverUrl + "deleteProjects");
     console.debug(data);
-    return this.http.post(this.serverUrl + "deleteProjects", {data})
+    return this.http.post(this.serverUrl + "deleteProjects", {data}, { withCredentials: true })
                                                         .pipe(catchError(handleError));
   }
 
@@ -50,7 +51,7 @@ export class ProjectService {
     console.debug("%s: %s | %s", "ProjectService", "updateProject", "POST " + this.serverUrl + "updateProject");
     console.debug(data);
 
-    return this.http.post(this.serverUrl + "updateProject", getFormData(data))
+    return this.http.post(this.serverUrl + "updateProject", getFormData(data), { withCredentials: true })
                                                         .pipe(catchError(handleError));
   }
 

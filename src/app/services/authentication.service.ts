@@ -4,6 +4,7 @@ import { LocalStorageService } from './local-storage.service';
 import { HttpClient } from '@angular/common/http';
 import { handleError } from '../util/ErrorHandlerREST';
 import { getFormDataFromToken } from '../util/FormWrapper';
+
 declare global {
   interface Window { loginSubject: Subject<any>; }
 }
@@ -21,7 +22,7 @@ export class AuthenticationService {
       var googleButton: HTMLElement = <HTMLElement>document.getElementsByClassName("googleButton")[0];
       var logoutButton: HTMLElement = <HTMLElement>document.getElementsByClassName("logout-btn")[0];
 
-      this.http.post(this.serverUrl + "login", getFormDataFromToken(jwt))
+      this.http.post(this.serverUrl + "login", getFormDataFromToken(jwt), { withCredentials: true })
                .pipe(catchError(handleError))
                .subscribe((result: any) => {
                   if (result.loginStatus === 'true') {
