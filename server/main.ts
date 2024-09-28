@@ -1,15 +1,18 @@
 import { logger } from "./utils/project.logger";
 import express from 'express';
 import cors from 'cors';
-import session from 'express-session';
+import session, * as expressSession from 'express-session';
+import MySqlSessionStore from 'express-mysql-session';
 
 import {router} from './routes/projectlist.router';
-import { init } from "./models/projectone.models";
+import { init, pool } from "./models/projectone.models";
 
 const app = express();
 const port = 3000;
 
 init();
+
+const sessionStore = MySqlSessionStore(expressSession);
 
 /* Cross-Origin Resource Sharing (CORS) is an HTTP-header based 
    mechanism that allows a server to indicate any origins (domain, scheme, or port) 
@@ -36,6 +39,7 @@ app.use(session({
   secret: 'rQEMKVdmfRQGYq9JG7r7PLd8oITY9i', // May need to regularly change this, and provide array of all secrets used so far
   resave: false,
   saveUninitialized: false,
+  store: new sessionStore({}, pool),
   cookie: { path: '/', 
             httpOnly: true, 
             secure: false,

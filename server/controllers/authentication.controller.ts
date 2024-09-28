@@ -54,3 +54,30 @@ export async function login (req: any, res: any): Promise<void> {
         }); 
     }
 }
+
+export function logout (req: any, res: any): void {
+    logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | logout');
+    req.session.destroy(function(err: any) {
+        if (err) {
+            logger.log('verbose',  new Date().toLocaleString() + ' | authentication.service.ts | logout | User Rejected | Failed to destroy session');
+            logger.log('verbose',  new Date().toLocaleString() + ' | authentication.service.ts | logout | User Rejected | ' + JSON.stringify(err));
+            res.status(200).send({loginStatus: 'error'});
+        }
+        else {
+            res.status(200).send({loginStatus: 'false'});
+        }
+    });
+}
+
+export function isSignedIn (req: any, res: any): void {
+    logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | isSignedIn');
+
+    if (req.session.login) {
+        logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | isSignedIn | yes');
+        res.status(200).send({loginStatus: 'true'});
+    }
+    else {
+        logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | isSignedIn | no')
+        res.status(200).send({loginStatus: 'false'});
+    }
+}

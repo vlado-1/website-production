@@ -19,26 +19,11 @@ export class AuthenticationService {
     window.loginSubject = new Subject<any>();
 
     window.loginSubject.asObservable().subscribe((jwt: any) => {
-      var googleButton: HTMLElement = <HTMLElement>document.getElementsByClassName("googleButton")[0];
-      var logoutButton: HTMLElement = <HTMLElement>document.getElementsByClassName("logout-btn")[0];
-
+      console.debug("%s: %s | %s", "AuthenticationService", "window.loginSubject", "POST " + this.serverUrl + "login");
       this.http.post(this.serverUrl + "login", getFormDataFromToken(jwt), { withCredentials: true })
                .pipe(catchError(handleError))
                .subscribe((result: any) => {
-                  if (result.loginStatus === 'true') {
-                    console.debug("%s: %s", "AuthenticationService", "Login Success");
-                    lss.saveDataBasic("login", "true");
-
-                    googleButton.style.display = "none";
-                    logoutButton.style.display = "block";
-                  }
-                  else {
-                    console.debug("%s: %s", "AuthenticationService", "Login Fail");
-                    lss.removeData("login");
-
-                    googleButton.style.display = "flex";
-                    logoutButton.style.display = "none";
-                  }
+                this.setButton(result.loginStatus);
                });
     });
   }
@@ -46,5 +31,44 @@ export class AuthenticationService {
   getLoginStatus(): boolean {
     return this.lss.getData("login") != "";
   };
+
+  isSignedIn(): void {
+    console.debug("%s: %s | %s", "AuthenticationService", "isSignedIn", "GET " + this.serverUrl + "isSignedIn");
+    this.http.get(this.serverUrl + "isSignedIn", {withCredentials: true})
+             .pipe(catchError(handleError))
+             .subscribe((result: any) => {
+                this.setButton(result.loginStatus);
+             });
+  }
   
+  logout(): void {
+
+    console.debug("%s: %s | %s", "AuthenticationService", "logout", "GET " + this.serverUrl + "logout");
+    this.http.get(this.serverUrl + "logout", { withCredentials: true })
+               .pipe(catchError(handleError))
+               .subscribe((result: any) => {
+                  this.setButton(result.loginStatus);
+               });
+  };
+
+  setButton(login: string): void {
+
+    var googleButton: HTMLElement = <HTMLElement>document.getElementsByClassName("googleButton")[0];
+    var logoutButton: HTMLElement = <HTMLElement>document.getElementsByClassName("logout-btn")[0];
+
+    if (login == 'true') {
+      console.debug("%s: %s", "AuthenticationService", "Logged In");
+      this.lss.saveDataBasic("login", "true");
+
+      googleButton.style.display = "none";
+      logoutButton.style.display = "block";
+    }
+    else {
+      console.debug("%s: %s", "AuthenticationService", "Logged Out");
+      this.lss.removeData("login");
+
+      googleButton.style.display = "flex";
+      logoutButton.style.display = "none";
+    }
+  }
 }

@@ -57,4 +57,4 @@ const execute = (query: any, params: any) => {
   }
 }
 
-export {init, execute};
+export {init, execute, pool};
