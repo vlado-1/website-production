@@ -46,3 +46,4 @@ Thumbs.db
 /project_progress
 /server/debug.log
 /server/static/*
+/documentation*

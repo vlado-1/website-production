@@ -1,5 +1,5 @@
-import { Request } from 'express'
-import { FileFilterCallback } from 'multer'
+import { Request } from 'express';
+import { FileFilterCallback } from 'multer';
 import { logger } from './project.logger';
 
 export const fileFilter = (

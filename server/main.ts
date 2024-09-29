@@ -7,11 +7,23 @@ import MySqlSessionStore from 'express-mysql-session';
 import {router} from './routes/projectlist.router';
 import { init, pool } from "./models/projectone.models";
 
+/** 
+ * Express 
+ * @type {any} 
+ */
 const app = express();
+/** 
+ * Port 
+ * @type {number} 
+ */
 const port = 3000;
 
 init();
 
+/** 
+ * MySQL Session Store 
+ * @type {any} 
+ */
 const sessionStore = MySqlSessionStore(expressSession);
 
 /* Cross-Origin Resource Sharing (CORS) is an HTTP-header based 
@@ -34,7 +46,7 @@ app.use(express.json());
 app.use(express.static('static'));
 
 /* Create a session for incoming connections to server.
-   Though don't save session until login success. */
+    Though don't save session until login success. */
 app.use(session({
   secret: 'rQEMKVdmfRQGYq9JG7r7PLd8oITY9i', // May need to regularly change this, and provide array of all secrets used so far
   resave: false,
