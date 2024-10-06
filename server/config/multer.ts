@@ -5,6 +5,14 @@ import { logger } from '../utils/project.logger';
 type DestinationCallback = (error: Error | null, destination: string) => void
 type FileNameCallback = (error: Error | null, filename: string) => void
 
+/** @module config/multer */
+
+/** @function
+ *  @name fileStorage
+ *  @description Determines where on disk uploaded files will be stored and what their stored name will be.
+ *  @param {multer.DiskStorageOptions} options 
+ *  @returns {multer.StorageEngine}
+ */
 export const fileStorage = multer.diskStorage({
     destination: (
         request: Request,
@@ -16,7 +24,7 @@ export const fileStorage = multer.diskStorage({
            operating system’s default directory for temporary files is used.
            
            Note: You are responsible for creating the directory when providing destination as a function. 
-           When passing a string, multer will make sure that the directory is created for you.*/
+           When passing a string, multer will make sure that the directory is created for you. */
            logger.log('verbose',new Date().toLocaleString() + '| config/multer.ts | /destination' + " | " + "/static");
            callback(null, "./static");
     },
@@ -31,10 +39,8 @@ export const fileStorage = multer.diskStorage({
            doesn’t include any file extension.
 
            Note: Multer will not append any file extension for you, your function 
-           should return a filename complete with an file extension. */
-    
-        logger.log('verbose',new Date().toLocaleString() + '| config/multer.ts | /filename ' + " | " + file.originalname + ".md");
-    
+           should return a filename complete with an file extension. */  
+        logger.log('verbose',new Date().toLocaleString() + '| config/multer.ts | /filename ' + " | " + file.originalname + ".md");   
         callback(null, Date.now().toString() + ".md");
     }
 })

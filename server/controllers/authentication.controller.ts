@@ -1,6 +1,17 @@
 import { checkAccount } from '../services/authentication.service';
 import { logger } from '../utils/project.logger';
 
+/** @module controllers/authentication */
+
+/** @async
+ *  @function login
+ *  @description Takes the JWT from the request and attempts to verify it and login.
+ *    If login is OK, then session info is changed, and response sets login status to true.
+ *    Otherwise login has failed, and so the session is destroyed and response sets login status to false.
+ *  @param {Express.Request} req Request object. Contains JWT from body of http(s) request.
+ *  @param {Express.Response} res Response object.
+ *  @returns {Promise<void>}
+*/
 export async function login (req: any, res: any): Promise<void> {
     logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | login');
     try {
@@ -55,6 +66,13 @@ export async function login (req: any, res: any): Promise<void> {
     }
 }
 
+/** @function
+ *  @name logout
+ *  @description Logs out the user from the website by destoying the session. Not async.
+ *  @param {Express.Request} req Request object. Contains the session to be destoyed.
+ *  @param {Express.Response} res Response object.
+ *  @returns {void}
+ */
 export function logout (req: any, res: any): void {
     logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | logout');
     req.session.destroy(function(err: any) {
@@ -69,6 +87,14 @@ export function logout (req: any, res: any): void {
     });
 }
 
+/** @function
+ *  @name isSignedIn
+ *  @description Checks session to see if user is logged in, and returns response with true/false login status.
+ *     Not async.
+ *  @param {Express.Request} req Request object. Contains session.
+ *  @param {Express.Response} res Response object.
+ *  @returns {void}
+ */
 export function isSignedIn (req: any, res: any): void {
     logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | isSignedIn');
 
