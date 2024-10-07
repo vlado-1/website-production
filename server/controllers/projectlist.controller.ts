@@ -1,6 +1,15 @@
 import {getProjectListData, addProjectData, deleteProjectData, updateProjectData} from '../services/projectone.service';
 import { logger } from '../utils/project.logger';
 
+/** @module projectlist-controller */
+
+/** @async
+ *  @function getProjectList
+ *  @description Retrieves a list of project list items and sends them back in a response.
+ *  @param {Express.Request} req Request object.
+ *  @param {Express.Response} res Response object.
+ *  @returns {Promise<void>}
+ */
 const getProjectList = async (req: any, res: any) => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | getProjectList');
     getProjectListData().then((result: any) => {
@@ -10,6 +19,14 @@ const getProjectList = async (req: any, res: any) => {
     });
 }
 
+/** @async
+ *  @function addProject
+ *  @description Adds project list item specified in request. The request must come from
+ *    a logged in session.
+ *  @param {Express.Request} req Request object.
+ *  @param {Express.Response} res Response object.
+ *  @returns {Promise<void>}
+ */
 const addProject = async (req: any, res: any) => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | addProject | ' + req.session.name);
 
@@ -26,6 +43,15 @@ const addProject = async (req: any, res: any) => {
     }
 }
 
+
+/** @async
+ *  @function deleteProjects
+ *  @description Deletes project list item(s) specified in request. The request must come from a logged
+ *    in session.
+ *  @param {Express.Request} req Request object
+ *  @param {Express.Response} res Response object
+ *  @returns {Promise<void>}
+ */
 const deleteProjects = async (req: any, res: any) => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | deleteProjects | ' + req.session.name );
 
@@ -42,6 +68,14 @@ const deleteProjects = async (req: any, res: any) => {
     }
 }
 
+/** @async
+ *  @function updateProject
+ *  @description Updates the project list item specified in request. The request must come from
+ *    a logged in session.
+ *  @param {Express.Request} req Request object
+ *  @param {Express.Response} res Response object
+ *  @returns {Promise<void>} 
+ */
 const updateProject = async (req: any, res: any) => {
     logger.log('verbose',  new Date().toLocaleString() + ' | projectlist.controller.ts | updateProject | ' + req.session.name);
     

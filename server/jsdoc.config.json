@@ -10,6 +10,7 @@
         "allowUnknownTags": true
     },
     "plugins": [
-        "node_modules/better-docs/typescript"
+        "node_modules/better-docs/typescript",
+        "node_modules/better-docs/category"
     ]
 }

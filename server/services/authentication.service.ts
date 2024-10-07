@@ -1,3 +1,5 @@
+/** @module authentication-service */
+
 // Will need to import Execute from projectone.models.ts
 // Helpful site: https://www.becomebetterprogrammer.com/mysql-nodejs-expressjs-typescript/
 import { AuthenticationQueries } from "../models/authentication.queries";
@@ -5,6 +7,13 @@ import { execute } from "../models/projectone.models";
 import { logger } from "../utils/project.logger";
 import { LoginTicket, OAuth2Client, TokenPayload } from 'google-auth-library';
 
+/** @async
+ *  @function checkAccount
+ *  @memberof module:authentication-service
+ *  @description Validate incoming JWT, and if valid then check if user is recognized by website.
+ *  @param {JSON} data Body of the POST request.
+ *  @returns {Promise<any>}
+ */
 export async function checkAccount (data: any): Promise<any> {
     var token: any = JSON.parse(data.jwt).credential;
     var uid: string = "";

@@ -6,6 +6,10 @@ import { fileStorage } from "../config/multer";
 import { getProjectList, addProject, deleteProjects, updateProject } from "../controllers/projectlist.controller";
 import { isSignedIn, login, logout } from "../controllers/authentication.controller";
 
+/** @module projectlist-router
+ *  @description Sets the API endpoints for incoming requests. Calls corresponding controller.
+ */
+
 var router = Router();
 var upload = multer({ storage: fileStorage, fileFilter: fileFilter });
 

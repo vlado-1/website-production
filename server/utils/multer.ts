@@ -2,6 +2,16 @@ import { Request } from 'express';
 import { FileFilterCallback } from 'multer';
 import { logger } from './project.logger';
 
+/** @module utils/multer */
+
+/** @function
+ *  @name fileFilter
+ *  @description Filter out non-text files.
+ *  @param {Request} request 
+ *  @param {Express.Multer.File} file
+ *  @param {FileFilterCallback} callback
+ *  @returns {void} 
+ */
 export const fileFilter = (
     request: Request,
     file: Express.Multer.File,

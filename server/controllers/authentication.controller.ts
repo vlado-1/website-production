@@ -1,10 +1,11 @@
+/** @module authentication-controller */
+
 import { checkAccount } from '../services/authentication.service';
 import { logger } from '../utils/project.logger';
 
-/** @module controllers/authentication */
-
 /** @async
  *  @function login
+ *  @memberof module:authentication-controller
  *  @description Takes the JWT from the request and attempts to verify it and login.
  *    If login is OK, then session info is changed, and response sets login status to true.
  *    Otherwise login has failed, and so the session is destroyed and response sets login status to false.
@@ -66,10 +67,11 @@ export async function login (req: any, res: any): Promise<void> {
     }
 }
 
-/** @function
- *  @name logout
+/** 
+ *  @function logout
+ *  @memberof module:authentication-controller
  *  @description Logs out the user from the website by destoying the session. Not async.
- *  @param {Express.Request} req Request object. Contains the session to be destoyed.
+ *  @param {Express.Request} req Request object. Contains the session to be destroyed.
  *  @param {Express.Response} res Response object.
  *  @returns {void}
  */
@@ -87,10 +89,11 @@ export function logout (req: any, res: any): void {
     });
 }
 
-/** @function
- *  @name isSignedIn
- *  @description Checks session to see if user is logged in, and returns response with true/false login status.
- *     Not async.
+/** 
+ *  @function isSignedIn
+ *  @memberof module:authentication-controller
+ *  @description Checks session to see if user is logged in, and sends response with true/false login status.
+ *    Not async.
  *  @param {Express.Request} req Request object. Contains session.
  *  @param {Express.Response} res Response object.
  *  @returns {void}
@@ -103,7 +106,7 @@ export function isSignedIn (req: any, res: any): void {
         res.status(200).send({loginStatus: 'true'});
     }
     else {
-        logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | isSignedIn | no')
+        logger.log('verbose',  new Date().toLocaleString() + ' | authentication.controller.ts | isSignedIn | no');
         res.status(200).send({loginStatus: 'false'});
     }
 }

@@ -1,3 +1,6 @@
+/** @module projectone-queries
+ *  @description Contains the CRUD queries for project list items.
+ */
 const projectOneQueries = {
     GetProjectList: 'SELECT * FROM projectone.projects;',
     AddProject: 'INSERT INTO projectone.projects (title, descn, effort, file) VALUES (?,?,?,?);',

@@ -10,6 +10,8 @@ var dataSource = DATA_SOURCES.mySqlDataSource;
 
 var pool: any;
 
+/** @module projectone-models */
+
 /**
  * generates pool connection to be used throughout the app
  */
