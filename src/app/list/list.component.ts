@@ -16,9 +16,12 @@ import { LocalStorageService } from '../services/local-storage.service';
 })
 export class ListComponent {
 
+  /** List of project items. */
   public pList: project[] = [];
+  /** Project item currently selected. Only 1 at a time can be selected. */
   public selection: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
 
+  /** Fetch initial list of project items, and setup handlers for refresh and select observables.  */
   constructor( private pService: ProjectService, private lss: LocalStorageService) {
     this.refreshList();
     pService.onRefresh().subscribe(() => {
@@ -38,6 +41,9 @@ export class ListComponent {
     });
   }
 
+  /**
+   * Clear cache and re-fetch list of project items.
+   * */
   public refreshList(): void {
     console.debug("%s: %s | %s", "ListComponent", "refreshList", "Refreshing");
     
@@ -50,6 +56,15 @@ export class ListComponent {
       });
   }
 
+  /** 
+   * Find the given project item in the list, set its select status to true,
+   * update the cache with that project's file data, and fire the select subject.
+   * 
+   * Note: Only one project can be selected at a time.
+   * 
+   * @param {project} listItem Selected project
+   * @returns {void}
+   * */
   public onSelect(listItem: project): void {
     console.debug("%s: %s | %s", "ListComponent", "onSelect", "Set selected attribute");
 
@@ -82,7 +97,10 @@ export class ListComponent {
     console.debug("%s: %s | %o", "ListComponent", "onSelect", this.pList);
   }
 
-  public onDelete() {
+
+  /** Get selected project item from list, and call service to delete it.
+   *  On return of service refresh the project list, and don't select anything. */
+  public onDelete():void {
     console.debug("%s: %s | %s", "ListComponent", "onDelete", "Delete");
 
     var selectedItems: project[] = this.pList.filter((item: project) => {

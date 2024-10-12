@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { handleError } from '../util/ErrorHandlerREST';
 import { getFormDataFromToken } from '../util/FormWrapper';
 
+/** Desclare a global subject that will be fired during Google sign in callback. */
 declare global {
   interface Window { loginSubject: Subject<any>; }
 }
@@ -13,8 +14,12 @@ declare global {
 })
 export class AuthenticationService {
 
+  /** Server address */
   private serverUrl: string = 'http://localhost:3000/';
 
+  /** When the authentication service is created, create the global login subject
+   *  and subscribe to it.
+   */
   constructor(private lss: LocalStorageService, private http: HttpClient) { 
     window.loginSubject = new Subject<any>();
 
@@ -28,10 +33,12 @@ export class AuthenticationService {
     });
   }
 
+  /** Determin login status based on local storage. */
   getLoginStatus(): boolean {
     return this.lss.getData("login") != "";
   };
 
+  /** Determine login status based on server session information. */
   isSignedIn(): void {
     console.debug("%s: %s | %s", "AuthenticationService", "isSignedIn", "GET " + this.serverUrl + "isSignedIn");
     this.http.get(this.serverUrl + "isSignedIn", {withCredentials: true})
@@ -41,6 +48,7 @@ export class AuthenticationService {
              });
   }
   
+  /** Logout the user from the server. */
   logout(): void {
 
     console.debug("%s: %s | %s", "AuthenticationService", "logout", "GET " + this.serverUrl + "logout");
@@ -51,6 +59,13 @@ export class AuthenticationService {
                });
   };
 
+  /** 
+   * Toggle between Google Sign In and logout button, depending on whether the user
+   * is signed in or not.
+   * 
+   * @param {string} login Whether the user is logged in or not
+   * @return {void}
+   */
   setButton(login: string): void {
 
     var googleButton: HTMLElement = <HTMLElement>document.getElementsByClassName("googleButton")[0];

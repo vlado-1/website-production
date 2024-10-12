@@ -16,17 +16,23 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class MdeditorComponent {
 
+  /** Editor text */
   public content: string | null = "";
+  /** Either 'editor' or 'preview' */
   public mode: string = "editor";
+  /** Configuration for editor */
   public options: MdEditorOption = {  
     showPreviewPanel: false,    // Show preview panel, Default is true
-    resizable: false,             // Allow resize the editor
+    resizable: false,           // Allow resize the editor
     enablePreviewContentClick: true,
     hideIcons: ['FullScreen'] // full screen is a little buggy so don't give user the option
   };
+  /** Whether user is logged in */
   public loggedIn: boolean = false;
 
-
+  /** After the editor has been initialized, check whether the user is logged in to
+   *  determine whether to enable (logged) or disable (not logged in) it.
+   */
   public ngAfterViewInit(): void {
     // After editor has been loaded, disable it if not logged in.
     var toolbar: HTMLElement = <HTMLElement>document.getElementsByClassName("tool-bar")[0];
@@ -43,6 +49,8 @@ export class MdeditorComponent {
     }
   }
 
+  /** Initialize the editor content and subscribe to the project item select, editor content update 
+   *  and local storage observables. */
   constructor (private pService: ProjectService, private lss: LocalStorageService, private authService: AuthenticationService) {
     this.content = lss.getData("File");
 
@@ -66,6 +74,8 @@ export class MdeditorComponent {
     });
   }
 
+  /** Fires before content in editor is rendered, to keep local storage 
+   *  updated with the editors content. */
   public preRenderFunc: Function = (inContent: string): string => {
     this.lss.saveData("File", inContent);
     return inContent;
@@ -73,6 +83,15 @@ export class MdeditorComponent {
   public postRenderFunc(inContent: string): string {
     return inContent;
   }
+
+  /**  
+   * Click event handler to toggle whether to display a text editor or preview screen.
+   * Check if certain icons were clicked, and then determine if text editor or preview 
+   * screen is required. Preview screen must take up full space of editor.
+   * 
+   * @param {Event} event Click event
+   * @returns {void}
+  */
   public togglePreview(event: Event): void {
     var clickedHTMLElement: HTMLElement = <HTMLElement>event.target;
 
@@ -96,6 +115,7 @@ export class MdeditorComponent {
     }
   }
 
+  /** Hide editor and display full preview. */
   private fullPreview(): void {
     // Replace text editor with preview, and fix preview width to 50vh
     var editorContainer: HTMLElement = <HTMLElement>document.getElementsByClassName("editor-container")[0];
@@ -107,6 +127,7 @@ export class MdeditorComponent {
     previewSection.style.width = "50vh";
   }
 
+  /** Hide preview and show editor. */
   private closePreview(): void {
     var editorContainer: HTMLElement = <HTMLElement>document.getElementsByClassName("editor-container")[0];
     var editSection: HTMLElement = <HTMLElement>editorContainer.firstElementChild;

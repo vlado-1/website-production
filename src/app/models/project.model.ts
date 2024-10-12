@@ -1,3 +1,4 @@
+/** Declaration of 'project' item interface. */
 export interface project {
     pid: number;
     title: string;
