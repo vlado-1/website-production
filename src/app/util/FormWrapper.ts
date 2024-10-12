@@ -1,5 +1,10 @@
 import { project } from "../models/project.model";
 
+/** 
+ * Create a form encapsulating a project object 
+ * 
+ * @param {project} data Project object 
+ * */
 export function getFormData( data: project ): FormData {
 
     /* Default encoding type is "multipart/form-data" */
@@ -17,6 +22,10 @@ export function getFormData( data: project ): FormData {
     return formData;
 }
 
+/** 
+ * Create a form encapsulating Google's JWT 
+ * 
+ * @param {any} token JWT*/
 export function getFormDataFromToken (token: any): FormData {
     var formData: FormData = new FormData();
 

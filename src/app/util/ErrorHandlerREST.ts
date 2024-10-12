@@ -1,5 +1,11 @@
 import { Observable, throwError } from "rxjs";
 
+/**
+ * Log any errors that the server throws.
+ * 
+ * @param {any} response Response from server 
+ * @returns 
+ */
 function handleError(response: any): Observable<never> {
         let errMsg: string = '';
         errMsg = response.error.message;

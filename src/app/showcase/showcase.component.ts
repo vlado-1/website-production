@@ -15,9 +15,12 @@ import { LocalStorageService } from '../services/local-storage.service';
 })
 export class ShowcaseComponent {
 
+  /** Whether editor is in edit mode */
   public editMode: boolean = false;
+  /** Whether user is logged in */
   public loggedIn: boolean = false;
 
+  /** Subscribe to edit and local storage Subjects */
   constructor (private pService: ProjectService, private authService: AuthenticationService, private lss: LocalStorageService) {
     this.pService.onEdit().subscribe(() => {
       this.editMode = !this.editMode;
@@ -30,6 +33,7 @@ export class ShowcaseComponent {
     });
   }
 
+  /** Clicking placeholder icon should fire edit Subject */
   public onClick() {
     this.pService.edit();
   }

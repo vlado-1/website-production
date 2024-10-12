@@ -13,14 +13,17 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
+
   title = 'myweb';
 
   constructor(private lss: LocalStorageService, private auth: AuthenticationService) {}
 
+  /** When app is initialized, check if the user is signed in on server */
   ngOnInit(): void {
     this.auth.isSignedIn();
   }
 
+  /** Logout user from server */
   onLogout(): void {
     this.auth.logout();
   }

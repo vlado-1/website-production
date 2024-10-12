@@ -15,20 +15,27 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrl: './edit-item.component.css'
 })
 export class EditItemComponent {
+  /** For firing 'delete' event to parent. */
   // for emitter to work on parent, the event handler must be on component selector
   @Output()
   public delete: EventEmitter<void> = new EventEmitter<void>();
 
+  /** Current item being edited */
   public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
 
+  /** Whether component will allow editing */
   public editMode: boolean = false;
+
   public inTitle : string;
   public inDescn : string;
   public inEffort: string;
   public inFile: string | null;
 
+  /** Whether the user is logged in */
   public loggedIn: boolean = false;
 
+  /** Initialize component; subscribe to observables for editing, selecting and storing in local storage;
+   *  and get loging status. */
   constructor( private pService: ProjectService, private lss: LocalStorageService, private authService: AuthenticationService) {
     this.inTitle  = "";
     this.inDescn  = "";
@@ -61,6 +68,8 @@ export class EditItemComponent {
     this.loggedIn = authService.getLoginStatus();
   }
   
+  /** Save changes made to the project item, and if this is a new project item
+   *  then add it. Call the appropriate service to add/update the project item. */
   onSave(): void {
     var formData: FormData = new FormData();
   
@@ -97,6 +106,7 @@ export class EditItemComponent {
     }
   }
 
+  /** Stop editing the project item */
   onCancel(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onCancel", "Cancel");
     this.reset();
@@ -104,6 +114,7 @@ export class EditItemComponent {
     this.pService.edit();
   }
 
+  /** Setup component(s) for adding a new project item. */
   onAdd(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onAdd", "Add");
     // Deselct all project items
@@ -112,6 +123,7 @@ export class EditItemComponent {
     this.pService.edit();
   }
 
+  /** Setup component(s) for editing project item. */
   onEdit(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onEdit", "Edit");
 
@@ -122,12 +134,14 @@ export class EditItemComponent {
     this.pService.edit();
   }
 
+  /** Clear local storage and fire 'delete' event. */
   onDelete(): void {
     console.debug("%s: %s | %s", "EditItemComponent", "onDelete", "Delete");
     this.lss.clearData();
     this.delete.emit();
   }
 
+  /** Clear the component of any items currently being edited, and off the local storage data. */
   reset(): void {
     this.editItem = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
     this.inTitle  = this.editItem.title;
