@@ -60,6 +60,12 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+              },
+            "dev-watch": {
+               "outputPath": {
+                 "base": "docs/",
+                 "browser": ""
+               }
             }
           },
           "defaultConfiguration": "production"

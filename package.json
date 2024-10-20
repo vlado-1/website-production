@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --output-path docs --base-href /website-production/",
+    "build": "ng build --base-href /website-production/ --watch --configuration dev-watch --verbose",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "compodoc": "npx compodoc -p tsconfig.doc.json -d ./documentation-src"
