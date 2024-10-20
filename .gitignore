@@ -47,3 +47,4 @@ Thumbs.db
 /server/debug.log
 /server/static/*
 /documentation*
+/docs*
