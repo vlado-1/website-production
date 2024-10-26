@@ -4,6 +4,7 @@ import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { project } from '../models/project.model';
 import { handleError } from '../util/ErrorHandlerREST';
 import { getFormData } from '../util/FormWrapper';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { getFormData } from '../util/FormWrapper';
 export class ProjectService {
 
   /** Location of server */
-  private serverUrl:                   string                 = 'http://localhost:3000/';
+  private serverUrl:                   string                 = environment.serverUrl;
   
   private refreshSubject:              Subject<void>          = new Subject<void>();
   private selectSubject:               Subject<project>       = new Subject<project>();
