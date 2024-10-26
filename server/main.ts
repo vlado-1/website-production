@@ -35,7 +35,7 @@ const sessionStore = MySqlSessionStore(expressSession);
    that indicate the HTTP method and headers that will be used in the actual request. 
    Read: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS*/
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: ['http://localhost:4200', 'https://vlado-1.github.io/website-production/'],
   methods: 'GET,POST',
   allowedHeaders: 'Content-Type, Accept',
   credentials: true

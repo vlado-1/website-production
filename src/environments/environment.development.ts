@@ -1,4 +1,5 @@
 export const environment = {
     production: false,
-    assets: "assets/"
+    assets: "assets/",
+    serverUrl: "http://localhost:3000/"
 };

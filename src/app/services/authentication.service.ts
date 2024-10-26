@@ -4,6 +4,7 @@ import { LocalStorageService } from './local-storage.service';
 import { HttpClient } from '@angular/common/http';
 import { handleError } from '../util/ErrorHandlerREST';
 import { getFormDataFromToken } from '../util/FormWrapper';
+import { environment } from 'src/environments/environment';
 
 /** Desclare a global subject that will be fired during Google sign in callback. */
 declare global {
@@ -15,7 +16,7 @@ declare global {
 export class AuthenticationService {
 
   /** Server address */
-  private serverUrl: string = 'http://localhost:3000/';
+  private serverUrl: string = environment.serverUrl;
 
   /** When the authentication service is created, create the global login subject
    *  and subscribe to it.
