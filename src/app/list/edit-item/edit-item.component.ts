@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, AsyncPipe, CommonModule } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
@@ -6,6 +6,7 @@ import { project } from '../../models/project.model';
 import { FileuploadComponent } from '../../fileupload/fileupload.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-item',
@@ -15,6 +16,8 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrl: './edit-item.component.css'
 })
 export class EditItemComponent {
+  public assetPath: string = environment.assets;
+
   /** For firing 'delete' event to parent. */
   // for emitter to work on parent, the event handler must be on component selector
   @Output()

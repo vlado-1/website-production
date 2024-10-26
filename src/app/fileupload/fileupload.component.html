@@ -1,5 +1,5 @@
 <input type="file" accept=".md" class="file-input" (change)="onFileSelected($event)" #fileUpload>
 
 <div class="file-upload">
-   <button (click)="fileUpload.click()"><img class="navimg" src="..\..\assets\clip.svg"></button>
+   <button (click)="fileUpload.click()"><img class="navimg" [src]="assetPath + 'clip.svg'"></button>
 </div>
