@@ -66,6 +66,12 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "dev-watch": {
+              "outputPath": {
+                "base": "docs/",
+                "browser": ""
+              }
             }
           },
           "defaultConfiguration": "production"
