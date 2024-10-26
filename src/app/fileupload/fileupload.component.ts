@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProjectService } from '../services/project.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-fileupload',
@@ -10,6 +11,7 @@ import { LocalStorageService } from '../services/local-storage.service';
   styleUrl: './fileupload.component.css'
 })
 export class FileuploadComponent {
+  public assetPath: string = environment.assets;
 
   /** Keep track of the name of the file which was last selected. */
   public fileName: string | null = null;

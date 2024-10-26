@@ -1,15 +1,15 @@
 <!-- Bar that shows add, remove / save, cancel icons -->
 <div class="editnav">
     <ng-container *ngIf="editMode; else standBy">
-        <button class="active" [disabled]="!loggedIn" (click)="onSave()"><img class="navimg" src="..\..\assets\check.svg"></button>
-        <button class="active" (click)="onCancel()"><img class="navimg" src="..\..\assets\cross.svg"></button>           
+        <button class="active" [disabled]="!loggedIn" (click)="onSave()"><img class="navimg" [src]="assetPath + 'check.svg'"></button>
+        <button class="active" (click)="onCancel()"><img class="navimg" [src]="assetPath + 'cross.svg'"></button>           
     </ng-container>
     <ng-template #standBy>
-        <button class="active" [disabled]="!loggedIn" (click)="onAdd()"><img class="navimg" src="..\..\assets\plus.svg"></button>
+        <button class="active" [disabled]="!loggedIn" (click)="onAdd()"><img class="navimg" [src]="assetPath + 'plus.svg'"></button>
         <ng-container *ngIf="editItem.selected">
-            <button class="active" [disabled]="!loggedIn" (click)="onEdit()"><img class="navimg" src="..\..\assets\edit.svg"></button> 
+            <button class="active" [disabled]="!loggedIn" (click)="onEdit()"><img class="navimg" [src]="assetPath + 'edit.svg'"></button> 
         </ng-container>       
-        <button class="active" [disabled]="!loggedIn" (click)="onDelete()"><img class="navimg" src="..\..\assets\trash.svg"></button>
+        <button class="active" [disabled]="!loggedIn" (click)="onDelete()"><img class="navimg" [src]="assetPath + 'trash.svg'"></button>
     </ng-template>
 </div>
 
