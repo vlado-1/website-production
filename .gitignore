@@ -48,3 +48,4 @@ Thumbs.db
 /server/static/*
 /documentation*
 /docs*
+/cert*
