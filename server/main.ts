@@ -3,9 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import session, * as expressSession from 'express-session';
 import MySqlSessionStore from 'express-mysql-session';
-
 import {router} from './routes/projectlist.router';
 import { init, pool } from "./models/projectone.models";
+import fs from 'fs';
+import https from 'https';
 
 /** 
  * Express 
@@ -17,6 +18,28 @@ const app = express();
  * @type {number} 
  */
 const port = 3000;
+
+/** 
+ * Private key for https 
+ * @type {any} 
+ */
+const privateKey: string  = fs.readFileSync('../cert/server.key', 'utf8');
+/** 
+ * Public certificate for https
+ * @type {any} 
+ */
+const certificate: string = fs.readFileSync('../cert/server.crt', 'utf8');
+/** 
+ * Credential containing private key and public certificate
+ * @type {any} 
+ */
+const credentials: any = {key: privateKey, cert: certificate};
+
+/** 
+ * Https server
+ * @type {any} 
+ */
+const httpsServer = https.createServer(credentials, app);
 
 init();
 
@@ -68,6 +91,6 @@ app.use((req: any, res: any, next: Function) => {
 
 app.use('/', router);
 
-app.listen(port, () => {
+httpsServer.listen(port, () => {
   console.log(`Project One server is listening on port ${port}`);
 })
