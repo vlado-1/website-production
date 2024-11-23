@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SplitscreenComponent } from './splitscreen.component';
+import { ProjectviewComponent } from './projectview.component';
 
-describe('SplitscreenComponent', () => {
-  let component: SplitscreenComponent;
-  let fixture: ComponentFixture<SplitscreenComponent>;
+describe('ProjectviewComponent', () => {
+  let component: ProjectviewComponent;
+  let fixture: ComponentFixture<ProjectviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SplitscreenComponent]
+      imports: [ProjectviewComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SplitscreenComponent);
+    fixture = TestBed.createComponent(ProjectviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
