@@ -1,4 +1,4 @@
-import { project } from "../models/project.model";
+import { project } from "../types/project.model";
 
 /** 
  * Create a form encapsulating a project object 

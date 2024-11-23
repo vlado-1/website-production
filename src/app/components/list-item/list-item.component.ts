@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { project } from '../../models/project.model';
+import { project } from '../../types/project.model';
 
 @Component({
   selector: 'app-list-item',

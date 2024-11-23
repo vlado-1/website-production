@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { LMarkdownEditorModule, MdEditorOption } from 'ngx-markdown-editor';
 import { FormsModule } from '@angular/forms';
-import { ProjectService } from '../services/project.service';
-import { project } from '../models/project.model';
-import { LocalStorageService } from '../services/local-storage.service';
+import { ProjectService } from '../../services/project.service';
+import { project } from '../../types/project.model';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { FileuploadComponent } from '../fileupload/fileupload.component';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-mdeditor',

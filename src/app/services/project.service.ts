@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, catchError, throwError } from 'rxjs';
-import { project } from '../models/project.model';
+import { project } from '../types/project.model';
 import { handleError } from '../util/ErrorHandlerREST';
 import { getFormData } from '../util/FormWrapper';
 import { environment } from 'src/environments/environment';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ProjectService } from '../services/project.service';
-import { LocalStorageService } from '../services/local-storage.service';
+import { ProjectService } from '../../services/project.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
