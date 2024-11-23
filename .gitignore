@@ -44,8 +44,6 @@ Thumbs.db
 
 # custom files
 /project_progress
-/server/debug.log
-/server/static/*
 /documentation*
 /docs*
 /cert*
