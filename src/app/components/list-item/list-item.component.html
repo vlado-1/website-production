@@ -1,8 +1,8 @@
-<div class="item" (click)="onSelect()">
-    <div id="indicator" [ngClass]="{'selected': listItem.selected}"></div>
-    <div id="content">
+<div class="item">
+    <div id="indicator" (click)="onSelect()" [ngClass]="{'selected': listItem.selected}"></div>
+    <div id="content" (click)="onSelect()">
         <h4>{{listItem.title}}</h4>
         <p>{{listItem.descn}}</p>
-        <p class="small">Effort: {{listItem.effort}}</p>
     </div>
+    <a class="valign" [routerLink]="listItem.pageUrl"><img class="itemimg" [src]="assetPath + 'arrow-circle-right.svg'"></a>
 </div>

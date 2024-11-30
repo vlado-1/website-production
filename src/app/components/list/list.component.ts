@@ -19,7 +19,7 @@ export class ListComponent {
   /** List of project items. */
   public pList: project[] = [];
   /** Project item currently selected. Only 1 at a time can be selected. */
-  public selection: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
+  public selection: project = {pid: 0, title: "", descn: "", pageUrl: "", selected: false, file: null};
 
   /** Fetch initial list of project items, and setup handlers for refresh and select observables.  */
   constructor( private pService: ProjectService, private lss: LocalStorageService) {
@@ -83,7 +83,7 @@ export class ListComponent {
       this.selection = this.pList.filter(item => { return item.selected })[0];
     }
     else {
-      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
+      this.selection = {pid: 0, title: "", descn: "", pageUrl: "", selected: false, file: null};
     }
 
     if (this.lss.getData("File") == "") {
@@ -111,7 +111,7 @@ export class ListComponent {
       console.debug("%s: %s | %s", "ListComponent", "Subscribe", "Delete finished");
       this.refreshList();
 
-      this.selection = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
+      this.selection = {pid: 0, title: "", descn: "", pageUrl: "", selected: false, file: null};
       this.pService.select(this.selection);
     });
   }

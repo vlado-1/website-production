@@ -41,3 +41,14 @@
 .selected {
     background-color: #55cef0;
 }
+
+.itemimg {  
+    height: 2em;
+    object-fit: contain;
+    padding: 0 2px 0 0;
+}
+
+.valign {
+    display: flex;
+    align-items: center;
+}
