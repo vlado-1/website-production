@@ -18,16 +18,26 @@ body {
          to go out-of-flow and thus ruin the %-based styling below, or cause the element
          to become a block and thus take up a whole line by itself 
          (we want want two half-containers in the same row).*/
-.half-container {
+.list-container {
     flex: 0 1 column;
     margin: 2.5%; 
     height: 68vh;
     background-color: white;
   }
 
-  app-list .half-container {
+  app-list {
     overflow-y: auto;
   }
-  app-showcase .half-container {
+  app-showcase {
     overflow-y: hidden;
+  }
+
+  .flex-half-container {
+    display: flex;
+    flex-direction: row;
+    line-height: 1.2;
+  }
+
+  .flex-half-container-item {
+    flex: 1 1 0;
   }
