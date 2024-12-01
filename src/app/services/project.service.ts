@@ -39,22 +39,22 @@ export class ProjectService {
    * 
    * @param {string} inTitle Title of project
    * @param {string} inDescn Short description of project
-   * @param {string} inEffort Number of days spent on project
+   * @param {string} inPageUrl Number of days spent on project
    * @param {string | null} inFile Text from edited file
    * 
    * @returns {Observable<any>}
    */
-  addProject(inTitle: string, inDescn: string, inEffort: string, inFile: string | null): Observable<any> {    
+  addProject(inTitle: string, inDescn: string, inPageUrl: string, inFile: string | null): Observable<any> {    
     console.debug("%s: %s | %s", "ProjectService", "addProject", "POST " + this.serverUrl + "addProject");
     console.debug({title:  inTitle, 
       descn:  inDescn, 
-      effort: inEffort,
+      effort: inPageUrl,
       file: inFile});
 
     return this.http.post(this.serverUrl + "addProject", getFormData({pid: 0,
                                                           title:  inTitle, 
                                                           descn:  inDescn, 
-                                                          effort: Number(inEffort),
+                                                          pageUrl: inPageUrl,
                                                           selected: true,
                                                           file: inFile}),
                                                           { withCredentials: true })

@@ -1,22 +1,26 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { project } from '../../types/project.model';
+import { environment } from 'src/environments/environment';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list-item',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './list-item.component.html',
   styleUrl: './list-item.component.css'
 })
 export class ListItemComponent {
+ 
+  public assetPath: string = environment.assets;
 
   /** Project item encapsulated by this component. */
   @Input()
   listItem: project = { pid:   -1,
                         title: 'None',
                         descn: 'None',
-                        effort: 0,
+                        pageUrl: "",
                         selected: false,
                         file: null};
   

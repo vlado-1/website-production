@@ -24,14 +24,14 @@ export class EditItemComponent {
   public delete: EventEmitter<void> = new EventEmitter<void>();
 
   /** Current item being edited */
-  public editItem: project = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
+  public editItem: project = {pid: 0, title: "", descn: "", pageUrl: "", selected: false, file: null};
 
   /** Whether component will allow editing */
   public editMode: boolean = false;
 
   public inTitle : string;
   public inDescn : string;
-  public inEffort: string;
+  public inPageUrl: string;
   public inFile: string | null;
 
   /** Whether the user is logged in */
@@ -42,7 +42,7 @@ export class EditItemComponent {
   constructor( private pService: ProjectService, private lss: LocalStorageService, private authService: AuthenticationService) {
     this.inTitle  = "";
     this.inDescn  = "";
-    this.inEffort = "";
+    this.inPageUrl = "";
     this.inFile = null;
 
     this.pService.onEdit().subscribe(() => {
@@ -54,7 +54,7 @@ export class EditItemComponent {
       if (this.editItem.selected) {
         this.inTitle  = this.editItem.title;
         this.inDescn  = this.editItem.descn;
-        this.inEffort = this.editItem.effort.toString();
+        this.inPageUrl = this.editItem.pageUrl;
         this.inFile   = this.editItem.file;
       }
       else {
@@ -80,17 +80,17 @@ export class EditItemComponent {
 
     this.inFile = this.lss.getData("File");
 
-    if (this.inTitle == "" && this.inDescn == "" && this.inEffort == "") {
+    if (this.inTitle == "" && this.inDescn == "" && this.inPageUrl == "") {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
     }
-    if (this.inTitle == this.editItem.title && this.inDescn == this.editItem.descn && this.inEffort == this.editItem.effort.toString() && this.inFile == this.editItem.file) {
+    if (this.inTitle == this.editItem.title && this.inDescn == this.editItem.descn && this.inPageUrl == this.editItem.pageUrl && this.inFile == this.editItem.file) {
       console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save aborted");
       return;
     }
 
     if (this.editItem.pid != 0) {
-      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, effort: Number(this.inEffort), selected: true, file: this.inFile}).subscribe(
+      this.pService.updateProject({pid: this.editItem.pid, title: this.inTitle, descn: this.inDescn, pageUrl: this.inPageUrl, selected: true, file: this.inFile}).subscribe(
         (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Save finished -- Edit");
             this.pService.refresh();
@@ -99,7 +99,7 @@ export class EditItemComponent {
       });    
     }
     else { 
-      this.pService.addProject(this.inTitle, this.inDescn, this.inEffort, this.inFile).subscribe(
+      this.pService.addProject(this.inTitle, this.inDescn, this.inPageUrl, this.inFile).subscribe(
         (result: any) => {
             console.debug("%s: %s | %s", "EditItemComponent", "onSave", "Add finished -- Edit");
             this.pService.refresh();
@@ -132,7 +132,7 @@ export class EditItemComponent {
 
     this.inTitle  = this.editItem.title;
     this.inDescn  = this.editItem.descn;
-    this.inEffort = this.editItem.effort.toString();
+    this.inPageUrl = this.editItem.pageUrl;
 
     this.pService.edit();
   }
@@ -146,10 +146,10 @@ export class EditItemComponent {
 
   /** Clear the component of any items currently being edited, and off the local storage data. */
   reset(): void {
-    this.editItem = {pid: 0, title: "", descn: "", effort: 0, selected: false, file: null};
+    this.editItem = {pid: 0, title: "", descn: "", pageUrl: "", selected: false, file: null};
     this.inTitle  = this.editItem.title;
     this.inDescn  = this.editItem.descn;
-    this.inEffort = "";
+    this.inPageUrl = "";
     this.inFile = this.editItem.file;   
     this.lss.clearData();
   }  

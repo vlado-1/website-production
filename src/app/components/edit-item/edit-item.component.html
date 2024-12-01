@@ -16,8 +16,8 @@
 <ng-container *ngIf="editMode && loggedIn">
     <!-- Form to add event -->
     <div id="addItemForm">
-        <input [disabled]="!loggedIn" type="text" name="itemTitle"  placeholder="Project Name"        [(ngModel)]="inTitle"><br>
-        <input [disabled]="!loggedIn" type="text" name="itemDescn"  placeholder="Project Description" [(ngModel)]="inDescn"><br>
-        <input [disabled]="!loggedIn" type="text" name="itemEffort" placeholder="Project Effort"      [(ngModel)]="inEffort"><br>
+        <input [disabled]="!loggedIn" type="text" name="itemTitle"   placeholder="Project Name"        [(ngModel)]="inTitle"><br>
+        <input [disabled]="!loggedIn" type="text" name="itemDescn"   placeholder="Project Description" [(ngModel)]="inDescn"><br>
+        <input [disabled]="!loggedIn" type="text" name="itemPageUrl" placeholder="View Page"           [(ngModel)]="inPageUrl"><br>
     </div>
 </ng-container>

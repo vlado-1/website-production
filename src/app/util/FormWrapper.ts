@@ -13,7 +13,7 @@ export function getFormData( data: project ): FormData {
     formData.append("pid", data.pid.toString());
     formData.append("title", data.title);
     formData.append("descn", data.descn);
-    formData.append("effort", data.effort.toString());
+    formData.append("pageUrl", data.pageUrl);
 
     if (data.file != null) {
       formData.append("file", data.file);

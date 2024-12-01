@@ -3,7 +3,7 @@ export interface project {
     pid: number;
     title: string;
     descn: string;
-    effort: number;
+    pageUrl: string;
     selected: boolean;
     file: string | null;
 }
